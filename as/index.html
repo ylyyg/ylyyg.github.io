@@ -1,0 +1,202 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>AppSearch - (^_−)☆嘻嘻嘻</title>
+<link rel="stylesheet" type="text/css" href="style.css?v=16.1" />
+<script src="time.js" type="text/javascript"></script>
+</head>
+<body onLoad="document.app-form.app-input.focus()">
+<div class="nav">
+  <div class="nav-menu">
+    <div class="nav-time">
+      <div id="chilk"></div>
+    </div>
+  </div>
+</div>
+<div class="logo"> <img src="logo.png"> </div>
+<div class="content">
+  <div class="search-bg">
+    <form name="app-form" action="" target="_blank" id="search">
+      <div class="search-main">
+        <input type="text" name="app-input" id="text" class="search-text" autocomplete="off" placeholder="现在就开始你的搜索，可以搜应用名称、包名以及资质或是使用其他搜索引擎搜索~">
+        <input type="submit" class="search-sub-bd" value="百度一下" onClick="baiducomIt()">
+      </div>
+      <div class="search-sub-bg">
+        <div class="search-title1">&gt;&nbsp; 按应用名称</div>
+        <div class="search-title2">&gt;&nbsp; 按资质信息</div>
+        <div class="search-sub-bg1">
+          <input type="submit" class="search-sub" value="应用宝" onClick="yingyongbaoIt()">
+          <input type="submit" class="search-sub" value="华为" onClick="huaweiIt()">
+          <input type="submit" class="search-sub" value="小米" onClick="xiaomiIt()">
+          <input type="submit" class="search-sub1" value="GooglePlay" onClick="googleplayIt()">
+        </div>
+        <div class="search-sub-bg1">
+          <input type="submit" class="search-sub" value="公司名称" onClick="tianyanchamcIt()">
+          <input type="submit" class="search-sub" value="商标信息" onClick="tianyanchasbIt()">
+          <input type="submit" class="search-sub" value="软著信息" onClick="tianyancharzIt()">
+          <input type="submit" class="search-sub1" value="ICP备案" onClick="chinaztoolIt()">
+        </div>
+        <div class="search-title1">&gt;&nbsp; 按应用包名</div>
+        <div class="search-title2">&gt;&nbsp; 按常用站点</div>
+        <div class="search-sub-bg1">
+          <input type="submit" class="search-sub" value="应用宝" onClick="yingyongbaoanIt()">
+          <input type="submit" class="search-sub" value="小米" onClick="xiaomianIt()">
+          <input type="submit" class="search-sub" value="魅族" onClick="meizuanIt()">
+          <input type="submit" class="search-sub1" value="GooglePlay" onClick="googleplayanIt()">
+        </div>
+        <div class="search-sub-bg1">
+          <input type="submit" class="search-sub" value="Google搜索" onClick="googlecomIt()">
+          <input type="submit" class="search-sub" value="360搜索" onClick="socomIt()">
+          <input type="submit" class="search-sub" value="搜狗搜索" onClick="sogoucomIt()">
+          <input type="submit" class="search-sub1" value="头条搜索" onClick="toutiaocomIt()">
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="link-bg">
+  <div class="link-list">
+    <p><span class="s1">&gt;&nbsp; 常用直达</span></p>
+    <p><a href="https://cli.im/" target="_blank">草料二维码</a></p>
+    <p><a href="https://www.qimai.cn/andapp/shelves/appid/102" target="_blank">七麦数据</a></p>
+    <p><a href="https://www.tianyancha.com/" target="_blank">天眼查</a></p>
+    <p><a href="https://www.taptap.com/" target="_blank">TapTap</a></p>
+    <p><a href="https://www.wandoujia.com/" target="_blank">豌豆荚</a></p>
+    <p><a href="https://sj.qq.com/myapp/" target="_blank">应用宝</a></p>
+    <p><a href="https://appstore.huawei.com/" target="_blank">华为应用市场</a></p>
+    <p><a href="http://app.mi.com/" target="_blank">小米应用商店</a></p>
+  </div>
+  <div class="link-list">
+    <p><span class="s1">&gt;&nbsp; 数据看板</span></p>
+    <p><a href="https://www.qimai.cn/rank/marketRank" target="_blank">七麦榜单数据</a></p>
+    <p><a href="https://www.chandashi.com/ranking/index.html" target="_blank">蝉大师榜单数据</a></p>
+    <p><a href="https://aso.chinaz.com/android.html" target="_blank">站长之家榜单数据</a></p>
+    <p><span class="s2">&gt;&nbsp; 软件下载</span></p>
+    <p><a href="https://www.xmind.net/" target="_blank">Xmind</a></p>
+    <p><a href="https://sj.qq.com/myapp/detail.htm?apkName=com.xcn.baoming" target="_blank">包名查看App</a></p>
+    <p><a href="https://www.quickapp.cn/docCenter/post/69" target="_blank">快应用预览版</a></p>
+    <p><a href="https://www.quickapp.cn/docCenter/post/69" target="_blank">快应用调试器</a></p>
+  </div>
+  <div class="link-list">
+    <p><span class="s1">&gt;&nbsp; 开放平台</span></p>
+    <p><a href="https://dev.vivo.com.cn/" target="_blank">vivo开放平台</a></p>
+    <p><a href="https://open.oppomobile.com/" target="_blank">OPPO开放平台</a></p>
+    <p><a href="https://developer.huawei.com/consumer/cn/" target="_blank">华为开发者联盟</a></p>
+    <p><a href="https://dev.mi.com/console/" target="_blank">小米开放平台</a></p>
+    <p><a href="https://open.tencent.com/" target="_blank">腾讯开放平台</a></p>
+    <p><a href="http://open.uc.cn/" target="_blank">阿里分发开放平台</a></p>
+    <p><a href="http://open.flyme.cn/" target="_blank">魅族开放平台</a></p>
+    <p><a href="https://www.quickapp.cn/" target="_blank">快应用平台</a></p>
+  </div>
+  <div class="link-list">
+    <p><span class="s1">&gt;&nbsp; 资质查询</span></p>
+    <p><a href="http://xukezheng.cbrc.gov.cn/ilicence/" target="_blank">金融许可证</a></p>
+    <p><a href="http://www.csrc.gov.cn/pub/newsite/zjjg/hfjgml/xqhfjgml/" target="_blank">经营证券期货业务许可证</a></p>
+    <p><a href="http://www.pbc.gov.cn/zhengwugongkai/127924/128041/2951606/1923625/1923629/index.html" target="_blank">支付业务许可证</a></p>
+    <p><a href="http://www.safe.gov.cn/safe/jyjywhywxkzdbxjyjgmd/index.html">经营外汇业务许可证</a></p>
+    <p><a href="http://samr.cfda.gov.cn/WS01/CL0412/" target="_blank">药品经营许可证</a></p>
+    <p><a href="http://samr.cfda.gov.cn/WS01/CL1026/" target="_blank">医疗器械生产许可证</a></p>
+    <p><a href="http://www.cgigc.com.cn/isbn/index.html?curPage=1" target="_blank">游戏版号查询</a></p>
+    <p><a href="https://www.p2peye.com/platform/wenti_30/" target="_blank">网贷黑名单</a></p>
+  </div>
+</div>
+<div class="post">﻿(σﾟ∀ﾟ)σ..:*☆ &nbsp; 本站点不定期更新，感谢喜欢！</div>
+<div class="footer"> &copy;&nbsp; 2018 - 2020<span>/</span> Powered by C.M. <span>/</span> v16.1 <span>/</span> 2020.05.02 </div>
+
+<!--js部分--> 
+<script>
+var search = document.getElementById("search");
+var text =  document.getElementById("text");
+
+//主搜索
+function baiducomIt(){
+	search.setAttribute('action','https://www.baidu.com/s');
+	text.setAttribute('name','wd');
+}
+
+//应用名称
+function yingyongbaoIt(){
+	search.setAttribute('action','http://sj.qq.com/myapp/search.htm');
+	text.setAttribute('name','kw');
+}
+
+function huaweiIt(){
+	search.setAttribute('action','http://app.hicloud.com/search');
+	text.setAttribute('name','searchText');
+}
+
+function xiaomiIt(){
+	search.setAttribute('action','http://app.mi.com/search');
+	text.setAttribute('name','keywords');
+}
+
+function googleplayIt(){
+	search.setAttribute('action','https://play.google.com/store/search');
+	text.setAttribute('name','q');
+}
+
+//应用包名
+function yingyongbaoanIt(){
+	search.setAttribute('action','http://sj.qq.com/myapp/detail.htm');
+	text.setAttribute('name','apkName');
+}
+
+function xiaomianIt(){
+	search.setAttribute('action','http://app.mi.com/details');
+	text.setAttribute('name','id');
+}
+
+function meizuanIt(){
+	search.setAttribute('action','https://app.meizu.com/apps/public/detail');
+	text.setAttribute('name','package_name');
+}
+
+function googleplayanIt(){
+	search.setAttribute('action','https://play.google.com/store/apps/details');
+	text.setAttribute('name','id');
+}
+
+//资质版权
+function tianyanchamcIt(){
+	search.setAttribute('action','https://www.tianyancha.com/search');
+	text.setAttribute('name','key');
+}
+
+function tianyanchasbIt(){
+	search.setAttribute('action','https://www.tianyancha.com/search/t401');
+	text.setAttribute('name','key');
+}
+
+function tianyancharzIt(){
+	search.setAttribute('action','https://www.tianyancha.com/search/t403');
+	text.setAttribute('name','key');
+}
+
+function chinaztoolIt(){
+	search.setAttribute('action','http://icp.chinaz.com');
+	text.setAttribute('name','s');
+}
+
+//搜索引擎
+function googlecomIt(){
+	search.setAttribute('action','https://www.google.com/search');
+	text.setAttribute('name','q');
+}
+
+function socomIt(){
+	search.setAttribute('action','https://www.so.com/s');
+	text.setAttribute('name','q');
+}
+
+function sogoucomIt(){
+	search.setAttribute('action','https://www.sogou.com/web');
+	text.setAttribute('name','query');
+}
+function toutiaocomIt(){
+	search.setAttribute('action','https://www.toutiao.com/search/');
+	text.setAttribute('name','keyword');
+}
+</script>
+</body>
+</html>
