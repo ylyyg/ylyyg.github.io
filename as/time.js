@@ -26,7 +26,7 @@ function time(){
 			flag="星期二";
 			break;
 		case 3:
-			flag="星期三";
+			flag="星期三 / 水曜日";
 			break;
 		case 4:
 			flag="星期四";
