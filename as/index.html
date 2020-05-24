@@ -57,30 +57,30 @@
       <div class="search-btn-right">
         <div class="search-btn-title">&gt;&nbsp; 按资质信息</div>
         <div class="search-btn-content">
-          <input type="submit" class="search-btn-btn" value="公司名称" onClick="TianyanchaCompanyname()">
-          <input type="submit" class="search-btn-btn" value="商标信息" onClick="TianyanchaBrand()">
-          <input type="submit" class="search-btn-btn" value="软著信息" onClick="TianyanchaSoft()">
-          <input type="submit" class="search-btn-btn1" value="ICP备案" onClick="ChinazDomain()">
+          <input type="button" class="search-btn-btn" value="公司名称" onClick="TianyanchaCompany()">
+          <input type="button" class="search-btn-btn" value="商标信息" onClick="TianyanchaBrand()">
+          <input type="button" class="search-btn-btn" value="软著信息" onClick="TianyanchaSoft()">
+          <input type="button" class="search-btn-btn1" value="ICP备案" onClick="ChinazDomain()">
         </div>
       </div>
       <!--常用站点-->
       <div class="search-btn-left">
         <div class="search-btn-title">&gt;&nbsp; 按常用站点</div>
         <div class="search-btn-content">
-          <input type="submit" class="search-btn-btn" value="微博搜索" onClick="WeiboWeb()">
-          <input type="submit" class="search-btn-btn" value="微信搜索" onClick="WeixinWeb()">
-          <input type="submit" class="search-btn-btn" value="聚投诉" onClick="JutousuWeb()">
-          <input type="submit" class="search-btn-btn1" value="黑猫投诉" onClick="HeimaoWeb()">
+          <input type="button" class="search-btn-btn" value="微博搜索" onClick="WeiboWeb()">
+          <input type="button" class="search-btn-btn" value="微信搜索" onClick="WeixinWeb()">
+          <input type="button" class="search-btn-btn" value="聚投诉" onClick="JutousuWeb()">
+          <input type="button" class="search-btn-btn1" value="黑猫投诉" onClick="HeimaoWeb()">
         </div>
       </div>
       <!--搜索引擎-->
       <div class="search-btn-right">
         <div class="search-btn-title">&gt;&nbsp; 按搜索引擎</div>
         <div class="search-btn-content">
-          <input type="submit" class="search-btn-btn" value="Google搜索" onClick="GoogleWeb()">
+          <input type="button" class="search-btn-btn" value="Google搜索" onClick="GoogleWeb()">
           <input type="submit" class="search-btn-btn" value="360搜索" onClick="QihooWeb()">
-          <input type="submit" class="search-btn-btn" value="搜狗搜索" onClick="SogouWeb()">
-          <input type="submit" class="search-btn-btn1" value="头条搜索" onClick="ToutiaoWeb()">
+          <input type="button" class="search-btn-btn" value="搜狗搜索" onClick="SogouWeb()">
+          <input type="button" class="search-btn-btn1" value="头条搜索" onClick="ToutiaoWeb()">
         </div>
       </div>
     </div>
@@ -200,7 +200,7 @@ function GoogleplayPackage(){
 
 //资质信息
 
-function TianyanchaCompanyname(){
+function TianyanchaCompany(){
 	window.open('https://www.tianyancha.com/search?key=' + astext.value);
 }
 
