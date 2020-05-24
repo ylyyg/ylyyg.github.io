@@ -33,16 +33,16 @@
 	margin: 60px auto 0;
 }
 .content {
-	height: 295px;
+	height: 382px;
 	width: 1000px;
 	margin: 30px auto 0;
 }
-.search-bg {
+.search-main {
 	height: auto;
 	width: 1000px;
 	margin: 0px auto 0;
 }
-.search-main {
+.search-bar {
 	height: 46px;
 	width: 700px;
 	margin: auto;
@@ -62,7 +62,7 @@
 	font-size: 15px;
 	float: left;
 }
-.search-sub-bd {
+.search-btn-bd {
 	height: 46px;
 	width: 108px;
 	background: #4e6ef2;
@@ -74,36 +74,37 @@
 	border-radius: 0 5px 5px 0;
 	cursor: pointer;
 }
-.search-sub-bg {
-	height: 184px;
+.search-btn-main {
+	height: 276px;
 	width: 1000px;
 	margin: 40px auto 20px;
 }
-.search-title1 {
+.search-btn-left {
+	height: 92px;
+	width: 470px;
+	float: left;
+	margin: 0 15px 0 15px;
+}
+.search-btn-right {
+	height: 92px;
+	width: 470px;
+	float: left;
+	margin: 0 15px 0 15px;
+}
+.search-btn-title {
 	height: 32px;
 	width: 470px;
 	font-size: 14px;
 	color: #4e6ef2;
 	float: left;
 	font-weight: bold;
-	margin: 0 15px 0 15px;
 }
-.search-title2 {
-	height: 32px;
-	width: 470px;
-	font-size: 14px;
-	color: #4e6ef2;
-	float: left;
-	font-weight: bold;
-	margin: 0 15px 0 15px;
-}
-.search-sub-bg1 {
+.search-btn-content {
 	height: 60px;
 	width: 470px;
 	float: left;
-	margin: 0 15px 0 15px;
 }
-.search-sub {
+.search-btn-btn {
 	height: 36px;
 	width: 106px;
 	float: left;
@@ -116,9 +117,9 @@
 	color: #222;
 	cursor: pointer;
 }
-.search-sub1 {
+.search-btn-btn1 {
 	height: 36px;
-	width: 100px;
+	width: 106px;
 	float: left;
 	background: #f4f4f5;
 	border: 0;
@@ -128,9 +129,9 @@
 	color: #222;
 	cursor: pointer;
 }
-.link-bg {
+.link-main {
 	width: 1000px;
-	height: 320px;
+	height: 250px;
 	margin: auto;
 }
 .link-list {
@@ -169,14 +170,14 @@
 	display: block;
 	line-height: 32px;
 }
-.post {
+.blackboard {
 	height: 30px;
-	width: 320px;
+	width: 555px;
 	border-radius: 100px;
 	background: #f4f4f5;
-	font-size: 13px;
+	font-size: 12px;
 	line-height: 30px;
-	margin: 50px auto 0;
+	margin: 40px auto 0;
 	text-align: center;
 	color: #444;
 }
