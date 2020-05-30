@@ -180,11 +180,12 @@
 	margin: 40px auto 0;
 	text-align: center;
 	color: #444;
+	display:none;
 }
 .footer {
 	height: 30px;
 	width: 1000px;
-	margin: 10px auto 0;
+	margin: 60px auto 0;
 	font-size: 13px;
 	line-height: 30px;
 	text-align: center;
