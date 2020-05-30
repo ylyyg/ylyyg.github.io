@@ -172,7 +172,7 @@
 }
 .blackboard {
 	height: 30px;
-	width: 420px;
+	width: 280px;
 	border-radius: 100px;
 	background: #f4f4f5;
 	font-size: 13px;
@@ -193,6 +193,9 @@
 .footer a{
 	text-decoration: none;
 	color: #999;
+}
+.footer a:hover{
+	color: #4e6ef2;
 }
 .footer span {
 	color: #ddd;
