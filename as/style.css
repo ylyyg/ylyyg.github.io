@@ -203,3 +203,11 @@
 	padding-left: 8px;
 	padding-right: 8px;
 }
+.poster{
+	height:247px;
+	width:236px;
+	position:fixed;
+	top:0;
+	left:0;
+	background:url(https://ylyyg.github.io/as/poster.png) no-repeat;
+}
