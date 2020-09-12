@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <title>AppSearch - (^_−)☆嘻嘻嘻~</title>
-<link rel="stylesheet" type="text/css" href="style.css?v=17.7" />
+<link rel="stylesheet" type="text/css" href="style.css?v=18.0" />
 <script src="time.js" type="text/javascript"></script>
 </head>
 <body>
@@ -19,7 +19,8 @@
   <div class="search-main">
   <form name="app-form" target="_blank">
     <div class="search-bar">
-      <input type="text" id="astext" class="search-text" autocomplete="off" placeholder="最前面不要带空格！暂不支持直接按Enter键搜索！也不支持IE浏览器！">
+	    <input type="text" name="" style="display:none;">
+      <input type="text" id="astext" class="search-text" autocomplete="off" placeholder="最前面不要带空格！暂不支持直接按Enter键搜索！也不支持IE浏览器！" onKeyUp="enterSearch()">
       <input type="button" class="search-btn-bd" value="百度一下" onClick="baiduWeb()">
     </div>
     <div class="search-btn-main"> 
@@ -136,13 +137,19 @@
   </div>
 </div>
 <div class="blackboard">﻿(σﾟ∀ﾟ)σ..:*☆ &nbsp; 公告：本站不支持IE浏览器！</div>
-<div class="footer"> &copy;&nbsp; 2018 - 2020<span>/</span> Powered by C.M. <span>/</span> v17.7 <span>/</span> 2020.09.05 <span>/</span> 免责申明：本站点仅汇总相关信息，具体内容由各自网站提供，与本站点无关</div>
+<div class="footer"> &copy;&nbsp; 2018 - 2020<span>/</span> Powered by C.M. <span>/</span> v18.0 <span>/</span> 2020.09.12 <span>/</span> 免责申明：本站点仅汇总相关信息，具体内容由各自网站提供，与本站点无关</div>
 <div class="poster"></div>
 
 <!--js部分--> 
 <script>
 
 //主搜索
+
+function enterSearch(){
+	if (window.event.keyCode === 13) {
+		baiduWeb();
+	}
+}
 
 function baiduWeb(){
 	window.open('https://www.baidu.com/s?wd=' + astext.value);
