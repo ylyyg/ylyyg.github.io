@@ -1,0 +1,116 @@
+@charset "utf-8";
+/* CSS Document */
+
+* {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+	font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Noto Sans CJK SC, WenQuanYi Micro Hei, Arial, sans-serif;
+}
+.main {
+	height: 551px;
+	width: 390px;
+}
+.nav {
+	height: 44px;
+	width: 390px;
+	background: #fff;
+	border-bottom: 1px solid #eee;
+}
+.nav-logo {
+	height: 34px;
+	width: 34px;
+	margin: 5px 14px 5px 14px;
+	float: left;
+}
+.nav-logo img {
+	height: 34px;
+	width: 34px;
+}
+.nav-title {
+	height: 44px;
+	width: 140px;
+	float: left;
+	line-height: 44px;
+	font-size: 16px;
+	font-weight: bold;
+}
+.nav-as {
+	height: 24px;
+	width: 100px;
+	float: right;
+	margin: 10px 15px 10px 0px;
+	line-height: 24px;
+	text-align: center;
+	background: #4e6ef2;
+	font-size: 12px;
+	border-radius: 4px;
+}
+.nav-as a {
+	text-decoration: none;
+	color: #fff;
+}
+.content {
+	height: 461px;
+	width: 390px;
+	padding-left: 15px;
+	padding-right: 15px;
+	background: #fff;
+}
+.link-list {
+	height: 210px;
+	width: 120px;
+	float: left;
+	background: #fff;
+	line-height: 30px;
+	font-size: 13px;
+	padding: 10px 0 10px 0px;
+	border-bottom: 1px dashed #eee;
+}
+.link-list span {
+	color: #4e6ef2;
+	font-weight: bold;
+}
+.link-list a {
+	text-decoration: none;
+	color: #000;
+	margin-left: 10px;
+}
+.link-list a:hover {
+	color: #4e6ef2;
+}
+.link-list1 {
+	height: 210px;
+	width: 120px;
+	float: left;
+	background: #fff;
+	line-height: 30px;
+	font-size: 13px;
+	padding: 10px 0 10px 0px;
+}
+.link-list1 span {
+	color: #4e6ef2;
+	font-weight: bold;
+}
+.link-list1 a {
+	text-decoration: none;
+	color: #000;
+	margin-left: 10px;
+}
+.link-list1 a:hover {
+	color: #4e6ef2;
+}
+.footer {
+	height: 44px;
+	width: 390px;
+	font-size: 12px;
+	line-height: 44px;
+	text-align: center;
+	color: #999;
+	border-top: 1px solid #eee;
+}
+.footer span {
+	color: #ddd;
+	padding-left: 8px;
+	padding-right: 8px;
+}
