@@ -17,6 +17,23 @@
 	width: 100%;
 	min-width: 1000px;
 }
+.nav-home{
+	height:40px;
+	width:100px;
+	font-size: 13px;
+	float: left;
+	line-height: 40px;
+	text-align: left;
+	color: #444;
+	margin-left: 15px;
+}
+.nav-home a{
+	text-decoration:none;
+	color:#444;
+}
+.nav-home a:hover{
+	color:#4e6ef2;
+}
 .nav-time {
 	height: 40px;
 	width: 280px;
