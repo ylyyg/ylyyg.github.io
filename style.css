@@ -23,23 +23,13 @@
 }
 .nav-logo {
 	height: 48px;
-	width: 48px;
+	width: 240px;
 	float: left;
 	margin: 12px 0;
 }
 .nav-logo img {
 	height: 48px;
-	width: 48px;
-}
-.nav-title {
-	height: 48px;
-	width: 200px;
-	float: left;
-	margin: 12px 0 12px 20px;
-	line-height: 48px;
-	font-size: 28px;
-	font-weight: bold;
-	color: #ff4e4e;
+	width: 240px;
 }
 .nav-menu {
 	height: 48px;
