@@ -41,6 +41,6 @@ function time(){
 			flag="星期日 / 日曜日";
 			break;
 	}
-	document.getElementById("chilk").innerHTML=year+"年"+month+"月"+date+"日"+"&nbsp;"+hh+":"+mm+":"+ss+"&nbsp;"+d+"&nbsp;"+flag;
+	document.getElementById("chilk").innerHTML=year+"年"+month+"月"+date+"日"+"&nbsp;"+hh+":"+mm+"&nbsp;"+d+"&nbsp;"+flag;
 }
 setInterval("time()",1000);
