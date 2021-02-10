@@ -275,8 +275,9 @@
 	background: #fff;
 	display: none;
 	position: absolute;
-	margin-top: -98px;
+	margin-top: -108px;
 	margin-left: -1px;
+	padding:5px 0;
 }
 .footer-language li ul li {
 	height: 32px;
