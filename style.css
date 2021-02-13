@@ -224,9 +224,9 @@
 }
 .footer-copyright {
 	height: 60px;
-	width: 1000px;
+	width: 800px;
 	float: left;
-	font-size: 14px;
+	font-size: 13px;
 	line-height: 60px;
 	text-align: left;
 	color: #888;
@@ -245,45 +245,24 @@
 	padding-right: 8px;
 }
 .footer-language {
-	height: 32px;
-	width: 120px;
+	height: 60px;
+	width: 300px;
 	float: right;
-	border: 1px solid #eee;
-	font-size: 14px;
+	font-size: 13px;
+	line-height: 60px;
+	text-align: right;
 	color: #888;
 	letter-spacing: 1px;
-	margin-top: 13px;
 }
-.footer-language li {
-	height: 32px;
-	width: 120px;
-	text-align: center;
-	line-height: 32px;
-	letter-spacing: 1px;
-}
-.footer-language li a {
+.footer-language a {
 	text-decoration: none;
 	color: #888;
 }
-.footer-language li:hover ul {
-	display: block;
-}
-.footer-language li ul {
-	height: 64px;
-	width: 120px;
-	border: 1px solid #eee;
-	background: #fff;
-	display: none;
-	position: absolute;
-	margin-top: -108px;
-	margin-left: -1px;
-	padding:5px 0;
-}
-.footer-language li ul li {
-	height: 32px;
-	width: 118px;
-	line-height: 32px;
-}
-.footer-language li ul li a:hover {
+.footer-language a:hover {
 	color: #ff4e4e;
+}
+.footer-language span {
+	color: #ddd;
+	padding-left: 8px;
+	padding-right: 8px;
 }
