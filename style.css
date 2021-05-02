@@ -10,7 +10,7 @@
 .navs {
 	height: 72px;
 	width: 100%;
-	background: rgba(255,255,255,0.9);
+	background: rgba(255,255,255,0.8);
 	backdrop-filter: saturate(180%) blur(6px);
 	top: 0;
 	left: 0;
