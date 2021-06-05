@@ -76,7 +76,7 @@
           <input type="button" class="search-btn-btn" value="微博搜索" onClick="weiboWeb()">
           <input type="button" class="search-btn-btn" value="微信搜索" title="搜狗微信搜索的搜索结果" onClick="weixinWeb()">
 		<input type="button" class="search-btn-btn" value="知乎搜索" onClick="zhihuWeb()">
-          <input type="button" class="search-btn-btn" value="聚投诉" onClick="jutousuWeb()">
+          <input type="button" class="search-btn-btn" value="bilibili搜索" onClick="bilibiliWeb()">
           <input type="button" class="search-btn-btn1" value="黑猫投诉" onClick="heimaoWeb()">
         </div>
       </div>
@@ -255,8 +255,8 @@ function zhihuWeb(){
 	window.open('https://www.zhihu.com/search?type=content&q=' + astext.value);
 }
 
-function jutousuWeb(){
-	window.open('https://ts.21cn.com/home/search?keyword=' + astext.value);
+function bilibiliWeb(){
+	window.open('https://search.bilibili.com/all?keyword=' + astext.value);
 }
 
 function heimaoWeb(){
