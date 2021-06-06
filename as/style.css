@@ -148,7 +148,7 @@
 }
 .link-main {
 	width: 1180px;
-	height: 250px;
+	height: 276px;
 	margin: auto;
 }
 .link-list {
@@ -187,22 +187,10 @@
 	display: block;
 	line-height: 32px;
 }
-.blackboard {
-	height: 30px;
-	width: 280px;
-	border-radius: 100px;
-	background: #f4f4f5;
-	font-size: 13px;
-	line-height: 30px;
-	margin: 40px auto 0;
-	text-align: center;
-	color: #444;
-	display:none;
-}
 .footer {
 	height: 30px;
 	width: 1000px;
-	margin: 60px auto 0;
+	margin: 35px auto 0;
 	font-size: 13px;
 	line-height: 30px;
 	text-align: center;
