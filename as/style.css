@@ -6,6 +6,7 @@
 	margin: 0;
 	list-style: none;
 	font-family: PingFang SC, Helvetica Neue, Helvetica, Microsoft YaHei, Hiragino Sans GB, Noto Sans CJK SC, WenQuanYi Micro Hei, Arial, sans-serif;
+	-webkit-appearance: none;
 }
 .nav {
 	height: 40px;
