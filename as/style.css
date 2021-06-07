@@ -45,10 +45,16 @@
 	color: #444;
 	margin-right: 15px;
 }
-.logo {
+.logo{
+	height:60px;
+	width: 100%;
+	min-width: 1180px;
+	margin: 45px auto 0;
+}
+.nav-logo {
 	height: 60px;
 	width: 240px;
-	margin: 45px auto 0;
+	margin:auto;
 }
 .content {
 	height: 382px;
