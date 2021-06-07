@@ -15,7 +15,8 @@
 }
 .nav-menu {
 	height: 40px;
-	width: 1180px;
+	width: 100%;
+	min-width: 1180px;
 }
 .nav-home{
 	height:40px;
