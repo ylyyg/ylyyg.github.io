@@ -300,8 +300,11 @@
 .footer-language a:hover {
 	color: #ff4e4e;
 }
-.footer-language span {
+.footer-language span.s1 {
 	color: #ddd;
 	padding-left: 8px;
 	padding-right: 8px;
+}
+.footer-language span.s2 {
+	color: #ddd;
 }
