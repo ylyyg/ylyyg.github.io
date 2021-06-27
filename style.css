@@ -75,11 +75,11 @@
 	font-size: 36px;
 	line-height: 100px;
 	font-weight: bold;
-	color: #fff;
+	color: #222;
 }
 .main-content span {
 	font-size: 22px;
-	color: #fff;
+	color: #666;
 }
 .main-by {
 	margin-top: 110px;
@@ -90,7 +90,7 @@
 	padding: 5px 10px;
 	line-height: 24px;
 	text-align: center;
-	background: rgba(255,255,255,0.3);
+	background: rgba(153,153,153,0.3);
 	backdrop-filter: saturate(180%) blur(6px);
 	border-radius: 3px;
 	letter-spacing: 1px;
