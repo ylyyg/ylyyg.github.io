@@ -72,7 +72,7 @@
 	padding-bottom: 5px;
 }
 .main {
-	height: 682px;
+	height: 940px;
 	width: 100%;
 	min-width: 1440px;
 	background: url(images/main-photo.png) no-repeat;
@@ -80,14 +80,14 @@
 	overflow: hidden;
 }
 .main-middle {
-	height: 682px;
+	height: 940px;
 	width: 1440px;
 	margin: auto;
 }
 .main-content {
 	height: 300px;
 	width: 800px;
-	margin: 227px 0 0 0;
+	margin: 345px 0 0 0;
 	font-size: 36px;
 	line-height: 100px;
 	font-weight: bold;
