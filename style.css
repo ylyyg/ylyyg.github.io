@@ -36,14 +36,16 @@
 	margin: auto;
 }
 .nav-logo {
-	height: 48px;
+	height: 72px;
 	width: 240px;
 	float: left;
-	margin: 12px 0;
+	line-height: 72px;
+	font-size: 26px;
+	font-weight: bold;
 }
-.nav-logo img {
-	height: 48px;
-	width: 240px;
+.nav-logo a {
+	text-decoration: none;
+	color: #000;
 }
 .nav-menu {
 	height: 48px;
