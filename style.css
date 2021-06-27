@@ -85,6 +85,7 @@
 	margin-top: 110px;
 	position: absolute;
 	z-index: 2;
+	display: none;
 }
 .main-by a {
 	padding: 5px 10px;
