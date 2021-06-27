@@ -5,8 +5,21 @@
 	padding: 0;
 	margin: 0;
 	list-style: none;
-	font-family: PingFang SC, Helvetica Neue, Helvetica, Microsoft YaHei, Hiragino Sans GB, Noto Sans CJK SC, WenQuanYi Micro Hei, Arial, sans-serif;
+	font-family: HarmonyOS-Sans, PingFang SC, Microsoft YaHei;
 	-webkit-appearance: none;
+}
+/*引入HarmonyOS Sans字体*/
+@font-face {
+	font-family: HarmonyOS-Sans;
+	font-weight: normal;
+	font-display: swap;
+	src: url(https://ylyyg.github.io/font/HarmonyOS-Sans-Regular.ttf);
+}
+@font-face {
+	font-family: HarmonyOS-Sans;
+	font-weight: bold;
+	font-display: swap;
+	src: url(https://ylyyg.github.io/font/HarmonyOS-Sans-Bold.ttf);
 }
 .nav {
 	height: 40px;
@@ -171,7 +184,7 @@
 .link-list a {
 	text-decoration: none;
 	color: #222;
-	padding-left: 18px;
+	padding-left: 17px;
 }
 .link-list a:hover {
 	color: #4e6ef2;
