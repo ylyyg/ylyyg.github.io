@@ -5,7 +5,20 @@
 	padding: 0;
 	margin: 0;
 	list-style: none;
-	font-family: PingFang SC, Helvetica Neue, Helvetica, Microsoft YaHei, Hiragino Sans GB, Noto Sans CJK SC, WenQuanYi Micro Hei, Arial, sans-serif;
+	font-family: HarmonyOS-Sans, PingFang SC, Microsoft YaHei;
+}
+/*引入HarmonyOS Sans字体*/
+@font-face {
+	font-family: HarmonyOS-Sans;
+	font-weight: normal;
+	font-display: swap;
+	src: url(font/HarmonyOS-Sans-Regular.ttf);
+}
+@font-face {
+	font-family: HarmonyOS-Sans;
+	font-weight: bold;
+	font-display: swap;
+	src: url(font/HarmonyOS-Sans-Bold.ttf);
 }
 .navs {
 	height: 72px;
@@ -48,7 +61,7 @@
 }
 .nav-menu li a {
 	text-decoration: none;
-	color: #444;
+	color: #000;
 }
 .nav-menu li a:hover {
 	border-bottom: 4px solid #ff4e4e;
