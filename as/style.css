@@ -166,6 +166,9 @@
 	cursor: pointer;
 	letter-spacing: 0.5px;
 }
+.search-btn-btn:hover {
+	color: #4e6ef2;
+}
 .search-btn-btn1 {
 	height: 36px;
 	width: 100px;
@@ -178,6 +181,9 @@
 	color: #222;
 	cursor: pointer;
 	letter-spacing: 0.5px;
+}
+.search-btn-btn1:hover {
+	color: #4e6ef2;
 }
 .link-main {
 	width: 1180px;
