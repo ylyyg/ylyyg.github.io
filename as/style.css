@@ -40,6 +40,7 @@
 	text-align: left;
 	color: #444;
 	margin-left: 15px;
+	letter-spacing: 0.5px;
 }
 .nav-home a{
 	text-decoration:none;
@@ -57,6 +58,7 @@
 	text-align: right;
 	color: #444;
 	margin-right: 15px;
+	letter-spacing: 0.5px;
 }
 .logo{
 	height:60px;
@@ -67,7 +69,13 @@
 .nav-logo {
 	height: 60px;
 	width: 240px;
-	margin:auto;
+	margin: auto;
+	font-size: 26px;
+	color: #4e6ef2;
+	line-height: 60px;
+	text-align: center;
+	font-weight: bold;
+	letter-spacing: 0.5px;
 }
 .content {
 	height: 382px;
@@ -98,6 +106,7 @@
 	background: #fff;
 	font-size: 15px;
 	float: left;
+	letter-spacing: 0.5px;
 }
 .search-btn-bd {
 	height: 46px;
@@ -110,6 +119,7 @@
 	float: left;
 	border-radius: 0 5px 5px 0;
 	cursor: pointer;
+	letter-spacing: 0.5px;
 }
 .search-btn-main {
 	height: 276px;
@@ -135,6 +145,7 @@
 	color: #4e6ef2;
 	float: left;
 	font-weight: bold;
+	letter-spacing: 0.5px;
 }
 .search-btn-content {
 	height: 60px;
@@ -153,6 +164,7 @@
 	font-size: 14px;
 	color: #222;
 	cursor: pointer;
+	letter-spacing: 0.5px;
 }
 .search-btn-btn1 {
 	height: 36px;
@@ -165,6 +177,7 @@
 	font-size: 14px;
 	color: #222;
 	cursor: pointer;
+	letter-spacing: 0.5px;
 }
 .link-main {
 	width: 1180px;
@@ -180,6 +193,7 @@
 	border-radius: 5px;
 	margin: 0 15px 0 15px;
 	padding: 10px 15px 10px 15px;
+	letter-spacing: 0.5px;
 }
 .link-list a {
 	text-decoration: none;
@@ -197,6 +211,7 @@
 	font-weight: bold;
 	display: block;
 	line-height: 32px;
+	letter-spacing: 0.5px;
 }
 .link-list span.s2 {
 	height: 32px;
@@ -206,6 +221,7 @@
 	font-weight: bold;
 	display: block;
 	line-height: 32px;
+	letter-spacing: 0.5px;
 }
 .footer {
 	height: 30px;
@@ -215,6 +231,7 @@
 	line-height: 30px;
 	text-align: center;
 	color: #999;
+	letter-spacing: 0.5px;
 }
 .footer a{
 	text-decoration: none;
