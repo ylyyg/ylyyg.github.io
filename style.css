@@ -12,13 +12,13 @@
 	font-family: HarmonyOS-Sans;
 	font-weight: normal;
 	font-display: swap;
-	src: url(font/HarmonyOS-Sans-Regular.ttf);
+	src: url(fonts/HarmonyOS-Sans-Regular.ttf);
 }
 @font-face {
 	font-family: HarmonyOS-Sans;
 	font-weight: bold;
 	font-display: swap;
-	src: url(font/HarmonyOS-Sans-Bold.ttf);
+	src: url(fonts/HarmonyOS-Sans-Bold.ttf);
 }
 .navs {
 	height: 72px;
