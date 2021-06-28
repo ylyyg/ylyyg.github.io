@@ -14,13 +14,13 @@
 	font-family: HarmonyOS-Sans;
 	font-weight: normal;
 	font-display: swap;
-	src: url(https://ylyyg.github.io/font/HarmonyOS-Sans-Regular.ttf);
+	src: url(https://ylyyg.github.io/fonts/HarmonyOS-Sans-Regular.ttf);
 }
 @font-face {
 	font-family: HarmonyOS-Sans;
 	font-weight: bold;
 	font-display: swap;
-	src: url(https://ylyyg.github.io/font/HarmonyOS-Sans-Bold.ttf);
+	src: url(https://ylyyg.github.io/fonts/HarmonyOS-Sans-Bold.ttf);
 }
 /*HarmonyOS Sans字体引入结束*/
 .nav {
