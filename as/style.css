@@ -1,6 +1,7 @@
 @charset "utf-8";
 /* CSS Document */
 
+/*v22.1，更新时间：2021.06.28*/
 * {
 	padding: 0;
 	margin: 0;
@@ -21,6 +22,7 @@
 	font-display: swap;
 	src: url(https://ylyyg.github.io/font/HarmonyOS-Sans-Bold.ttf);
 }
+/*字体引入结束*/
 .nav {
 	height: 40px;
 	width: 100%;
@@ -167,7 +169,7 @@
 	letter-spacing: 0.5px;
 }
 .search-btn-btn:hover {
-	color: #4e6ef2;
+	background: #eee;
 }
 .search-btn-btn1 {
 	height: 36px;
@@ -183,7 +185,7 @@
 	letter-spacing: 0.5px;
 }
 .search-btn-btn1:hover {
-	color: #4e6ef2;
+	background: #eee;
 }
 .link-main {
 	width: 1180px;
