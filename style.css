@@ -7,7 +7,6 @@
 	list-style: none;
 	font-family: HarmonyOS-Sans, PingFang SC, Microsoft YaHei;
 }
-/*引入HarmonyOS Sans字体*/
 @font-face {
 	font-family: HarmonyOS-Sans;
 	font-weight: normal;
