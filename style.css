@@ -97,36 +97,9 @@
 	font-size: 22px;
 	color: #666;
 }
-.main-by {
-	margin-top: 110px;
+.main-point {
+	margin-top: 230px;
 	position: absolute;
-	z-index: 2;
-	display: none;
-}
-.main-by a {
-	padding: 5px 10px;
-	line-height: 24px;
-	text-align: center;
-	background: rgba(153,153,153,0.3);
-	backdrop-filter: saturate(180%) blur(6px);
-	border-radius: 3px;
-	letter-spacing: 1px;
-	color: #fff;
-	font-size: 13px;
-}
-.say {
-	height: 98px;
-	width: 1440px;
-	margin: 100px auto;
-}
-.say p {
-	line-height: 24px;
-	text-align: center;
-	font-size: 26px;
-	letter-spacing: 1px;
-	color: #222;
-	margin-top:50px;
-	font-weight: bold;
 }
 .box {
 	height: 600px;
@@ -271,6 +244,24 @@
 .box-right-bottom-btn a {
 	text-decoration: none;
 	color: #fff;
+}
+.bottom {
+	height: 400px;
+	width: 1440px;
+	margin: auto;
+	background: url(images/bottom-bg.png) no-repeat;
+}
+.bottom-say {
+	height: 120px;
+	width: 1440px;
+	margin: auto;
+	line-height: 60px;
+	text-align: center;
+	font-size: 26px;
+	letter-spacing: 1px;
+	color: #222;
+	font-weight: bold;
+	padding-top: 140px;
 }
 .footer {
 	height: 60px;
