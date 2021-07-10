@@ -66,9 +66,7 @@
 	color: #000;
 }
 .nav-menu li a:hover {
-	border-bottom: 4px solid #ff4e4e;
 	color: #ff4e4e;
-	padding-bottom: 5px;
 }
 .main {
 	height: 940px;
