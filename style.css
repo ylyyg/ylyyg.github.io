@@ -22,12 +22,7 @@
 .navs {
 	height: 72px;
 	width: 100%;
-	background: rgba(255,255,255,0.8);
-	backdrop-filter: saturate(180%) blur(20px);
-	top: 0;
-	left: 0;
-	position: fixed;
-	z-index: 999;
+	background: #fff;
 }
 .nav {
 	height: 72px;
@@ -49,17 +44,19 @@
 }
 .nav-menu {
 	height: 48px;
-	width: 480px;
-	margin: 12px 0;
-	float: right;
+	width: 600px;
+	float: left;
+	margin-left: 180px;
+	margin-top: 12px;
 }
 .nav-menu li {
 	height: 48px;
-	width: 160px;
+	width: 120px;
 	float: left;
-	text-align: right;
+	text-align: center;
 	line-height: 48px;
 	letter-spacing: 1px;
+	font-weight: bold;
 }
 .nav-menu li a {
 	text-decoration: none;
@@ -67,6 +64,12 @@
 }
 .nav-menu li a:hover {
 	color: #ff4e4e;
+}
+.nav-right {
+	height: 24px;
+	width: 24px;
+	float: right;
+	padding: 24px 0 24px 24px;
 }
 .main {
 	height: 940px;
@@ -84,7 +87,7 @@
 .main-content {
 	height: 300px;
 	width: 800px;
-	margin: 345px 0 0 0;
+	margin: 272px 0 0 0;
 	font-size: 36px;
 	line-height: 100px;
 	font-weight: bold;
@@ -273,12 +276,12 @@
 	font-size: 13px;
 	line-height: 60px;
 	text-align: left;
-	color: #888;
+	color: #999;
 	letter-spacing: 1px;
 }
 .footer-copyright a {
 	text-decoration: none;
-	color: #888;
+	color: #999;
 }
 .footer-copyright a:hover {
 	color: #ff4e4e;
@@ -295,12 +298,12 @@
 	font-size: 13px;
 	line-height: 60px;
 	text-align: right;
-	color: #888;
+	color: #999;
 	letter-spacing: 1px;
 }
 .footer-language a {
 	text-decoration: none;
-	color: #888;
+	color: #999;
 }
 .footer-language a:hover {
 	color: #ff4e4e;
