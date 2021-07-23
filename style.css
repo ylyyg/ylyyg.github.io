@@ -31,7 +31,7 @@
 }
 .nav-logo {
 	height: 72px;
-	width: 240px;
+	width: 230px;
 	float: left;
 	line-height: 72px;
 	font-size: 26px;
@@ -46,7 +46,6 @@
 	height: 48px;
 	width: 600px;
 	float: left;
-	margin-left: 180px;
 	margin-top: 12px;
 }
 .nav-menu li {
