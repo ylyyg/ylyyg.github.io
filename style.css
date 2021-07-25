@@ -245,7 +245,6 @@
 	font-weight: bold;
 	letter-spacing: 1.5px;
 	border-radius: 5px;
-	margin: left;
 	float: left;
 }
 .column-box-content-btn2 {
@@ -258,7 +257,6 @@
 	font-weight: bold;
 	letter-spacing: 1.5px;
 	border-radius: 5px;
-	margin: left;
 	float: left;
 }
 .column-box-content-btn3 {
@@ -271,7 +269,6 @@
 	font-weight: bold;
 	letter-spacing: 1.5px;
 	border-radius: 5px;
-	margin: left;
 	float: left;
 	margin-left: 24px;
 }
