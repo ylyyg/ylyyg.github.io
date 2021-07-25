@@ -358,16 +358,16 @@
 .column-box-msg-list1 {
 	height: 168px;
 	width: 588px;
-	background: #f9f9f9;
-	border: 1px solid #ddd;
+	background: #fff;
+	border: 1px solid #eee;
 	padding: 20px;
 	border-radius: 10px;
 }
 .column-box-msg-list2 {
 	height: 168px;
 	width: 588px;
-	background: #f9f9f9;
-	border: 1px solid #ddd;
+	background: #fff;
+	border: 1px solid #eee;
 	padding: 20px;
 	border-radius: 10px;
 	margin-top: 60px;
@@ -427,7 +427,7 @@
 	height: 16px;
 	width: 588px;
 	float: left;
-	border-top: 1px solid #ddd;
+	border-top: 1px solid #eee;
 	padding-top: 20px;
 }
 .column-box-msg-list-info-icon {
