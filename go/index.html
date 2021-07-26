@@ -3,8 +3,6 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"/>
-<meta name="description" content="MPGO新媒体，一个新媒体平台与编辑工具聚合导航网站。" />
-<meta name="keywords" content="mpgo,mpgo新媒体,mpgo导航,新媒体,自媒体,媒体人,新媒体导航,自媒体导航,新媒体助手,自媒体助手" />
 <title>MPGO新媒体 - 新媒体平台聚合导航</title>
 <link rel="shortcut icon" href="images/favicon.ico" />
 <link rel="stylesheet" type="text/css" href="go-main.css" />
@@ -43,27 +41,11 @@
 <div class="search-bg">
   <div class="nav2">
     <div class="search">
-      <form onsubmit="return baiduWithHttps(this)" action="http://www.baidu.com/baidu" target="_blank">
-        <input name="tn" type="hidden" value="mpgo">
-        <input type="text"  onfocus="checkHttps" name="word"  size="30" autocomplete="off" class="search-bd1" placeholder="网页搜索">
-        <input type="submit" class="search-bd2" value="百度一下">
+   <form name="mpgo-form" target="_blank">
+        <input type="text" name="" style="display:none;">
+        <input type="text" id="mpgotext" class="search-bd1" autocomplete="off" placeholder="网页搜索" onKeyUp="enterSearch()">
+        <input type="button" class="search-bd2" value="百度一下" onClick="baiduWeb()">
       </form>
-      <script src="http://s1.bdstatic.com/r/www/cache/global/js/BaiduHttps_20150714_zhanzhang.js"></script> 
-      <script>
-    function checkHttps () {
-        BaiduHttps.useHttps();    
-    };
-    function baiduWithHttps (formname) {
-        var data = BaiduHttps.useHttps();
-        if (data.s === 0) {
-            return true;
-        }
-        else {
-            formname.action = 'https://www.baidu.com/baidu' + '?ssl_s=1&ssl_c' + data.ssl_code;
-            return true;
-        }
-    };
-</script> 
     </div>
     <div class="search-abc"><a href="https://www.so.com/" target="_blank">360搜索</a><span>丨</span><a href="https://www.sogou.com/" target="_blank">搜狗搜索</a><span>丨</span><a href="http://www.chinaso.com/" target="_blank">中国搜索</a><span>丨</span><a href="http://s.weibo.com/" target="_blank">微博搜索</a><span>丨</span><a href="https://www.toutiao.com/search/" target="_blank">头条搜索</a><span>丨</span><a href="https://s.taobao.com/" target="_blank">淘宝搜索</a><span>丨</span><a href="http://weixin.sogou.com/" target="_blank">微信搜索</a><span>丨</span><a href="http://zhihu.sogou.com/" target="_blank">知乎搜索</a></div>
   </div>
@@ -377,6 +359,17 @@
     <p>Copyright &copy; 2017 - 2021 <a href="#" target="_blank">RML.</a> All Rights Reserved.</p>
   </div>
 </div>
+<script>
+function enterSearch(){
+	if (window.event.keyCode === 13) {
+		baiduWeb();
+	}
+}
+
+function baiduWeb(){
+	window.open('https://www.baidu.com/s?wd=' + mpgotext.value);
+}
+</script>
 <!--版权所有，保留所有权利-->
 </body>
 </html>
