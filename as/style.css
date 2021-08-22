@@ -51,7 +51,7 @@
 	color: #444;
 }
 .nav-home:hover {
-	background: url(https://ylyyg.github.io/images/as-about.svg) no-repeat;
+	background: url(https://ylyyg.github.io/images/as-inhome.svg) no-repeat;
 }
 .nav-home a:hover {
 	color: #4e6ef2;
@@ -66,7 +66,7 @@
 	color: #444;
 	margin: 12px 0 12px 25px;
 	letter-spacing: 0.5px;
-	background: url(as-about.svg) no-repeat;
+	background: url(https://ylyyg.github.io/images/as-about.svg) no-repeat;
 	padding-left: 20px;
 }
 .nav-about a {
