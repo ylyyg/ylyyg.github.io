@@ -1,0 +1,394 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"/>
+<title>关于AppSearch - (^_−)☆嘻嘻嘻~</title>
+<style>
+* {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+	font-family: HarmonyOS-Sans, PingFang SC, Microsoft YaHei;
+	-webkit-appearance: none;
+}
+@font-face {
+	font-family: HarmonyOS-Sans;
+	font-weight: normal;
+	font-display: swap;
+	src: url(https://ylyyg.github.io/fonts/HarmonyOS-Sans-Regular.ttf);
+}
+@font-face {
+	font-family: HarmonyOS-Sans;
+	font-weight: bold;
+	font-display: swap;
+	src: url(https://ylyyg.github.io/fonts/HarmonyOS-Sans-Bold.ttf);
+}
+body {
+	background: #d3dde6;
+}
+.nav {
+	height: 60px;
+	width: 710px;
+	padding: 0px 20px 0 20px;
+	margin: auto;
+}
+.nav-icon {
+	height: 20px;
+	width: 20px;
+	float: left;
+	padding: 20px 8px 20px 0;
+}
+.nav-title {
+	height: 60px;
+	width: auto;
+	float: left;
+	line-height: 60px;
+	font-size: 16px;
+	font-weight: bold;
+	letter-spacing: 1px;
+	color: #000;
+}
+.poster {
+	height: 160px;
+	width: 710px;
+	margin: 20px auto 40px;
+	padding: 0 20px 0 20px;
+}
+.poster-title {
+	height: 120px;
+	width: 510px;
+	line-height: 120px;
+	font-size: 40px;
+	color: #000;
+	font-weight: bold;
+	float: left;
+	letter-spacing: 1px;
+}
+.poster-title span {
+	height: 40px;
+	width: 510px;
+	line-height: 40px;
+	font-size: 16px;
+	font-weight: bold;
+	display: block;
+	color: #555;
+	letter-spacing: 1px;
+}
+.poster-pic {
+	height: 200px;
+	width: 200px;
+	float: left;
+	margin-top: -20px;
+}
+.poster-pic img {
+	height: 200px;
+	width: 200px;
+}
+.box1 {
+	height: auto;
+	width: 750px;
+	margin: 20px auto 0;
+}
+.box2 {
+	height: auto;
+	width: 710px;
+	border-radius: 10px;
+	background: #fff;
+	padding: 0 20px;
+}
+.box3 {
+	padding-left: 30px;
+}
+.box-list1 {
+	height: 60px;
+	width: 710px;
+	border-bottom: 1px solid #e0e9f2;
+	letter-spacing: 1px;
+}
+.box-list2 {
+	height: 60px;
+	width: 710px;
+	letter-spacing: 1px;
+}
+.box-list-title {
+	height: 60px;
+	width: 200px;
+	line-height: 60px;
+	font-size: 16px;
+	float: left;
+}
+.box-list-title img {
+	height: 20px;
+	width: 20px;
+	margin: 20px 10px 20px 0;
+	display: block;
+	float: left;
+}
+.box-list-content {
+	height: 60px;
+	width: 510px;
+	line-height: 60px;
+	font-size: 16px;
+	float: left;
+	text-align: right;
+}
+.box-list-content span {
+	color: #999;
+}
+.box-list-contents1 {
+	height: auto;
+	width: 680px;
+	font-size: 16px;
+	text-align: left;
+	border-bottom: 1px solid #e0e9f2;
+	letter-spacing: 1px;
+	padding-bottom: 16px;
+}
+.box-list-contents1 p {
+	margin-top: 16px;
+}
+.box-list-contents2 {
+	height: auto;
+	width: 680px;
+	font-size: 16px;
+	text-align: left;
+	letter-spacing: 1px;
+	padding-bottom: 16px;
+}
+.box-list-contents2 p {
+	margin-top: 16px;
+}
+.footer {
+	height: 60px;
+	width: 750px;
+	font-size: 14px;
+	text-align: center;
+	line-height: 60px;
+	color: #999;
+	margin: 20px auto;
+	letter-spacing: 1px;
+}
+.footer span {
+	color: #999;
+	padding-left: 8px;
+	padding-right: 8px;
+}
+
+/*mobile*/
+
+@media only screen and (max-width:779px) {
+.nav {
+	height: 60px;
+	width: 100%;
+	padding: 0px 20px 0 20px;
+	margin: auto;
+	box-sizing: border-box;
+}
+.nav-icon {
+	height: 20px;
+	width: 20px;
+	float: left;
+	padding: 20px 8px 20px 0;
+}
+.nav-title {
+	height: 60px;
+	width: auto;
+	float: left;
+	line-height: 60px;
+	font-size: 15px;
+	font-weight: bold;
+	letter-spacing: 1px;
+}
+.poster {
+	height: 120px;
+	width: 100%;
+	margin: 20px auto 40px;
+	padding: 0 20px 0 20px;
+	box-sizing: border-box;
+}
+.poster-title {
+	height: 80px;
+	width: 100%;
+	line-height: 80px;
+	font-size: 28px;
+	letter-spacing: 1px;
+	color: #000;
+	font-weight: bold;
+	float: left;
+}
+.poster-title span {
+	height: 40px;
+	width: 100%;
+	line-height: 40px;
+	font-size: 12px;
+	font-weight: bold;
+	display: block;
+	color: #555;
+	letter-spacing: 1px;
+}
+.poster-pic {
+	display: none;
+}
+.box1 {
+	height: auto;
+	width: 100%;
+	padding: 0 15px 0 15px;
+	box-sizing: border-box;
+}
+.box2 {
+	height: auto;
+	width: 100%;
+	border-radius: 10px;
+	background: #fff;
+	box-sizing: border-box;
+	padding: 0 15px;
+}
+.box3 {
+	padding-left: 30px;
+}
+.box-list1 {
+	height: 60px;
+	width: 100%;
+	border-bottom: 1px solid #e0e9f2;
+	letter-spacing: 1px;
+	box-sizing: border-box;
+}
+.box-list2 {
+	height: 60px;
+	width: 100%;
+	letter-spacing: 1px;
+	box-sizing: border-box;
+}
+.box-list-title {
+	height: 60px;
+	width: 40%;
+	line-height: 60px;
+	font-size: 15px;
+	float: left;
+}
+.box-list-title img {
+	height: 20px;
+	width: 20px;
+	margin: 20px 10px 20px 0;
+	display: block;
+	float: left;
+}
+.box-list-content {
+	height: 60px;
+	width: 60%;
+	line-height: 60px;
+	font-size: 15px;
+	float: left;
+	text-align: right;
+}
+.box-list-content span {
+	color: #999;
+}
+.box-list-contents1 {
+	height: auto;
+	width: 100%;
+	font-size: 15px;
+	text-align: left;
+	border-bottom: 1px solid #e0e9f2;
+	letter-spacing: 1px;
+	padding-bottom: 16px;
+	box-sizing: border-box;
+}
+.box-list-contents1 p {
+	margin-top: 16px;
+}
+.box-list-contents2 {
+	height: auto;
+	width: 100%;
+	font-size: 15px;
+	text-align: left;
+	letter-spacing: 1px;
+	padding-bottom: 16px;
+	box-sizing: border-box;
+}
+.box-list-contents2 p {
+	margin-top: 16px;
+}
+.footer {
+	height: 40px;
+	width: 100%;
+	font-size: 12px;
+	text-align: center;
+	line-height: 40px;
+	color: #999;
+	margin: 20px auto;
+	letter-spacing: 1px;
+}
+.footer span {
+	color: #999;
+	padding-left: 8px;
+	padding-right: 8px;
+}
+}
+</style>
+</head>
+<body>
+<div class="nav"> <a href="https://ylyyg.github.io/as/" target="_blank">
+  <div class="nav-icon"><img src="images/me-back.svg"></div>
+  <div class="nav-title">返回APP SEARCH</div>
+  </a> </div>
+<div class="poster">
+  <div class="poster-title">ABOUT APP SEARCH<span>APP SEARCH是一个APP查询与快捷访问聚合网站</span></div>
+  <div class="poster-pic"><img src="images/me-bg.svg"></div>
+</div>
+<div class="box1">
+  <div class="box2">
+    <div class="box-list1">
+      <div class="box-list-title"><img src="images/me-author.svg">Designed</div>
+      <div class="box-list-content">RUMENGLING</div>
+    </div>
+    <div class="box-list1">
+      <div class="box-list-title"><img src="images/me-firsttime.svg">首次上线</div>
+      <div class="box-list-content">2018.04.01</div>
+    </div>
+    <div class="box-list1">
+      <div class="box-list-title"><img src="images/me-newtime.svg">更新时间</div>
+      <div class="box-list-content">2021.08.22</div>
+    </div>
+    <div class="box-list2">
+      <div class="box-list-title"><img src="images/me-version.svg">最新版本</div>
+      <div class="box-list-content">v23.0</div>
+    </div>
+  </div>
+</div>
+<div class="box1">
+  <div class="box2">
+    <div class="box-list1">
+      <div class="box-list-title"><img src="images/me-cn.svg">中文字体</div>
+      <div class="box-list-content">PingFang</div>
+    </div>
+    <div class="box-list2">
+      <div class="box-list-title"><img src="images/me-en.svg">英文字体</div>
+      <div class="box-list-content">HarmonyOS Sans</div>
+    </div>
+  </div>
+</div>
+<div class="box1">
+  <div class="box2">
+    <div class="box-list1">
+      <div class="box-list-title"><img src="images/me-logs.svg">更新日志</div>
+      <div class="box-list-content"></div>
+    </div>
+    <div class="box3">
+      <div class="box-list-contents1">
+        <p>v23.1 - 2021.08.26</p>
+        <p>1. 顶部导航新增关于本站栏目</p>
+      </div>
+      <div class="box-list-contents2">
+        <p>v23.0 - 2021.08.22</p>
+        <p>1. 顶部导航返回主站新增栏目ICON</p>
+        <p>2. 主搜索区域Button圆角优化</p>
+        <p>3. 资质查询区域更新新链接</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="footer"> &copy; 2018 - 2021 <span>/</span> Designed by RML. </div>
+</body>
+</html>
