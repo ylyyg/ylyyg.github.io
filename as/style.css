@@ -1,7 +1,7 @@
 @charset "utf-8";
 /* CSS Document */
 
-/*版本号：v23.0，更新时间：2021.08.22*/
+/*版本号：v23.2，更新时间：2021.08.28*/
 * {
 	padding: 0;
 	margin: 0;
@@ -33,51 +33,28 @@
 	width: 100%;
 	min-width: 1180px;
 }
-.nav-home {
-	height: 16px;
-	width: 62px;
+.nav-home{
+	height:40px;
+	width:200px;
 	font-size: 14px;
 	float: left;
-	line-height: 16px;
+	line-height: 40px;
 	text-align: left;
 	color: #444;
-	margin: 12px 0 12px 15px;
+	margin-left: 15px;
 	letter-spacing: 0.5px;
-	background: url(https://ylyyg.github.io/images/as-home.svg) no-repeat;
-	padding-left: 20px;
 }
-.nav-home a {
-	text-decoration: none;
-	color: #444;
+.nav-home a{
+	text-decoration:none;
+	color:#444;
 }
-.nav-home:hover {
-	background: url(https://ylyyg.github.io/images/as-inhome.svg) no-repeat;
+.nav-home a:hover{
+	color:#4e6ef2;
 }
-.nav-home a:hover {
-	color: #4e6ef2;
-}
-.nav-about {
-	height: 16px;
-	width: 62px;
-	font-size: 14px;
-	float: left;
-	line-height: 16px;
-	text-align: left;
-	color: #444;
-	margin: 12px 0 12px 25px;
-	letter-spacing: 0.5px;
-	background: url(https://ylyyg.github.io/images/as-about.svg) no-repeat;
-	padding-left: 20px;
-}
-.nav-about a {
-	text-decoration: none;
-	color: #444;
-}
-.nav-about:hover {
-	background: url(https://ylyyg.github.io/images/as-inabout.svg) no-repeat;
-}
-.nav-about a:hover {
-	color: #4e6ef2;
+.nav-home span {
+	color: #ddd;
+	padding-left: 5px;
+	padding-right: 5px;
 }
 .nav-time {
 	height: 40px;
