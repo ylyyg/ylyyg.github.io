@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <title>AppSearch - (^_−)☆嘻嘻嘻~</title>
-<link rel="stylesheet" type="text/css" href="style.css?v=23.2" />
+<link rel="stylesheet" type="text/css" href="style.css?v=24.0" />
 <script src="https://ylyyg.github.io/static/widget-time.js" type="text/javascript"></script>
 </head>
 <body>
@@ -31,22 +31,22 @@
       <div class="search-btn-left">
         <div class="search-btn-title">&gt;&nbsp; 按应用名称</div>
         <div class="search-btn-content">
-          <input type="button" class="search-btn-btn" value="应用宝" onClick="yingyongbaoName()">
           <input type="button" class="search-btn-btn" value="华为市场" onClick="huaweiName()">
-          <input type="button" class="search-btn-btn" value="小米商店" onClick="xiaomiName()">
-          <input type="button" class="search-btn-btn" value="360市场" onClick="qihooName()">
-          <input type="button" class="search-btn-btn1" value="Google Play" onClick="googleplayName()">
+          <input type="button" class="search-btn-btn" value="vivo(七麦)" title="七麦数据的vivo搜索结果" onClick="qimaivivoName()">
+          <input type="button" class="search-btn-btn" value="OPPO(七麦)" title="七麦数据的OPPO搜索结果" onClick="qimaioppoName()">
+          <input type="button" class="search-btn-btn" value="小米(七麦)" title="七麦数据的小米搜索结果" onClick="qimaixiaomiName()">
+          <input type="button" class="search-btn-btn1" value="TapTap" onClick="taptapName()">
         </div>
       </div>
       <!--应用名称2-->
       <div class="search-btn-right">
         <div class="search-btn-title">&gt;&nbsp; 按应用名称</div>
         <div class="search-btn-content">
-          <input type="button" class="search-btn-btn" value="TapTap" onClick="taptapName()">
           <input type="button" class="search-btn-btn" value="豌豆荚" onClick="wandoujiaName()">
           <input type="button" class="search-btn-btn" value="百度助手" onClick="baiduName()">
+          <input type="button" class="search-btn-btn" value="360市场" onClick="qihooName()">
           <input type="button" class="search-btn-btn" value="酷传" onClick="kuchuanName()">
-          <input type="button" class="search-btn-btn1" value="OPPO(七麦)" title="七麦数据的OPPO搜索结果" onClick="qimaiName()">
+          <input type="button" class="search-btn-btn1" value="Google Play" onClick="googleplayName()">
         </div>
       </div>
       <!--应用包名-->
@@ -57,7 +57,7 @@
           <input type="button" class="search-btn-btn" value="Google Play" onClick="googleplayPackage()">
           <input type="button" class="search-btn-btn" value="豌豆荚" onClick="wandoujiaPackage()">
           <input type="button" class="search-btn-btn" value="酷传" title="酷传支持包名模糊查询" onClick="kuchuanName()">
-          <input type="button" class="search-btn-btn1" value="七麦" onClick="qimaiName()">
+          <input type="button" class="search-btn-btn1" value="七麦" onClick="qimaioppoName()">
         </div>
       </div>
       <!--资质信息-->
@@ -136,11 +136,11 @@
     <p><a href="http://www.pbc.gov.cn/zhengwugongkai/127924/128041/2951606/1923625/1923629/index.html" target="_blank">支付业务许可证</a></p>
     <p><a href="http://www.safe.gov.cn/safe/jyjywhywxkzdbxjyjgmd/index.html" target="_blank">经营外汇业务许可证</a></p>
     <p><a href="http://xkz.cbirc.gov.cn/jr/" target="_blank">金融许可证信息</a></p>
-<p><a href="http://www.nppa.gov.cn/nppa/channels/317.shtml" target="_blank">游戏审批结果</a></p>
+    <p><a href="http://www.nppa.gov.cn/nppa/channels/317.shtml" target="_blank">游戏审批结果</a></p>
     <p><a href="http://www.cgigc.com.cn/isbn/index.html?curPage=1" target="_blank">游戏版号</a></p>
   </div>
 </div>
-<div class="footer"> &copy;&nbsp; 2018 - 2021<span>/</span> Designed by RML. <span>/</span> v23.2 <span>/</span> 2021.08.28</div>
+<div class="footer"> &copy;&nbsp; 2018 - 2021<span>/</span> Designed by RML. <span>/</span> v24.0 <span>/</span> 2021.12.19 </div>
 
 <!--js部分--> 
 <script>
@@ -159,24 +159,20 @@ function baiduWeb(){
 
 //应用名称
 
-function yingyongbaoName(){
-	window.open('https://sj.qq.com/myapp/search.htm?kw=' + astext.value);
-}
-
 function huaweiName(){
-	window.open('https://appgallery1.huawei.com/#/search/' + astext.value);
+	window.open('https://appgallery.huawei.com/#/search/' + astext.value);
 }
 
-function xiaomiName(){
-	window.open('http://app.mi.com/search?keywords=' + astext.value);
+function qimaivivoName(){
+	window.open('https://www.qimai.cn/search/android/market/8/search/' + astext.value);
 }
 
-function qihooName(){
-	window.open('http://zhushou.360.cn/search/index/?kw=' + astext.value);
+function qimaioppoName(){
+	window.open('https://www.qimai.cn/search/android/market/9/search/' + astext.value);
 }
 
-function googleplayName(){
-	window.open('https://play.google.com/store/search?q=' + astext.value);
+function qimaixiaomiName(){
+	window.open('https://www.qimai.cn/search/android/market/4/search/' + astext.value);
 }
 
 function taptapName(){
@@ -191,12 +187,16 @@ function baiduName(){
 	window.open('https://shouji.baidu.com/s?wd=' + astext.value);
 }
 
+function qihooName(){
+	window.open('http://zhushou.360.cn/search/index/?kw=' + astext.value);
+}
+
 function kuchuanName(){
 	window.open('https://android.kuchuan.com/page/detail/searchResult?kw=' + astext.value);
 }
 
-function qimaiName(){
-	window.open('https://www.qimai.cn/search/android/market/9/search/' + astext.value);
+function googleplayName(){
+	window.open('https://play.google.com/store/search?q=' + astext.value);
 }
 
 //应用包名
