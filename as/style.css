@@ -1,0 +1,260 @@
+@charset "utf-8";
+/* CSS Document */
+
+/*版本号：v23.2，更新时间：2021.08.28*/
+* {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+	font-family: HarmonyOS-Sans, PingFang SC, Microsoft YaHei;
+	-webkit-appearance: none;
+}
+/*引入HarmonyOS Sans字体*/
+@font-face {
+	font-family: HarmonyOS-Sans;
+	font-weight: normal;
+	font-display: swap;
+	src: url(https://ylyyg.github.io/fonts/HarmonyOS-Sans-Regular.ttf);
+}
+@font-face {
+	font-family: HarmonyOS-Sans;
+	font-weight: bold;
+	font-display: swap;
+	src: url(https://ylyyg.github.io/fonts/HarmonyOS-Sans-Bold.ttf);
+}
+/*HarmonyOS Sans字体引入结束*/
+.nav {
+	height: 40px;
+	width: 100%;
+	min-width: 1180px;
+}
+.nav-menu {
+	height: 40px;
+	width: 100%;
+	min-width: 1180px;
+}
+.nav-home{
+	height:40px;
+	width:200px;
+	font-size: 14px;
+	float: left;
+	line-height: 40px;
+	text-align: left;
+	color: #444;
+	margin-left: 15px;
+	letter-spacing: 0.5px;
+}
+.nav-home a{
+	text-decoration:none;
+	color:#444;
+}
+.nav-home a:hover{
+	color:#4e6ef2;
+}
+.nav-home span {
+	color: #ddd;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+.nav-time {
+	height: 40px;
+	width: 300px;
+	font-size: 14px;
+	float: right;
+	line-height: 40px;
+	text-align: right;
+	color: #444;
+	margin-right: 15px;
+	letter-spacing: 0.5px;
+}
+.logo{
+	height:60px;
+	width: 100%;
+	min-width: 1180px;
+	margin: 45px auto 0;
+}
+.nav-logo {
+	height: 60px;
+	width: 240px;
+	margin: auto;
+	font-size: 26px;
+	color: #4e6ef2;
+	line-height: 60px;
+	text-align: center;
+	font-weight: bold;
+	letter-spacing: 0.5px;
+}
+.content {
+	height: 382px;
+	width: 1180px;
+	margin: 30px auto 0;
+}
+.search-main {
+	height: auto;
+	width: 1180px;
+	margin: 0px auto 0;
+}
+.search-bar {
+	height: 46px;
+	width: 700px;
+	margin: auto;
+}
+.search-text {
+	height: 42px;
+	width: 560px;
+	padding-left: 15px;
+	padding-right: 15px;
+	outline: none;
+	border-left: 2px solid #4e6ef2;
+	border-top: 2px solid #4e6ef2;
+	border-bottom: 2px solid #4e6ef2;
+	border-right: 0;
+	border-radius: 5px 0 0 5px;
+	background: #fff;
+	font-size: 15px;
+	float: left;
+	letter-spacing: 0.5px;
+}
+.search-btn-bd {
+	height: 46px;
+	width: 108px;
+	background: #4e6ef2;
+	outline: none;
+	color: #fff;
+	font-size: 15px;
+	border: 1px solid #4e6ef2;
+	float: left;
+	border-radius: 0 5px 5px 0;
+	cursor: pointer;
+	letter-spacing: 0.5px;
+}
+.search-btn-main {
+	height: 276px;
+	width: 1180px;
+	margin: 40px auto 20px;
+}
+.search-btn-left {
+	height: 92px;
+	width: 560px;
+	float: left;
+	margin: 0 15px 0 15px;
+}
+.search-btn-right {
+	height: 92px;
+	width: 560px;
+	float: left;
+	margin: 0 15px 0 15px;
+}
+.search-btn-title {
+	height: 32px;
+	width: 560px;
+	font-size: 14px;
+	color: #4e6ef2;
+	float: left;
+	font-weight: bold;
+	letter-spacing: 0.5px;
+}
+.search-btn-content {
+	height: 60px;
+	width: 560px;
+	float: left;
+}
+.search-btn-btn {
+	height: 36px;
+	width: 100px;
+	float: left;
+	margin-right: 15px;
+	background: #f2f4f6;
+	border: 0;
+	border-radius: 5px;
+	outline: none;
+	font-size: 14px;
+	color: #222;
+	cursor: pointer;
+	letter-spacing: 0.5px;
+}
+.search-btn-btn:hover {
+	background: #eee;
+}
+.search-btn-btn1 {
+	height: 36px;
+	width: 100px;
+	float: left;
+	background: #f2f4f6;
+	border: 0;
+	border-radius: 5px;
+	outline: none;
+	font-size: 14px;
+	color: #222;
+	cursor: pointer;
+	letter-spacing: 0.5px;
+}
+.search-btn-btn1:hover {
+	background: #eee;
+}
+.link-main {
+	width: 1180px;
+	height: 276px;
+	margin: auto;
+}
+.link-list {
+	width: 235px;
+	float: left;
+	font-size: 14px;
+	line-height: 32px;
+	background: #f2f4f6;
+	border-radius: 5px;
+	margin: 0 15px 0 15px;
+	padding: 10px 15px 10px 15px;
+	letter-spacing: 0.5px;
+}
+.link-list a {
+	text-decoration: none;
+	color: #222;
+	padding-left: 17px;
+}
+.link-list a:hover {
+	color: #4e6ef2;
+}
+.link-list span.s1 {
+	height: 32px;
+	width: 190px;
+	font-size: 14px;
+	color: #4e6ef2;
+	font-weight: bold;
+	display: block;
+	line-height: 32px;
+	letter-spacing: 0.5px;
+}
+.link-list span.s2 {
+	height: 32px;
+	width: 190px;
+	font-size: 14px;
+	color: #4e6ef2;
+	font-weight: bold;
+	display: block;
+	line-height: 32px;
+	letter-spacing: 0.5px;
+}
+.footer {
+	height: 30px;
+	width: 1180px;
+	margin: 35px auto 0;
+	font-size: 13px;
+	line-height: 30px;
+	text-align: center;
+	color: #999;
+	letter-spacing: 0.5px;
+}
+.footer a{
+	text-decoration: none;
+	color: #999;
+}
+.footer a:hover{
+	color: #4e6ef2;
+}
+.footer span {
+	color: #ddd;
+	padding-left: 8px;
+	padding-right: 8px;
+}
