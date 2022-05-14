@@ -1,0 +1,375 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"/>
+<title>MPGO新媒体 - 新媒体平台聚合导航</title>
+<link rel="shortcut icon" href="images/favicon.ico" />
+<link rel="stylesheet" type="text/css" href="go-main.css" />
+<script src="https://ylyyg.github.io/static/widget-time.js" type="text/javascript"></script>
+</head>
+<body>
+<!--2021.07.26 V9.0-->
+<!--版权所有，保留所有权利-->
+<div class="nav-bg">
+  <div class="nav1">
+    <div class="logo"> <a href="#"><img src="images/logo.png"/></a></div>
+    <div class="search-mobile"><a href="https://www.baidu.com/" target="_blank">百度搜索</a></div>
+    <div class="time">
+      <div id="chilk"></div>
+    </div>
+    <div class="icon-nav"> <a href="http://email.163.com/" target="_blank">
+      <div class="icon-netease-mail">邮箱</div>
+      </a> <a href="https://pan.baidu.com/" target="_blank">
+      <div class="icon-baidu-pan">网盘</div>
+      </a> <a href="http://map.baidu.com/" target="_blank">
+      <div class="icon-baidu-map">地图</div>
+      </a> <a href="http://fanyi.baidu.com/" target="_blank">
+      <div class="icon-baidu-fanyi">翻译</div>
+      </a> <a href="http://music.163.com/" target="_blank">
+      <div class="icon-netease-music">音乐</div>
+      </a> <a href="https://www.bilibili.com/" target="_blank">
+      <div class="icon-bilibili">B站</div>
+      </a> <a href="https://www.taobao.com/" target="_blank">
+      <div class="icon-taobao">淘宝</div>
+      </a> <a href="https://www.mi.com/" target="_blank">
+      <div class="icon-xiaomi">小米</div>
+      </a> </div>
+  </div>
+</div>
+</div>
+<div class="search-bg">
+  <div class="nav2">
+    <div class="search">
+   <form name="mpgo-form" target="_blank">
+        <input type="text" name="" style="display:none;">
+        <input type="text" id="mpgotext" class="search-bd1" autocomplete="off" placeholder="网页搜索" onKeyUp="enterSearch()">
+        <input type="button" class="search-bd2" value="百度一下" onClick="baiduWeb()">
+      </form>
+    </div>
+    <div class="search-abc"><a href="https://www.so.com/" target="_blank">360搜索</a><span>丨</span><a href="https://www.sogou.com/" target="_blank">搜狗搜索</a><span>丨</span><a href="http://www.chinaso.com/" target="_blank">中国搜索</a><span>丨</span><a href="http://s.weibo.com/" target="_blank">微博搜索</a><span>丨</span><a href="https://www.toutiao.com/search/" target="_blank">头条搜索</a><span>丨</span><a href="https://s.taobao.com/" target="_blank">淘宝搜索</a><span>丨</span><a href="http://weixin.sogou.com/" target="_blank">微信搜索</a><span>丨</span><a href="http://zhihu.sogou.com/" target="_blank">知乎搜索</a></div>
+  </div>
+</div>
+<div class="media-bg">
+  <div class="media-hot">
+    <ul>
+      <li>
+        <div class="media-icon"><a href="https://mp.weixin.qq.com/" target="_blank"><img src="images/wechat.png" /></a></div>
+        <div class="media-title"><a href="https://mp.weixin.qq.com/" target="_blank">微信</a></div>
+      </li>
+      <li>
+        <div class="media-icon"><a href="http://weibo.com/" target="_blank"><img src="images/weibo.png" /></a></div>
+        <div class="media-title"><a href="http://weibo.com/" target="_blank">微博</a></div>
+      </li>
+      <li>
+        <div class="media-icon"><a href="https://mp.toutiao.com/" target="_blank"><img src="images/toutiao.png" /></a></div>
+        <div class="media-title"><a href="https://mp.toutiao.com/" target="_blank">头条号</a></div>
+      </li>
+      <li>
+        <div class="media-icon"><a href="http://baijiahao.baidu.com/" target="_blank"><img src="images/baijia.png" /></a></div>
+        <div class="media-title"><a href="http://baijiahao.baidu.com/" target="_blank">百家号</a></div>
+      </li>
+      <li>
+        <div class="media-icon"><a href="https://mp.dayu.com/" target="_blank"><img src="images/dayu.png"/></a></div>
+        <div class="media-title"><a href="https://mp.dayu.com/" target="_blank">大鱼号</a></div>
+      </li>
+      <li>
+        <div class="media-icon"><a href="http://mp.sohu.com/" target="_blank"><img src="images/sohu.png"/></a></div>
+        <div class="media-title"><a href="http://mp.sohu.com/" target="_blank">搜狐号</a></div>
+      </li>
+      <li>
+        <div class="media-icon"><a href="http://mp.163.com/" target="_blank"><img src="images/netease.png"/></a></div>
+        <div class="media-title"><a href="http://mp.163.com/" target="_blank">网易号</a></div>
+      </li>
+      <li>
+        <div class="media-icon"><a href="https://om.qq.com/" target="_blank"><img src="images/qqom.png"/></a></div>
+        <div class="media-title"><a href="https://om.qq.com/" target="_blank">企鹅号</a></div>
+      </li>
+      <li>
+        <div class="media-icon"><a href="https://mp.yidianzixun.com/" target="_blank"><img src="images/yidian.png"/></a></div>
+        <div class="media-title"><a href="https://mp.yidianzixun.com/" target="_blank">一点号</a></div>
+      </li>
+      <li>
+        <div class="media-icon"><a href="https://mp.qq.com/" target="_blank"><img src="images/qq.png" /></a></div>
+        <div class="media-title"><a href="https://mp.qq.com/" target="_blank">QQ</a></div>
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="content-bg1"> 
+  <!--A01-->
+  <div class="content-line">
+    <div class="content-list">
+      <ul>
+        <li><span>更多平台</span></li>
+        <li><a href="http://mp.sina.com.cn/" target="_blank">新浪看点</a></li>
+        <li><a href="https://www.btime.com/" target="_blank">时间号</a></li>
+        <li><a href="http://fhh.ifeng.com/" target="_blank">大风号</a></li>
+        <li><a href="http://k.21cn.com/" target="_blank">看荐号</a></li>
+      </ul>
+    </div>
+    <div class="content-list">
+      <ul>
+        <li> <a href="http://www.myzaker.com/" target="_blank">ZAKER</a></li>
+        <li> <a href="https://fuwu.alipay.com/" target="_blank">生活号</a></li>
+        <li> <a href="https://daren.taobao.com/" target="_blank">阿里创作</a></li>
+        <li><a href="http://dr.jd.com/" target="_blank">京东达人</a></li>
+        <li> <a href="http://mp.meiyou.com/" target="_blank">美柚号</a></li>
+      </ul>
+    </div>
+  </div>
+  <!--A02-->
+  <div class="content-line">
+    <div class="content-list">
+      <ul>
+        <li><a href="https://mp.qutoutiao.net/" target="_blank">趣头条</a></li>
+        <li><a href="http://mp.china.com.cn/" target="_blank">中国号</a></li>
+        <li><a href="http://zm.look.360.cn/" target="_blank">快传号</a></li>
+        <li> <a href="https://www.ixigua.com/" target="_blank">西瓜视频</a></li>
+        <li> <a href="http://creator.miaopai.com/" target="_blank">秒拍号</a></li>
+      </ul>
+    </div>
+    <div class="content-list">
+      <ul>
+        <li> <a href="http://chejiahao.autohome.com.cn/" target="_blank">车家号</a></li>
+        <li> <a href="http://mp.yiche.com/" target="_blank">易车号</a></li>
+        <li><a href="https://we.alitrip.com/" target="_blank">飞猪达人</a></li>
+        <li><a href="http://www.jianshu.com/" target="_blank">简书</a></li>
+        <li><a href="https://zhuanlan.zhihu.com/" target="_blank">知乎专栏</a></li>
+      </ul>
+    </div>
+  </div>
+  <!--A03-->
+  <div class="content-line">
+    <div class="content-list">
+      <ul>
+        <li><a href="http://mp.eastday.com/" target="_blank">东方号</a></li>
+        <li><a href="https://toutiao.1688.com/" target="_blank">阿里头条</a></li>
+        <li><a href="http://mp.sogou.com/" target="_blank">搜狗号</a></li>
+        <li><a href="http://mp.m.xunlei.com/" target="_blank">迅雷号</a></li>
+        <li> <a href="http://public.renren.com/" target="_blank">人人号</a></li>
+      </ul>
+    </div>
+    <div class="content-list">
+      <ul>
+        <li> <a href="https://plus.yixin.im/" target="_blank">易信号</a></li>
+        <li><a href="http://www.pearvideo.com/" target="_blank">梨视频号</a></li>
+        <li> <a href="http://mp.iqiyi.com/" target="_blank">爱奇艺号</a></li>
+        <li> <a href="http://blog.sina.com.cn/" target="_blank">新浪博客</a></li>
+        <li> <a href="https://mp.ithome.com/" target="_blank">IT号</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="content-bg2"> 
+  <!--B01-->
+  <div class="content-line">
+    <div class="content-list">
+      <ul>
+        <li><span>媒体热点</span></li>
+        <li><a href="http://top.baidu.com/" target="_blank">百度榜单</a></li>
+        <li><a href="http://index.baidu.com/" target="_blank">百度指数</a></li>
+        <li><a href="http://s.weibo.com/top/summary" target="_blank">微博热搜</a></li>
+        <li><a href="https://index.toutiao.com/" target="_blank">头条指数</a></li>
+      </ul>
+    </div>
+    <div class="content-list">
+      <ul>
+        <li><span>微信排版</span></li>
+        <li><a href="http://www.135editor.com/" target="_blank">135</a></li>
+        <li><a href="https://xiumi.us/" target="_blank">秀米</a></li>
+        <li><a href="http://ipaiban.com/" target="_blank">i排版</a></li>
+        <li><a href="http://www.wxeditor.com/" target="_blank">易点</a></li>
+      </ul>
+    </div>
+  </div>
+  <!--B02-->
+  <div class="content-line">
+    <div class="content-list">
+      <ul>
+        <li><span>H 5 制作</span></li>
+        <li><a href="http://www.eqxiu.com/" target="_blank">易企秀</a></li>
+        <li><a href="http://www.ichuye.cn/" target="_blank">初页</a></li>
+        <li><a href="http://www.rabbitpre.com/" target="_blank">兔展</a></li>
+        <li><a href="http://www.ih5.cn/" target="_blank">iH5</a></li>
+      </ul>
+    </div>
+    <div class="content-list">
+      <ul>
+        <li><span>表单工具</span></li>
+        <li><a href="https://wj.qq.com/" target="_blank">腾讯问卷</a></li>
+        <li><a href="http://www.mikecrm.com/" target="_blank">麦客</a></li>
+        <li><a href="https://jinshuju.net/" target="_blank">金数据</a></li>
+        <li><a href="https://www.wjx.cn/" target="_blank">问卷星</a></li>
+      </ul>
+    </div>
+  </div>
+  <!--B03-->
+  <div class="content-line">
+    <div class="content-list">
+      <ul>
+        <li><span>图片素材</span></li>
+        <li><a href="http://huaban.com/" target="_blank">花瓣网</a></li>
+        <li><a href="https://www.duitang.com/" target="_blank">堆糖</a></li>
+        <li><a href="https://unsplash.com/" target="_blank">Unsplash</a></li>
+        <li><a href="http://www.nipic.com/" target="_blank">昵图网</a></li>
+      </ul>
+    </div>
+    <div class="content-list">
+      <ul>
+        <li><span>文档协作</span></li>
+        <li><a href="https://docs.qq.com/index.html" target="_blank">腾讯文档</a></li>
+        <li><a href="https://shimo.im/" target="_blank">石墨文档</a></li>
+        <li><a href="http://note.youdao.com/" target="_blank">有道笔记</a></li>
+        <li><a href="https://www.yinxiang.com/" target="_blank">印象笔记</a></li>
+      </ul>
+    </div>
+  </div>
+  <!--B04-->
+  <div class="content-line">
+    <div class="content-list">
+      <ul>
+        <li><span>媒体工具</span></li>
+        <li><a href="https://xmt.cn/" target="_blank">xmt管家</a></li>
+        <li><a href="https://www.chuangkit.com/" target="_blank">创客贴</a></li>
+        <li><a href="http://xiuxiu.web.meitu.com/" target="_blank">美图秀秀</a></li>
+        <li><a href="https://www.kuaizhan.com/" target="_blank">搜狐快站</a></li>
+      </ul>
+    </div>
+    <div class="content-list">
+      <ul>
+        <li><span>更多工具</span></li>
+        <li><a href="http://dwz.cn/" target="_blank">短网址</a></li>
+        <li><a href="https://cli.im/" target="_blank">二维码</a></li>
+        <li><a href="http://naotu.baidu.com/" target="_blank">百度脑图</a></li>
+        <li><a href="http://www.iconfont.cn/" target="_blank">iconfont</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="content-bg3"> 
+  <!--C01-->
+  <div class="content-line">
+    <div class="content-list">
+      <ul>
+        <li><span>权威推荐</span></li>
+        <li><a href="http://www.people.com.cn/" target="_blank">人民网</a></li>
+        <li><a href="http://www.xinhuanet.com/" target="_blank">新华网</a></li>
+        <li><a href="http://www.cctv.com/" target="_blank">央视网</a></li>
+        <li><a href="http://www.cac.gov.cn/" target="_blank">网信网</a></li>
+      </ul>
+    </div>
+    <div class="content-list">
+      <ul>
+        <li><span>新闻资讯</span></li>
+        <li><a href="http://www.qq.com/" target="_blank">腾讯网</a></li>
+        <li><a href="http://www.sina.com.cn/" target="_blank">新浪网</a></li>
+        <li><a href="http://www.163.com/" target="_blank">网易</a></li>
+        <li><a href="http://www.sohu.com/" target="_blank">搜狐网</a></li>
+      </ul>
+    </div>
+  </div>
+  <!--C02-->
+  <div class="content-line">
+    <div class="content-list">
+      <ul>
+        <li><span>生活购物</span></li>
+        <li><a href="https://www.taobao.com/" target="_blank">淘宝网</a></li>
+        <li><a href="https://www.jd.com/" target="_blank">京东商城</a></li>
+        <li><a href="https://www.suning.com/" target="_blank">苏宁易购</a></li>
+        <li><a href="https://www.amazon.cn/" target="_blank">亚马逊</a></li>
+      </ul>
+    </div>
+    <div class="content-list">
+      <ul>
+        <li><span>影视视频</span></li>
+        <li><a href="https://v.qq.com/" target="_blank">腾讯视频</a></li>
+        <li><a href="http://www.iqiyi.com/" target="_blank">爱奇艺</a></li>
+        <li><a href="http://www.youku.com/" target="_blank">优酷视频</a></li>
+        <li><a href="http://www.le.com/" target="_blank">乐视视频</a></li>
+      </ul>
+    </div>
+  </div>
+  <!--C03-->
+  <div class="content-line">
+    <div class="content-list">
+      <ul>
+        <li><span>社交互动</span></li>
+        <li><a href="https://tieba.baidu.com/" target="_blank">百度贴吧</a></li>
+        <li><a href="https://www.douban.com/" target="_blank">豆瓣</a></li>
+        <li><a href="https://www.zhihu.com/" target="_blank">知乎</a></li>
+        <li><a href="https://qzone.qq.com/" target="_blank">QQ空间</a></li>
+      </ul>
+    </div>
+    <div class="content-list">
+      <ul>
+        <li><span>互动直播</span></li>
+        <li><a href="https://www.douyu.com/" target="_blank">斗鱼直播</a></li>
+        <li><a href="http://www.huya.com/" target="_blank">虎牙直播</a></li>
+        <li><a href="http://www.yy.com/" target="_blank">YY直播</a></li>
+        <li><a href="https://live.bilibili.com/" target="_blank">B站直播</a></li>
+      </ul>
+    </div>
+  </div>
+  <!--C04-->
+  <div class="content-line">
+    <div class="content-list">
+      <ul>
+        <li><span>动漫漫画</span></li>
+        <li><a href="https://www.bilibili.com/" target="_blank">哔哩哔哩</a></li>
+        <li><a href="http://www.acfun.cn/" target="_blank">acfun</a></li>
+        <li><a href="http://ac.qq.com/" target="_blank">腾讯动漫</a></li>
+        <li><a href="https://bcy.net/" target="_blank">半次元</a></li>
+      </ul>
+    </div>
+    <div class="content-list">
+      <ul>
+        <li><span>小说文学</span></li>
+        <li><a href="https://www.qidian.com/" target="_blank">起点中文</a></li>
+        <li><a href="http://chuangshi.qq.com/" target="_blank">创世中文</a></li>
+        <li><a href="https://www.qdmm.com/" target="_blank">起点女生</a></li>
+        <li><a href="http://www.xxsy.net/" target="_blank">潇湘书院</a></li>
+      </ul>
+    </div>
+  </div>
+  <!--C05-->
+  <div class="content-line">
+    <div class="content-list">
+      <ul>
+        <li><span>汽车动态</span></li>
+        <li><a href="http://www.autohome.com.cn/" target="_blank">汽车之家</a></li>
+        <li><a href="http://www.bitauto.com/" target="_blank">易车网</a></li>
+        <li><a href="http://www.xcar.com.cn/" target="_blank">爱卡汽车</a></li>
+        <li><a href="http://auto.sina.com.cn/" target="_blank">新浪汽车</a></li>
+      </ul>
+    </div>
+    <div class="content-list">
+      <ul>
+        <li><span>体育赛事</span></li>
+        <li><a href="https://www.hupu.com/" target="_blank">虎扑体育</a></li>
+        <li><a href="http://sports.sina.com.cn/" target="_blank">新浪体育</a></li>
+        <li><a href="http://sports.qq.com/" target="_blank">腾讯体育</a></li>
+        <li><a href="http://www.ppsport.com/" target="_blank">PP体育</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="footer-bg">
+  <div class="footer-word">
+    <p>Copyright &copy; 2017 - 2022 <a href="#" target="_blank">RUMENGLING.</a> All Rights Reserved.</p>
+  </div>
+</div>
+<script>
+function enterSearch(){
+	if (window.event.keyCode === 13) {
+		baiduWeb();
+	}
+}
+
+function baiduWeb(){
+	window.open('https://www.baidu.com/s?wd=' + mpgotext.value);
+}
+</script>
+<!--版权所有，保留所有权利-->
+</body>
+</html>
