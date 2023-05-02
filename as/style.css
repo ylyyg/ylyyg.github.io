@@ -1,7 +1,7 @@
 @charset "utf-8";
 /* CSS Document */
 
-/*版本号：v24.1，更新时间：2022.05.14*/
+/*版本号：v26.0，更新时间：2023.05.02*/
 * {
 	padding: 0;
 	margin: 0;
@@ -33,9 +33,9 @@
 	width: 100%;
 	min-width: 1180px;
 }
-.nav-home{
-	height:40px;
-	width:200px;
+.nav-home {
+	height: 40px;
+	width: 200px;
 	font-size: 14px;
 	float: left;
 	line-height: 40px;
@@ -44,12 +44,12 @@
 	margin-left: 15px;
 	letter-spacing: 0.5px;
 }
-.nav-home a{
-	text-decoration:none;
-	color:#444;
+.nav-home a {
+	text-decoration: none;
+	color: #444;
 }
-.nav-home a:hover{
-	color:#4e6ef2;
+.nav-home a:hover {
+	color: #4e6ef2;
 }
 .nav-home span {
 	color: #ddd;
@@ -67,11 +67,11 @@
 	margin-right: 15px;
 	letter-spacing: 0.5px;
 }
-.logo{
-	height:60px;
+.logo {
+	height: 60px;
 	width: 100%;
 	min-width: 1180px;
-	margin: 36px auto 0;
+	margin: 24px auto 0;
 }
 .nav-logo {
 	height: 60px;
@@ -236,6 +236,14 @@
 	line-height: 32px;
 	letter-spacing: 0.5px;
 }
+.link-list span.s3 {
+	color: #ddd;
+	padding-left: 8px;
+	padding-right: 8px;
+}
+.link-list span.s4 {
+	margin-left: -17px;
+}
 .footer {
 	height: 30px;
 	width: 1180px;
@@ -246,11 +254,11 @@
 	color: #999;
 	letter-spacing: 0.5px;
 }
-.footer a{
+.footer a {
 	text-decoration: none;
 	color: #999;
 }
-.footer a:hover{
+.footer a:hover {
 	color: #4e6ef2;
 }
 .footer span {
