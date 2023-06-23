@@ -141,10 +141,8 @@ body {
 	padding: 184px 20px 0 60px;
 }
 .point {
-	top: -64px;
-	display: block;
-	height: 64px;
-	visibility:hidden;
+	height:64px;
+	margin-top:-64px;
 }
 .column-title {
 	height: 24px;
@@ -596,10 +594,8 @@ body {
 	display: none;
 }
 .point {
-	top: -64px;
-	display: block;
-	height: 64px;
-	visibility:hidden;
+	height:64px;
+	margin-top:-64px;
 }
 .column-title {
 	height: 24px;
