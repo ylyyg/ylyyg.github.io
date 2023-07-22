@@ -961,18 +961,18 @@ body {
 	color: #fff;
 }
 .column-box2 {
-	height: 880px;
+	height: 800px;
 	width: 100%;
 	margin: auto;
 	padding: 0 20px;
 	box-sizing: border-box;
 }
 .column-box-music {
-	height: 430px;
+	height: 390px;
 	width: 100%;
 	background: #fff;
 	border-radius: 24px;
-	padding: 30px 40px 40px 40px;
+	padding: 10px 20px 20px 20px;
 	float: left;
 	margin: 0 0 20px 0;
 	box-sizing: border-box;
@@ -1066,18 +1066,18 @@ body {
 	display: none;
 }
 .column-box3 {
-	height: 860px;
+	height: 780px;
 	width: 100%;
 	margin: auto;
 	padding: 0 20px;
 	box-sizing: border-box;
 }
 .column-box-trip {
-	height: 420px;
+	height: 380px;
 	width: 100%;
 	background: #fff;
 	border-radius: 24px;
-	padding: 40px;
+	padding: 20px;
 	float: left;
 	margin: 0;
 	box-sizing: border-box;
