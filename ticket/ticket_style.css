@@ -1,0 +1,989 @@
+@charset "utf-8";
+/* CSS Document */
+
+/*
+versionName:1.0
+versionCode:1
+*/
+
+* {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+	font-family: DIN-Fonts, HarmonyOS-Sans, PingFang SC, Microsoft YaHei;
+}
+@font-face {
+	font-family: HarmonyOS-Sans;
+	font-weight: normal;
+	font-display: swap;
+	src: url(fonts/HarmonyOS-Sans-Regular.ttf);
+}
+@font-face {
+	font-family: HarmonyOS-Sans;
+	font-weight: bold;
+	font-display: swap;
+	src: url(fonts/HarmonyOS-Sans-Bold.ttf);
+}
+@font-face {
+	font-family: DIN-Fonts;
+	font-weight: normal;
+	font-display: swap;
+	src: url(fonts/DIN-Fonts.otf);
+}
+body {
+	background: #f2f4f6;
+}
+.navs {
+	height: 72px;
+	width: 100%;
+	background: #fff;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 999;
+}
+.nav {
+	height: 72px;
+	width: 1160px;
+	background: #fff;
+	margin: auto;
+}
+.nav-logo {
+	height: 72px;
+	width: 180px;
+	line-height: 72px;
+	font-size: 24px;
+	font-weight: bold;
+	text-align: left;
+	color: #000;
+	float: left;
+	margin-left: 20px;
+	font-family: HarmonyOS-Sans;
+}
+.nav-logo a {
+	text-decoration: none;
+	color: #000;
+}
+.nav-return {
+	height: 44px;
+	width: 112px;
+	background: #f2f4f6;
+	line-height: 44px;
+	letter-spacing: 1px;
+	float: right;
+	margin: 14px 20px 14px 0;
+	text-align: center;
+	border-radius: 24px;
+}
+.nav-return a {
+	text-decoration: none;
+	color: #000;
+}
+.box {
+	height: 204px;
+	width: 1160px;
+	margin: 132px auto 0;
+}
+.box-info {
+	height: 24px;
+	width: auto;
+	margin: 0 20px 20px 20px;
+}
+.box-info-icon {
+	height: 24px;
+	width: 24px;
+	float: left;
+}
+.box-info-icon img {
+	height: 24px;
+	width: 24px;
+	display: block;
+}
+.box-info-text {
+	height: 24px;
+	width: auto;
+	float: left;
+	line-height: 24px;
+	font-size: 18px;
+	letter-spacing: 1px;
+	margin-left: 24px;
+}
+.box-data {
+	height: 120px;
+	width: 1120px;
+	background: #fff;
+	padding: 10px 20px;
+	box-sizing: border-box;
+	border-radius: 24px;
+	float: left;
+	margin: 20px;
+}
+.box-data-info1 {
+	height: 50px;
+	width: 25%;
+	line-height: 50px;
+	text-align: left;
+	float: left;
+	font-size: 16px;
+	letter-spacing: 1px;
+}
+.box-data-info2 {
+	height: 50px;
+	width: 25%;
+	line-height: 50px;
+	text-align: center;
+	float: left;
+	font-size: 16px;
+	letter-spacing: 1px;
+}
+.box-data-info3 {
+	height: 50px;
+	width: 25%;
+	line-height: 50px;
+	text-align: right;
+	float: left;
+	font-size: 16px;
+	letter-spacing: 1px;
+}
+.ticket24 {
+	height: 834px;
+	width: 1160px;
+	margin: 40px auto 0;
+}
+.ticket23 {
+	height: 834px;
+	width: 1160px;
+	margin: 40px auto 0;
+}
+.ticket-info {
+	height: 24px;
+	width: auto;
+	margin: 0 20px 20px 20px;
+}
+.ticket-info-icon {
+	height: 24px;
+	width: 24px;
+	float: left;
+}
+.ticket-info-icon img {
+	height: 24px;
+	width: 24px;
+	display: block;
+}
+.ticket-info-text {
+	height: 24px;
+	width: auto;
+	float: left;
+	line-height: 24px;
+	font-size: 18px;
+	letter-spacing: 1px;
+	margin-left: 24px;
+}
+.ticket-info-data {
+}
+.ticket-info-data-info {
+	height: 24px;
+	width: auto;
+	background: #eee;
+	line-height: 24px;
+	float: left;
+	padding: 0 4px;
+	border-radius: 3px;
+	color: #999;
+	margin: 0 0 0 16px;
+	font-size: 14px;
+	letter-spacing: 1px;
+}
+/*机票*/
+.ticket-air {
+	height: 295px;
+	width: 480px;
+	background: #fff;
+	border-radius: 24px;
+	padding: 30px;
+	margin: 20px;
+	float: left;
+}
+.ticket-air-airlines {
+	height: 36px;
+	width: 100%;
+}
+.ticket-air-airlines-logo {
+	height: 36px;
+	width: 36px;
+	float: left;
+	border-radius: 100px;
+}
+.ticket-air-airlines-logo img {
+	height: 36px;
+	width: 36px;
+	border-radius: 100px;
+}
+.ticket-air-airlines-name {
+	height: 36px;
+	width: auto;
+	float: left;
+	font-size: 18px;
+	line-height: 36px;
+	margin-left: 16px;
+	letter-spacing: 1px;
+}
+.ticket-air-airlines-team {
+	height: 24px;
+	width: auto;
+	background: #f2f4f6;
+	line-height: 24px;
+	float: left;
+	padding: 0 4px;
+	border-radius: 3px;
+	color: #999;
+	margin: 6px 0 6px 16px;
+	font-size: 14px;
+	letter-spacing: 1px;
+}
+.ticket-air-airport {
+	height: 84px;
+	width: 100%;
+	margin: 30px 0 25px;
+}
+.ticket-air-airport-code1 {
+	height: 24px;
+	width: 50%;
+	float: left;
+	text-align: left;
+	line-height: 24px;
+	font-size: 16px;
+	color: #999;
+	letter-spacing: 1px;
+}
+.ticket-air-airport-code2 {
+	height: 24px;
+	width: 50%;
+	float: left;
+	text-align: right;
+	line-height: 24px;
+	font-size: 16px;
+	color: #999;
+	letter-spacing: 1px;
+}
+.ticket-air-airport-airport1 {
+	height: 60px;
+	width: 45%;
+	float: left;
+	line-height: 60px;
+	font-size: 22px;
+	text-align: left;
+	letter-spacing: 1px;
+}
+.ticket-air-airport-icon {
+	height: 60px;
+	width: 10%;
+	float: left;
+}
+.ticket-air-airport-icon img {
+	height: 24px;
+	width: 24px;
+	padding: 18px 0;
+	display: block;
+	margin: auto;
+}
+.ticket-air-airport-airport2 {
+	height: 60px;
+	width: 45%;
+	float: left;
+	line-height: 60px;
+	font-size: 22px;
+	text-align: right;
+	letter-spacing: 1px;
+}
+.ticket-air-info {
+	height: 120px;
+	width: 100%;
+	background: #f2f4f6;
+	padding: 10px 20px;
+	box-sizing: border-box;
+	border-radius: 24px;
+}
+.ticket-air-info-info1 {
+	height: 50px;
+	width: 25%;
+	line-height: 50px;
+	text-align: left;
+	float: left;
+	color: #444;
+	font-size: 16px;
+	letter-spacing: 1px;
+}
+.ticket-air-info-info2 {
+	height: 50px;
+	width: 25%;
+	line-height: 50px;
+	text-align: center;
+	float: left;
+	color: #444;
+	font-size: 16px;
+	letter-spacing: 1px;
+}
+.ticket-air-info-info3 {
+	height: 50px;
+	width: 25%;
+	line-height: 50px;
+	text-align: right;
+	float: left;
+	color: #444;
+	font-size: 16px;
+	letter-spacing: 1px;
+}
+/*火车票*/
+.ticket-railway {
+	height: 295px;
+	width: 480px;
+	background: #fff;
+	border-radius: 24px;
+	padding: 30px;
+	margin: 20px;
+	float: left;
+}
+.ticket-railway-railway {
+	height: 36px;
+	width: 100%;
+}
+.ticket-railway-railway-logo {
+	height: 36px;
+	width: 36px;
+	float: left;
+	border-radius: 100px;
+}
+.ticket-railway-railway-logo img {
+	height: 36px;
+	width: 36px;
+	border-radius: 100px;
+}
+.ticket-railway-railway-name {
+	height: 36px;
+	width: auto;
+	float: left;
+	font-size: 18px;
+	line-height: 36px;
+	margin-left: 16px;
+	letter-spacing: 1px;
+}
+.ticket-railway-railway-team {
+	height: 24px;
+	width: auto;
+	background: #f2f4f6;
+	line-height: 24px;
+	float: left;
+	padding: 0 4px;
+	border-radius: 3px;
+	color: #999;
+	margin: 6px 0 6px 16px;
+	font-size: 14px;
+	letter-spacing: 1px;
+}
+.ticket-railway-station {
+	height: 84px;
+	width: 100%;
+	margin: 30px 0 25px;
+}
+.ticket-railway-station-code1 {
+	height: 24px;
+	width: 50%;
+	float: left;
+	text-align: left;
+	line-height: 24px;
+	font-size: 16px;
+	color: #999;
+	letter-spacing: 1px;
+}
+.ticket-railway-station-code2 {
+	height: 24px;
+	width: 50%;
+	float: left;
+	text-align: right;
+	line-height: 24px;
+	font-size: 16px;
+	color: #999;
+	letter-spacing: 1px;
+}
+.ticket-railway-station-station1 {
+	height: 60px;
+	width: 45%;
+	float: left;
+	line-height: 60px;
+	font-size: 22px;
+	text-align: left;
+	letter-spacing: 1px;
+}
+.ticket-railway-station-icon {
+	height: 60px;
+	width: 10%;
+	float: left;
+}
+.ticket-railway-station-icon img {
+	height: 24px;
+	width: 24px;
+	padding: 18px 0;
+	display: block;
+	margin: auto;
+}
+.ticket-railway-station-station2 {
+	height: 60px;
+	width: 45%;
+	float: left;
+	line-height: 60px;
+	font-size: 22px;
+	text-align: right;
+	letter-spacing: 1px;
+}
+.ticket-railway-info {
+	height: 120px;
+	width: 100%;
+	background: #f2f4f6;
+	padding: 10px 20px;
+	box-sizing: border-box;
+	border-radius: 24px;
+}
+.ticket-railway-info-info1 {
+	height: 50px;
+	width: 25%;
+	line-height: 50px;
+	text-align: left;
+	float: left;
+	color: #444;
+	font-size: 16px;
+	letter-spacing: 1px;
+}
+.ticket-railway-info-info2 {
+	height: 50px;
+	width: 25%;
+	line-height: 50px;
+	text-align: center;
+	float: left;
+	color: #444;
+	font-size: 16px;
+	letter-spacing: 1px;
+}
+.ticket-railway-info-info3 {
+	height: 50px;
+	width: 25%;
+	line-height: 50px;
+	text-align: right;
+	float: left;
+	color: #444;
+	font-size: 16px;
+	letter-spacing: 1px;
+}
+.footers {
+	height: 72px;
+	width: 100%;
+	background: #fff;
+	margin-top: 40px;
+}
+.footer {
+	height: 72px;
+	width: 1120px;
+	margin: auto;
+	padding: 0 20px;
+	background: #fff;
+	line-height: 72px;
+	font-size: 14px;
+	color: #888;
+	letter-spacing: 1px;
+	text-align: center;
+}
+.footer a {
+	text-decoration: none;
+	color: #888;
+}
+.footer span {
+	color: #ddd;
+	padding-left: 6px;
+	padding-right: 6px;
+}
+
+/*mobile*/
+ @media only screen and (max-width:1159px) {
+.navs {
+	height: 72px;
+	width: 100%;
+	background: #fff;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 999;
+}
+.nav {
+	height: 72px;
+	width: 100%;
+	background: #fff;
+	margin: auto;
+}
+.nav-logo {
+	height: 72px;
+	width: 180px;
+	line-height: 72px;
+	font-size: 22px;
+	font-weight: bold;
+	text-align: left;
+	color: #000;
+	float: left;
+	margin-left: 20px;
+	font-family: HarmonyOS-Sans;
+}
+.nav-logo a {
+	text-decoration: none;
+	color: #000;
+}
+.nav-return {
+	height: 40px;
+	width: 96px;
+	background: #f2f4f6;
+	line-height: 40px;
+	letter-spacing: 1px;
+	float: right;
+	margin: 16px 20px 16px 0;
+	text-align: center;
+	border-radius: 24px;
+}
+.nav-return a {
+	text-decoration: none;
+	color: #000;
+}
+.box {
+	height: 204px;
+	width: 100%;
+	margin: 122px auto 0;
+	padding: 0 20px;
+	box-sizing: border-box;
+}
+.box-info {
+	height: 24px;
+	width: auto;
+	margin: 0 0 20px 0;
+}
+.box-info-icon {
+	height: 24px;
+	width: 24px;
+	float: left;
+}
+.box-info-icon img {
+	height: 24px;
+	width: 24px;
+	display: block;
+}
+.box-info-text {
+	height: 24px;
+	width: auto;
+	float: left;
+	line-height: 24px;
+	font-size: 18px;
+	letter-spacing: 1px;
+	margin-left: 24px;
+}
+.box-data {
+	height: 120px;
+	width: 100%;
+	background: #fff;
+	padding: 10px 20px;
+	box-sizing: border-box;
+	border-radius: 24px;
+	float: left;
+	margin: 20px 0;
+}
+.box-data-info1 {
+	height: 50px;
+	width: 25%;
+	line-height: 50px;
+	text-align: left;
+	float: left;
+	font-size: 15px;
+	letter-spacing: 1px;
+}
+.box-data-info2 {
+	height: 50px;
+	width: 25%;
+	line-height: 50px;
+	text-align: center;
+	float: left;
+	font-size: 15px;
+	letter-spacing: 1px;
+}
+.box-data-info3 {
+	height: 50px;
+	width: 25%;
+	line-height: 50px;
+	text-align: right;
+	float: left;
+	font-size: 15px;
+	letter-spacing: 1px;
+}
+.ticket24 {
+	height: 1360px;
+	width: 100%;
+	margin: 30px auto 0;
+	padding: 0 20px;
+	box-sizing: border-box;
+}
+.ticket23 {
+	height: 1040px;
+	width: 100%;
+	margin: 30px auto 0;
+	padding: 0 20px;
+	box-sizing: border-box;
+}
+.ticket-info {
+	height: 60px;
+	width: auto;
+	margin: 0 0 20px 0;
+	box-sizing: border-box;
+}
+.ticket-info-icon {
+	height: 24px;
+	width: 24px;
+	float: left;
+}
+.ticket-info-icon img {
+	height: 24px;
+	width: 24px;
+	display: block;
+}
+.ticket-info-text {
+	height: 24px;
+	width: auto;
+	float: left;
+	line-height: 24px;
+	font-size: 18px;
+	letter-spacing: 1px;
+	margin-left: 24px;
+}
+.ticket-info-data {
+	height: 24px;
+	width: auto;
+	margin: 12px 0 0 48px;
+	float: left;
+}
+.ticket-info-data-info {
+	height: 24px;
+	width: auto;
+	background: #eee;
+	line-height: 24px;
+	float: left;
+	padding: 0 4px;
+	border-radius: 3px;
+	color: #999;
+	margin: 0 16px 0 0;
+	font-size: 14px;
+	letter-spacing: 1px;
+}
+/*机票*/
+.ticket-air {
+	height: 300px;
+	width: 100%;
+	background: #fff;
+	border-radius: 24px;
+	padding: 20px;
+	margin: 0 0 20px 0;
+	float: left;
+	box-sizing: border-box;
+}
+.ticket-air-airlines {
+	height: 32px;
+	width: 100%;
+}
+.ticket-air-airlines-logo {
+	height: 32px;
+	width: 32px;
+	float: left;
+	border-radius: 100px;
+}
+.ticket-air-airlines-logo img {
+	height: 32px;
+	width: 32px;
+	border-radius: 100px;
+}
+.ticket-air-airlines-name {
+	height: 32px;
+	width: auto;
+	float: left;
+	font-size: 16px;
+	line-height: 32px;
+	margin-left: 12px;
+	letter-spacing: 1px;
+}
+.ticket-air-airlines-team {
+	height: 24px;
+	width: auto;
+	background: #f2f4f6;
+	line-height: 24px;
+	float: left;
+	padding: 0 4px;
+	border-radius: 3px;
+	color: #999;
+	margin: 4px 0 4px 12px;
+	font-size: 13px;
+	letter-spacing: 1px;
+}
+.ticket-air-airport {
+	height: 84px;
+	width: 100%;
+	margin: 16px 0 8px;
+}
+.ticket-air-airport-code1 {
+	height: 24px;
+	width: 50%;
+	float: left;
+	text-align: left;
+	line-height: 24px;
+	font-size: 16px;
+	color: #999;
+	letter-spacing: 1px;
+}
+.ticket-air-airport-code2 {
+	height: 24px;
+	width: 50%;
+	float: left;
+	text-align: right;
+	line-height: 24px;
+	font-size: 16px;
+	color: #999;
+	letter-spacing: 1px;
+}
+.ticket-air-airport-airport1 {
+	height: 60px;
+	width: 45%;
+	float: left;
+	line-height: 60px;
+	font-size: 20px;
+	text-align: left;
+	letter-spacing: 1px;
+}
+.ticket-air-airport-icon {
+	height: 60px;
+	width: 10%;
+	float: left;
+}
+.ticket-air-airport-icon img {
+	height: 24px;
+	width: 24px;
+	padding: 18px 0;
+	display: block;
+	margin: auto;
+}
+.ticket-air-airport-airport2 {
+	height: 60px;
+	width: 45%;
+	float: left;
+	line-height: 60px;
+	font-size: 20px;
+	text-align: right;
+	letter-spacing: 1px;
+}
+.ticket-air-info {
+	height: 120px;
+	width: 100%;
+	background: #f2f4f6;
+	padding: 10px 20px;
+	border-radius: 24px;
+	box-sizing: border-box;
+}
+.ticket-air-info-info1 {
+	height: 50px;
+	width: 25%;
+	line-height: 50px;
+	text-align: left;
+	float: left;
+	color: #444;
+	font-size: 14px;
+	letter-spacing: 1px;
+}
+.ticket-air-info-info2 {
+	height: 50px;
+	width: 25%;
+	line-height: 50px;
+	text-align: center;
+	float: left;
+	color: #444;
+	font-size: 14px;
+	letter-spacing: 1px;
+}
+.ticket-air-info-info3 {
+	height: 50px;
+	width: 25%;
+	line-height: 50px;
+	text-align: right;
+	float: left;
+	color: #444;
+	font-size: 14px;
+	letter-spacing: 1px;
+}
+/*火车票*/
+.ticket-railway {
+	height: 300px;
+	width: 100%;
+	background: #fff;
+	border-radius: 24px;
+	padding: 20px;
+	margin: 0 0 20px 0;
+	float: left;
+	box-sizing: border-box;
+}
+.ticket-railway-railway {
+	height: 32px;
+	width: 100%;
+}
+.ticket-railway-railway-logo {
+	height: 32px;
+	width: 32px;
+	float: left;
+	border-radius: 100px;
+}
+.ticket-railway-railway-logo img {
+	height: 32px;
+	width: 32px;
+	border-radius: 100px;
+}
+.ticket-railway-railway-name {
+	height: 32px;
+	width: auto;
+	float: left;
+	font-size: 16px;
+	line-height: 32px;
+	margin-left: 12px;
+	letter-spacing: 1px;
+}
+.ticket-railway-railway-team {
+	height: 24px;
+	width: auto;
+	background: #f2f4f6;
+	line-height: 24px;
+	float: left;
+	padding: 0 4px;
+	border-radius: 3px;
+	color: #999;
+	margin: 4px 0 4px 12px;
+	font-size: 13px;
+	letter-spacing: 1px;
+}
+.ticket-railway-station {
+	height: 84px;
+	width: 100%;
+	margin: 16px 0 8px;
+}
+.ticket-railway-station-code1 {
+	height: 24px;
+	width: 50%;
+	float: left;
+	text-align: left;
+	line-height: 24px;
+	font-size: 16px;
+	color: #999;
+	letter-spacing: 1px;
+}
+.ticket-railway-station-code2 {
+	height: 24px;
+	width: 50%;
+	float: left;
+	text-align: right;
+	line-height: 24px;
+	font-size: 16px;
+	color: #999;
+	letter-spacing: 1px;
+}
+.ticket-railway-station-station1 {
+	height: 60px;
+	width: 45%;
+	float: left;
+	line-height: 60px;
+	font-size: 20px;
+	text-align: left;
+	letter-spacing: 1px;
+}
+.ticket-railway-station-icon {
+	height: 60px;
+	width: 10%;
+	float: left;
+}
+.ticket-railway-station-icon img {
+	height: 24px;
+	width: 24px;
+	padding: 18px 0;
+	display: block;
+	margin: auto;
+}
+.ticket-railway-station-station2 {
+	height: 60px;
+	width: 45%;
+	float: left;
+	line-height: 60px;
+	font-size: 20px;
+	text-align: right;
+	letter-spacing: 1px;
+}
+.ticket-railway-info {
+	height: 120px;
+	width: 100%;
+	background: #f2f4f6;
+	padding: 10px 20px;
+	box-sizing: border-box;
+	border-radius: 24px;
+}
+.ticket-railway-info-info1 {
+	height: 50px;
+	width: 25%;
+	line-height: 50px;
+	text-align: left;
+	float: left;
+	color: #444;
+	font-size: 14px;
+	letter-spacing: 1px;
+}
+.ticket-railway-info-info2 {
+	height: 50px;
+	width: 25%;
+	line-height: 50px;
+	text-align: center;
+	float: left;
+	color: #444;
+	font-size: 14px;
+	letter-spacing: 1px;
+}
+.ticket-railway-info-info3 {
+	height: 50px;
+	width: 25%;
+	line-height: 50px;
+	text-align: right;
+	float: left;
+	color: #444;
+	font-size: 14px;
+	letter-spacing: 1px;
+}
+.footers {
+	height: 72px;
+	width: 100%;
+	background: #fff;
+	margin-top: 30px;
+}
+.footer {
+	height: 72px;
+	width: 100%;
+	margin: auto;
+	padding: 0 20px;
+	background: #fff;
+	line-height: 72px;
+	font-size: 14px;
+	color: #888;
+	letter-spacing: 0px;
+	text-align: center;
+	box-sizing: border-box;
+}
+.footer a {
+	text-decoration: none;
+	color: #888;
+}
+.footer span {
+	color: #ddd;
+	padding-left: 2px;
+	padding-right: 2px;
+}
+}
