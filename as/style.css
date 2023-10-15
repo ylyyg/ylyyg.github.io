@@ -1,7 +1,7 @@
 @charset "utf-8";
 /* CSS Document */
 
-/*版本号：v26.0，更新时间：2023.05.02*/
+/*版本号：v27.0，更新时间：2023.10.15*/
 * {
 	padding: 0;
 	margin: 0;
@@ -23,6 +23,7 @@
 	src: url(https://ylyyg.github.io/fonts/HarmonyOS-Sans-Bold.ttf);
 }
 /*HarmonyOS Sans字体引入结束*/
+/*
 .nav {
 	height: 40px;
 	width: 100%;
@@ -67,11 +68,12 @@
 	margin-right: 15px;
 	letter-spacing: 0.5px;
 }
+*/
 .logo {
 	height: 60px;
 	width: 100%;
 	min-width: 1180px;
-	margin: 24px auto 0;
+	margin: 40px auto 0;
 }
 .nav-logo {
 	height: 60px;
