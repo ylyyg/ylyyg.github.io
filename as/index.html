@@ -3,19 +3,9 @@
 <head>
 <meta charset="utf-8">
 <title>AppSearch - (^_−)☆嘻嘻嘻~</title>
-<link rel="stylesheet" type="text/css" href="style.css?v=27.0" />
+<link rel="stylesheet" type="text/css" href="style.css?v=28.0" />
 </head>
 <body>
-<!--
-<div class="nav">
-  <div class="nav-menu">
-    <div class="nav-home"></div>
-    <div class="nav-time">
-      <div id="chilk"></div>
-    </div>
-  </div>
-</div>
--->
 <div class="logo">
   <div class="nav-logo">APP SEARCH</div>
 </div>
@@ -65,10 +55,10 @@
       <div class="search-btn-right">
         <div class="search-btn-title">&gt;&nbsp; 搜资质信息</div>
         <div class="search-btn-content">
-          <input type="button" class="search-btn-btn" value="公司名称" title="百度爱企查的公司注册信息搜索结果" onClick="aiqichaCompany()">
+          <input type="button" class="search-btn-btn" value="爱企查" title="爱企查的公司注册信息搜索结果" onClick="aiqichaCompany()">
+          <input type="button" class="search-btn-btn" value="天眼查" title="天眼查的公司注册信息搜索结果" onClick="tianyanchaCompany()">
           <input type="button" class="search-btn-btn" value="商标信息" title="天眼查的商标信息搜索结果" onClick="tianyanchaBrand()">
           <input type="button" class="search-btn-btn" value="软著信息" title="天眼查的软著信息搜索结果" onClick="tianyanchaSoft()">
-          <input type="button" class="search-btn-btn" value="游戏审批" onClick="gameApproval()">
           <input type="button" class="search-btn-btn1" value="ICP备案" title="站长之家的ICP搜索结果" onClick="chinazDomain()">
         </div>
       </div>
@@ -80,7 +70,7 @@
           <input type="button" class="search-btn-btn" value="OPPO文档" title="OPPO开放平台文档搜索结果" onClick="oppoDocs()">
           <input type="button" class="search-btn-btn" value="vivo文档" title="vivo开放平台文档搜索结果" onClick="vivoDocs()">
           <input type="button" class="search-btn-btn" value="小米文档" title="小米开放平台文档搜索结果" onClick="xiaomiDocs()">
-          <input type="button" class="search-btn-btn1" value="应用宝文档" title="腾讯应用开放平台文档搜索结果" onClick="yingyongbaoDocs()">
+          <input type="button" class="search-btn-btn1" value="荣耀文档" title="荣耀开发者服务平台文档搜索结果" onClick="honorDocs()">
         </div>
       </div>
       <!--常用站点-->
@@ -125,9 +115,9 @@
     <p><a href="https://dev.vivo.com.cn/" target="_blank">vivo开放平台</a></p>
     <p><a href="https://dev.mi.com/console/" target="_blank">小米开放平台</a></p>
     <p><a href="https://open.oppomobile.com/" target="_blank">OPPO开放平台</a></p>
+    <p><a href="https://developer.hihonor.com/cn/" target="_blank">荣耀开发者服务平台</a></p>
     <p><a href="https://developer.huawei.com/consumer/cn/" target="_blank">华为开发者联盟</a></p>
     <p><a href="https://app.open.qq.com/p/home" target="_blank">腾讯应用开放平台</a></p>
-    <p><a href="http://open.uc.cn/" target="_blank">阿里分发开放平台</a></p>
     <p><a href="https://www.quickapp.cn/" target="_blank">快应用平台</a></p>
   </div>
   <div class="link-list">
@@ -135,13 +125,13 @@
     <p><a href="https://register.ccopyright.com.cn/query.html" target="_blank">软著查询服务平台</a></p>
     <p><a href="http://www.safe.gov.cn/safe/jyjywhywxkzdbxjyjgmd/index.html" target="_blank">经营外汇业务许可证</a></p>
     <p><a href="http://xkz.cbirc.gov.cn/jr/" target="_blank">金融许可证信息</a></p>
-    <p><a href="http://www.nppa.gov.cn/nppa/channels/317.shtml" target="_blank">游戏审批结果</a></p>
+    <p><a href="https://www.nppa.gov.cn/bsfw/jggs/yxspjg/" target="_blank">游戏审批结果</a></p>
     <p><a href="http://www.cgigc.com.cn/isbn/index.html?curPage=1" target="_blank">游戏版号</a></p>
     <p><a href="https://beian.miit.gov.cn/" target="_blank">ICP备案信息查询</a></p>
     <p><a href="http://wcjs.sbj.cnipa.gov.cn/" target="_blank">注册商标信息查询</a></p>
   </div>
 </div>
-<div class="footer"> &copy;&nbsp; 2018 - 2023<span>/</span> DESIGNED BY <a href="http://www.rumengling.com/" target="_blank">POETRY.</a> <span>/</span> POWERED BY <a href="https://github.com/" target="_blank">GITHUB.</a> <span>/</span> v27.0 <span>/</span> 2023.10.15 </div>
+<div class="footer"> &copy;&nbsp; 2018 - 2024<span>/</span> DESIGNED BY <a href="http://www.rumengling.com/" target="_blank">POETRY.</a> <span>/</span> POWERED BY <a href="https://github.com/" target="_blank">GITHUB.</a> <span>/</span> v28.0 <span>/</span> 2024.01.12 </div>
 
 <!--js部分--> 
 <script>
@@ -220,16 +210,16 @@ function aiqichaCompany(){
 	window.open('https://aiqicha.baidu.com/s?q=' + astext.value);
 }
 
+function tianyanchaCompany(){
+	window.open('https://www.tianyancha.com/search?key=' + astext.value);
+}
+
 function tianyanchaBrand(){
 	window.open('https://www.tianyancha.com/search/t401?key=' + astext.value);
 }
 
 function tianyanchaSoft(){
 	window.open('https://www.tianyancha.com/search/t403?key=' + astext.value);
-}
-
-function gameApproval(){
-	window.open('http://www.nppa.gov.cn/nppa/publishing/serviceList2.shtml?gamesName=' + astext.value);
 }
 
 function chinazDomain(){
@@ -254,8 +244,8 @@ function xiaomiDocs(){
 	window.open('https://dev.mi.com/distribute/doc/search?keyword=' + astext.value);
 }
 
-function yingyongbaoDocs(){
-	window.open('https://wikinew.open.qq.com/index.html#/results?keyWord=' + astext.value);
+function honorDocs(){
+	window.open('https://developer.hihonor.com/cn/search?val=' + astext.value);
 }
 
 //常用站点
