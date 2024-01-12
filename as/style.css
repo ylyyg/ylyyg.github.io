@@ -1,7 +1,7 @@
 @charset "utf-8";
 /* CSS Document */
 
-/*版本号：v27.0，更新时间：2023.10.15*/
+/*版本号：v28.0，更新时间：2024.01.12*/
 * {
 	padding: 0;
 	margin: 0;
@@ -9,7 +9,6 @@
 	font-family: HarmonyOS-Sans, PingFang SC, Microsoft YaHei;
 	-webkit-appearance: none;
 }
-/*引入HarmonyOS Sans字体*/
 @font-face {
 	font-family: HarmonyOS-Sans;
 	font-weight: normal;
@@ -22,53 +21,6 @@
 	font-display: swap;
 	src: url(https://ylyyg.github.io/fonts/HarmonyOS-Sans-Bold.ttf);
 }
-/*HarmonyOS Sans字体引入结束*/
-/*
-.nav {
-	height: 40px;
-	width: 100%;
-	min-width: 1180px;
-}
-.nav-menu {
-	height: 40px;
-	width: 100%;
-	min-width: 1180px;
-}
-.nav-home {
-	height: 40px;
-	width: 200px;
-	font-size: 14px;
-	float: left;
-	line-height: 40px;
-	text-align: left;
-	color: #444;
-	margin-left: 15px;
-	letter-spacing: 0.5px;
-}
-.nav-home a {
-	text-decoration: none;
-	color: #444;
-}
-.nav-home a:hover {
-	color: #4e6ef2;
-}
-.nav-home span {
-	color: #ddd;
-	padding-left: 5px;
-	padding-right: 5px;
-}
-.nav-time {
-	height: 40px;
-	width: 300px;
-	font-size: 14px;
-	float: right;
-	line-height: 40px;
-	text-align: right;
-	color: #444;
-	margin-right: 15px;
-	letter-spacing: 0.5px;
-}
-*/
 .logo {
 	height: 60px;
 	width: 100%;
