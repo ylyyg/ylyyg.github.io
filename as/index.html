@@ -7,8 +7,24 @@
 </head>
 <body>
 <div class="logo">
-  <div class="nav-logo">APP SEARCH</div>
+  <div class="nav-logo">
+    <div id="mytime"></div>
+  </div>
 </div>
+<script>
+function updateTime() {  
+    var now = new Date();  
+	var hours = now.getHours();  
+    var minutes = now.getMinutes();  
+    minutes = minutes < 10 ? '0' + minutes : minutes;  
+    var timeString = hours + ":" + minutes;  
+    document.getElementById("mytime").textContent = timeString;  
+    setTimeout(updateTime, 1000);  
+}
+window.onload = function() {  
+    updateTime();  
+};
+</script>
 <div class="content">
   <div class="search-main">
   <form name="app-form" target="_blank">
@@ -64,7 +80,7 @@
       </div>
       <!--开放平台文档-->
       <div class="search-btn-left">
-        <div class="search-btn-title">&gt;&nbsp; 搜开放平台文档</div>
+        <div class="search-btn-title">&gt;&nbsp; 搜平台文档</div>
         <div class="search-btn-content">
           <input type="button" class="search-btn-btn" value="华为文档" title="华为开发者联盟文档搜索结果" onClick="huaweiDocs()">
           <input type="button" class="search-btn-btn" value="OPPO文档" title="OPPO开放平台文档搜索结果" onClick="oppoDocs()">
@@ -95,10 +111,8 @@
     <p><a href="https://cli.im/" target="_blank">草料二维码</a></p>
     <p><a href="https://www.qimai.cn/andapp/shelves/appid/102" target="_blank">七麦数据</a></p>
     <p><a href="https://app.diandian.com/" target="_blank">点点数据</a></p>
-    <p><a href="https://www.tianyancha.com/" target="_blank">天眼查</a></p>
     <p><a href="https://www.taptap.com/" target="_blank">TapTap</a></p>
     <p><a href="https://www.wandoujia.com/" target="_blank">豌豆荚</a></p>
-    <p><a href="https://sj.qq.com/myapp/" target="_blank">应用宝</a></p>
   </div>
   <div class="link-list">
     <p><span class="s1">&gt;&nbsp; 数据看板</span></p>
@@ -106,9 +120,7 @@
     <p><a href="https://app.diandian.com/rank/android/" target="_blank">点点安卓榜单</a></p>
     <p><span class="s2">&gt;&nbsp; 效率工具</span></p>
     <p><a href="https://www.xmind.net/" target="_blank">Xmind</a></p>
-    <p><a href="https://www.wps.cn/" target="_blank">WPS Office</a></p>
     <p><a href="https://www.dida365.com/" target="_blank">滴答清单</a></p>
-    <p><a href="https://www.quickapp.cn/docCenter/post/69" target="_blank">快应用调试器</a></p>
   </div>
   <div class="link-list">
     <p><span class="s1">&gt;&nbsp; 开放平台</span></p>
@@ -117,21 +129,17 @@
     <p><a href="https://open.oppomobile.com/" target="_blank">OPPO开放平台</a></p>
     <p><a href="https://developer.hihonor.com/cn/" target="_blank">荣耀开发者服务平台</a></p>
     <p><a href="https://developer.huawei.com/consumer/cn/" target="_blank">华为开发者联盟</a></p>
-    <p><a href="https://app.open.qq.com/p/home" target="_blank">腾讯应用开放平台</a></p>
-    <p><a href="https://www.quickapp.cn/" target="_blank">快应用平台</a></p>
   </div>
   <div class="link-list">
     <p><span class="s1">&gt;&nbsp; 资质查询</span></p>
     <p><a href="https://register.ccopyright.com.cn/query.html" target="_blank">软著查询服务平台</a></p>
-    <p><a href="http://www.safe.gov.cn/safe/jyjywhywxkzdbxjyjgmd/index.html" target="_blank">经营外汇业务许可证</a></p>
     <p><a href="http://xkz.cbirc.gov.cn/jr/" target="_blank">金融许可证信息</a></p>
     <p><a href="https://www.nppa.gov.cn/bsfw/jggs/yxspjg/" target="_blank">游戏审批结果</a></p>
-    <p><a href="http://www.cgigc.com.cn/isbn/index.html?curPage=1" target="_blank">游戏版号</a></p>
     <p><a href="https://beian.miit.gov.cn/" target="_blank">ICP备案信息查询</a></p>
     <p><a href="http://wcjs.sbj.cnipa.gov.cn/" target="_blank">注册商标信息查询</a></p>
   </div>
 </div>
-<div class="footer"> &copy;&nbsp; 2018 - 2024<span>/</span> DESIGNED BY <a href="#" target="_blank">POETRY.</a> <span>/</span> POWERED BY <a href="https://github.com/" target="_blank">GITHUB.</a> <span>/</span> v28.0 <span>/</span> 2024.01.12 </div>
+<div class="footer"> &copy;&nbsp; 2018 - 2024<span>/</span> DESIGNED BY <a href="https://ylyyg.github.io/" target="_blank">POETRY.</a> <span>/</span> POWERED BY <a href="https://github.com/" target="_blank">GITHUB.</a> <span>/</span> v29.0 <span>/</span> 2024.07.11 </div>
 
 <!--js部分--> 
 <script>
