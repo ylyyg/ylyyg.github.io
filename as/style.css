@@ -1,25 +1,25 @@
 @charset "utf-8";
 /* CSS Document */
 
-/*版本号：v29.0，更新时间：2024.07.11*/
+/*版本号：v29.1，更新时间：2025.10.24*/
 * {
 	padding: 0;
 	margin: 0;
 	list-style: none;
-	font-family: HarmonyOS-Sans, PingFang SC, Microsoft YaHei;
+	font-family: HONOR-Sans, PingFang SC, Microsoft YaHei;
 	-webkit-appearance: none;
 }
 @font-face {
-	font-family: HarmonyOS-Sans;
+	font-family: HONOR-Sans;
 	font-weight: normal;
 	font-display: swap;
-	src: url(https://ylyyg.github.io/fonts/HarmonyOS-Sans-Regular.ttf);
+	src: url(https://ylyyg.github.io/fonts/HONORSans-Regular.ttf);
 }
 @font-face {
-	font-family: HarmonyOS-Sans;
+	font-family: HONOR-Sans;
 	font-weight: bold;
 	font-display: swap;
-	src: url(https://ylyyg.github.io/fonts/HarmonyOS-Sans-Bold.ttf);
+	src: url(https://ylyyg.github.io/fonts/HONORSans-Bold.ttf);
 }
 .logo {
 	height: 100px;
@@ -219,3 +219,4 @@
 	padding-left: 8px;
 	padding-right: 8px;
 }
+
