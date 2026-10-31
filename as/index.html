@@ -1,0 +1,435 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="theme-color" id="themeColor" content="#4e6ef2">
+<title>AppSearch - (^_−)☆嘻嘻嘻~</title>
+<link rel="stylesheet" type="text/css" href="style.css?v=31.0" />
+<script>
+(function () {
+	var choice = 'light';
+	try { choice = localStorage.getItem('theme') || 'light'; } catch (e) {}
+	var dark = choice === 'auto'
+		? !!(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)
+		: choice === 'dark';
+	var root = document.documentElement;
+	root.setAttribute('data-theme', dark ? 'dark' : 'light');
+	var meta = document.getElementById('themeColor');
+	if (meta) meta.setAttribute('content', dark ? '#0f1319' : '#4e6ef2');
+})();
+</script>
+</head>
+<body>
+<div class="theme-switch" role="radiogroup" aria-label="主题切换">
+	<span class="thumb" aria-hidden="true"></span>
+	<button type="button" role="radio" aria-checked="true" tabindex="0" data-theme-value="light">浅色</button>
+	<button type="button" role="radio" aria-checked="false" tabindex="-1" data-theme-value="dark">深色</button>
+	<button type="button" role="radio" aria-checked="false" tabindex="-1" data-theme-value="auto" aria-label="跟随系统">跟随</button>
+</div>
+<div class="logo">
+  <div class="nav-logo">
+    <div id="mytime"></div>
+  </div>
+</div>
+<script>
+function updateTime() {
+	var now = new Date();
+	var h = now.getHours();
+	var m = now.getMinutes();
+	document.getElementById('mytime').textContent =
+		(h < 10 ? '0' + h : h) + ':' + (m < 10 ? '0' + m : m);
+	setTimeout(updateTime, 1000 - now.getMilliseconds());
+}
+document.addEventListener('DOMContentLoaded', function () { updateTime(); });
+</script>
+<div class="content">
+  <div class="search-main">
+  <form name="app-form" target="_blank" onsubmit="return false;">
+    <div class="search-bar">
+      <input type="text" id="astext" class="search-text" autocomplete="off" placeholder="开始你的搜索" onKeyUp="enterSearch(event)">
+      <input type="button" class="search-btn-bd" value="百度一下" onClick="baiduWeb()">
+    </div>
+    <div class="search-btn-main">
+      <!--应用名称1-->
+      <div class="search-btn-left">
+        <div class="search-btn-title">&gt;&nbsp; 搜应用名称</div>
+        <div class="search-btn-content">
+          <input type="button" class="search-btn-btn" value="华为市场" onClick="huaweiName()">
+          <input type="button" class="search-btn-btn" value="vivo(七麦)" title="七麦数据的vivo搜索结果" onClick="qimaivivoName()">
+          <input type="button" class="search-btn-btn" value="OPPO(七麦)" title="七麦数据的OPPO搜索结果" onClick="qimaioppoName()">
+          <input type="button" class="search-btn-btn" value="小米(七麦)" title="七麦数据的小米搜索结果" onClick="qimaixiaomiName()">
+          <input type="button" class="search-btn-btn1" value="TapTap" onClick="taptapName()">
+        </div>
+      </div>
+      <!--应用名称2-->
+      <div class="search-btn-right">
+        <div class="search-btn-title">&gt;&nbsp; 搜应用名称</div>
+        <div class="search-btn-content">
+          <input type="button" class="search-btn-btn" value="豌豆荚" onClick="wandoujiaName()">
+          <input type="button" class="search-btn-btn" value="百度助手" onClick="baiduName()">
+          <input type="button" class="search-btn-btn" value="点点数据" title="点点数据的华为搜索结果" onClick="diandianName()">
+          <input type="button" class="search-btn-btn" value="App Store" onClick="appstoreName()">
+          <input type="button" class="search-btn-btn1" value="Google Play" onClick="googleplayName()">
+        </div>
+      </div>
+      <!--应用包名-->
+      <div class="search-btn-left">
+        <div class="search-btn-title">&gt;&nbsp; 搜应用包名</div>
+        <div class="search-btn-content">
+          <input type="button" class="search-btn-btn" value="应用宝" onClick="yingyongbaoPackage()">
+          <input type="button" class="search-btn-btn" value="Google Play" onClick="googleplayPackage()">
+          <input type="button" class="search-btn-btn" value="豌豆荚" onClick="wandoujiaPackage()">
+          <input type="button" class="search-btn-btn" value="酷传" title="酷传支持包名模糊查询" onClick="comingSoon()">
+          <input type="button" class="search-btn-btn1" value="七麦数据" onClick="qimaioppoName()">
+        </div>
+      </div>
+      <!--资质信息-->
+      <div class="search-btn-right">
+        <div class="search-btn-title">&gt;&nbsp; 搜资质信息</div>
+        <div class="search-btn-content">
+          <input type="button" class="search-btn-btn" value="爱企查" title="爱企查的公司注册信息搜索结果" onClick="aiqichaCompany()">
+          <input type="button" class="search-btn-btn" value="天眼查" title="天眼查的公司注册信息搜索结果" onClick="tianyanchaCompany()">
+          <input type="button" class="search-btn-btn" value="商标信息" title="天眼查的商标信息搜索结果" onClick="tianyanchaBrand()">
+          <input type="button" class="search-btn-btn" value="软著信息" title="天眼查的软著信息搜索结果" onClick="tianyanchaSoft()">
+          <input type="button" class="search-btn-btn1" value="ICP备案" title="爱站网的ICP搜索结果" onClick="aizhanDomain()">
+        </div>
+      </div>
+      <!--开放平台文档-->
+      <div class="search-btn-left">
+        <div class="search-btn-title">&gt;&nbsp; 搜平台文档</div>
+        <div class="search-btn-content">
+          <input type="button" class="search-btn-btn" value="华为文档" title="华为开发者联盟文档搜索结果" onClick="huaweiDocs()">
+          <input type="button" class="search-btn-btn" value="OPPO文档" title="OPPO开放平台文档搜索结果" onClick="oppoDocs()">
+          <input type="button" class="search-btn-btn" value="vivo文档" title="vivo开放平台文档搜索结果" onClick="vivoDocs()">
+          <input type="button" class="search-btn-btn" value="小米文档" title="小米开放平台文档搜索结果" onClick="xiaomiDocs()">
+          <input type="button" class="search-btn-btn1" value="荣耀文档" title="荣耀开发者服务平台文档搜索结果" onClick="honorDocs()">
+        </div>
+      </div>
+      <!--常用站点-->
+      <div class="search-btn-right">
+        <div class="search-btn-title">&gt;&nbsp; 搜常用站点</div>
+        <div class="search-btn-content">
+          <input type="button" class="search-btn-btn" value="微博搜索" onClick="weiboWeb()">
+          <input type="button" class="search-btn-btn" value="抖音搜索" onClick="douyinWeb()">
+          <input type="button" class="search-btn-btn" value="bilibili搜索" onClick="bilibiliWeb()">
+          <input type="button" class="search-btn-btn" value="知乎搜索" onClick="zhihuWeb()">
+          <input type="button" class="search-btn-btn1" value="Google搜索" onClick="googleWeb()">
+        </div>
+      </div>
+    </div>
+  </form>
+  </div>
+</div>
+<div class="link-main">
+  <div class="link-list">
+    <p><span class="s1">&gt;&nbsp; 常用直达</span></p>
+    <p><a href="https://cli.im/" target="_blank" rel="noopener">草料二维码</a></p>
+    <p><a href="https://www.qimai.cn/andapp/shelves/appid/102" target="_blank" rel="noopener">七麦数据</a></p>
+    <p><a href="https://app.diandian.com/" target="_blank" rel="noopener">点点数据</a></p>
+    <p><a href="https://www.taptap.com/" target="_blank" rel="noopener">TapTap</a></p>
+    <p><a href="https://www.wandoujia.com/" target="_blank" rel="noopener">豌豆荚</a></p>
+  </div>
+  <div class="link-list">
+    <p><span class="s1">&gt;&nbsp; 数据看板</span></p>
+    <p><a href="https://www.qimai.cn/rank/marketRank" target="_blank" rel="noopener">七麦安卓榜单</a></p>
+    <p><a href="https://app.diandian.com/rank/android/" target="_blank" rel="noopener">点点安卓榜单</a></p>
+    <p><span class="s2">&gt;&nbsp; 效率工具</span></p>
+    <p><a href="https://www.xmind.net/" target="_blank" rel="noopener">Xmind</a></p>
+    <p><a href="https://www.dida365.com/" target="_blank" rel="noopener">滴答清单</a></p>
+  </div>
+  <div class="link-list">
+    <p><span class="s1">&gt;&nbsp; 开放平台</span></p>
+    <p><a href="https://dev.vivo.com.cn/" target="_blank" rel="noopener">vivo开放平台</a></p>
+    <p><a href="https://dev.mi.com/console/" target="_blank" rel="noopener">小米开放平台</a></p>
+    <p><a href="https://open.oppomobile.com/" target="_blank" rel="noopener">OPPO开放平台</a></p>
+    <p><a href="https://developer.hihonor.com/cn/" target="_blank" rel="noopener">荣耀开发者服务平台</a></p>
+    <p><a href="https://developer.huawei.com/consumer/cn/" target="_blank" rel="noopener">华为开发者联盟</a></p>
+  </div>
+  <div class="link-list">
+    <p><span class="s1">&gt;&nbsp; 资质查询</span></p>
+    <p><a href="https://register.ccopyright.com.cn/query.html" target="_blank" rel="noopener">软著查询服务平台</a></p>
+    <p><a href="http://xkz.nfra.gov.cn/jr/" target="_blank" rel="noopener">金融许可证信息</a></p>
+    <p><a href="https://www.nppa.gov.cn/bsfw/jggs/yxspjg/" target="_blank" rel="noopener">游戏审批结果</a></p>
+    <p><a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">ICP备案信息查询</a></p>
+    <p><a href="http://wcjs.sbj.cnipa.gov.cn/" target="_blank" rel="noopener">注册商标信息查询</a></p>
+  </div>
+</div>
+<div class="footer"> &copy;&nbsp; 2018 - 2026<span>/</span> DESIGNED BY <a href="https://ylyyg.github.io/" target="_blank" rel="noopener">POETRY.</a> <span>/</span> POWERED BY <a href="https://github.com/" target="_blank" rel="noopener">GITHUB.</a> <span>/</span> v31.0 <span>/</span> 2026.11.01 </div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<!--js部分-->
+<script>
+
+var searchInput = document.getElementById('astext');
+
+//轻提示
+var toastTimer = null;
+function showToast(msg) {
+	var el = document.getElementById('toast');
+	if (!el) return;
+	el.textContent = msg;
+	el.classList.add('is-show');
+	clearTimeout(toastTimer);
+	toastTimer = setTimeout(function () { el.classList.remove('is-show'); }, 2200);
+}
+
+function comingSoon() {
+	showToast('该选项暂不支持点击，请点击其他选项继续使用');
+}
+
+//主搜索
+
+//统一出口：先校验关键词，再做 URL 编码后打开
+function go(base){
+	var kw = searchInput.value.trim();
+	if (!kw) { showToast('请输入搜索关键词，再试试吧'); return; }
+	window.open(base + encodeURIComponent(kw), '_blank', 'noopener');
+}
+
+function enterSearch(e){
+	e = e || window.event;
+	if (!e || e.key !== 'Enter' || e.isComposing) return;
+	baiduWeb();
+}
+
+function baiduWeb(){
+	go('https://www.baidu.com/s?wd=');
+}
+
+//应用名称
+
+function huaweiName(){
+	go('https://appgallery.huawei.com/#/search/');
+}
+
+function qimaivivoName(){
+	go('https://www.qimai.cn/search/android/market/8/search/');
+}
+
+function qimaioppoName(){
+	go('https://www.qimai.cn/search/android/market/9/search/');
+}
+
+function qimaixiaomiName(){
+	go('https://www.qimai.cn/search/android/market/4/search/');
+}
+
+function taptapName(){
+	go('https://www.taptap.com/search/');
+}
+
+function wandoujiaName(){
+	go('https://www.wandoujia.com/search/?key=');
+}
+
+function baiduName(){
+	go('https://shouji.baidu.com/search?w=');
+}
+
+function diandianName(){
+	go('https://app.diandian.com/search/android-2-');
+}
+
+function appstoreName(){
+	go('https://apps.apple.com/cn/iphone/search?term=');
+}
+
+function googleplayName(){
+	go('https://play.google.com/store/search?q=');
+}
+
+//应用包名
+
+function yingyongbaoPackage(){
+	go('https://sj.qq.com/myapp/detail.htm?apkName=');
+}
+
+function googleplayPackage(){
+	go('https://play.google.com/store/apps/details?id=');
+}
+
+function wandoujiaPackage(){
+	go('https://www.wandoujia.com/apps/');
+}
+
+//资质信息
+
+function aiqichaCompany(){
+	go('https://aiqicha.baidu.com/s?q=');
+}
+
+function tianyanchaCompany(){
+	go('https://www.tianyancha.com/search?key=');
+}
+
+function tianyanchaBrand(){
+	go('https://www.tianyancha.com/search/t401?key=');
+}
+
+function tianyanchaSoft(){
+	go('https://www.tianyancha.com/search/t403?key=');
+}
+
+function aizhanDomain(){
+	go('https://icp.aizhan.com/');
+}
+
+//开放平台文档
+
+function huaweiDocs(){
+	go('https://developer.huawei.com/consumer/cn/doc/search?type=doc&val=');
+}
+
+function oppoDocs(){
+	go('https://open.oppomobile.com/new/searchWiki?keyword=');
+}
+
+function vivoDocs(){
+	go('https://dev.vivo.com.cn/documentCenter/search?keyword=');
+}
+
+function xiaomiDocs(){
+	go('https://dev.mi.com/distribute/doc/search?keyword=');
+}
+
+function honorDocs(){
+	go('https://developer.hihonor.com/cn/search?val=');
+}
+
+//常用站点
+
+function weiboWeb(){
+	go('https://s.weibo.com/weibo?q=');
+}
+
+function douyinWeb(){
+	go('https://www.douyin.com/search/');
+}
+
+function bilibiliWeb(){
+	go('https://search.bilibili.com/all?keyword=');
+}
+
+function zhihuWeb(){
+	go('https://www.zhihu.com/search?type=content&q=');
+}
+
+function googleWeb(){
+	go('https://www.google.com/search?q=');
+}
+
+</script>
+<script>
+(function () {
+	var root = document.documentElement;
+	var box = document.querySelector('.theme-switch');
+	if (!box) return;
+	var btns = box.querySelectorAll('button');
+	var thumb = box.querySelector('.thumb');
+	var order = ['light', 'dark', 'auto'];
+	var meta = document.getElementById('themeColor');
+	var mq = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+	var choice = 'light';
+
+	try {
+		var saved = localStorage.getItem('theme');
+		if (order.indexOf(saved) >= 0) choice = saved;
+	} catch (e) {}
+
+	function resolved() {
+		if (choice === 'auto') return (mq && mq.matches) ? 'dark' : 'light';
+		return choice;
+	}
+
+	function paint(save) {
+		var v = resolved();
+		root.setAttribute('data-theme', v);
+		if (meta) meta.setAttribute('content', v === 'dark' ? '#0f1319' : '#4e6ef2');
+		box.style.setProperty('--idx', order.indexOf(choice));
+		for (var i = 0; i < btns.length; i++) {
+			var on = btns[i].getAttribute('data-theme-value') === choice;
+			btns[i].classList.toggle('is-active', on);
+			btns[i].setAttribute('aria-checked', on ? 'true' : 'false');
+			btns[i].tabIndex = on ? 0 : -1;
+		}
+		if (save) {
+			try { localStorage.setItem('theme', choice); } catch (e) {}
+		}
+	}
+
+	// 从右上角开关的位置，用圆形扩散把新主题铺满全屏
+	function switchTheme(value, x, y) {
+		var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+		function commit() { choice = value; paint(true); }
+		if (!document.startViewTransition || reduced) { commit(); return; }
+		root.classList.add('vt-switching');
+		var vt = document.startViewTransition(commit);
+		vt.finished.finally(function () { root.classList.remove('vt-switching'); });
+		vt.ready.then(function () {
+			var w = window.innerWidth, h = window.innerHeight;
+			var far = Math.max(
+				Math.sqrt(x * x + y * y),
+				Math.sqrt((w - x) * (w - x) + y * y),
+				Math.sqrt(x * x + (h - y) * (h - y)),
+				Math.sqrt((w - x) * (w - x) + (h - y) * (h - y))
+			);
+			document.documentElement.animate(
+				[
+					{ clipPath: 'circle(0px at ' + x + 'px ' + y + 'px)' },
+					{ clipPath: 'circle(' + far + 'px at ' + x + 'px ' + y + 'px)' }
+				],
+				{
+					duration: 640,
+					easing: 'cubic-bezier(.65, 0, .35, 1)',
+					pseudoElement: '::view-transition-new(root)'
+				}
+			);
+		}).catch(function () {});
+	}
+
+	function pick(value) {
+		if (order.indexOf(value) < 0 || value === choice) return;
+		if (thumb) {
+			thumb.classList.remove('is-sliding');
+			void thumb.offsetWidth; // 重启动画
+			thumb.classList.add('is-sliding');
+		}
+		var btn = box.querySelector('[data-theme-value="' + value + '"]');
+		var rect = btn.getBoundingClientRect();
+		switchTheme(value, rect.left + rect.width / 2, rect.top + rect.height / 2);
+	}
+
+	if (thumb) {
+		thumb.addEventListener('animationend', function () {
+			thumb.classList.remove('is-sliding');
+		});
+	}
+
+	paint(false);
+
+	for (var i = 0; i < btns.length; i++) {
+		btns[i].addEventListener('click', function () {
+			pick(this.getAttribute('data-theme-value'));
+		});
+	}
+
+	box.addEventListener('keydown', function (e) {
+		var step = (e.key === 'ArrowRight' || e.key === 'ArrowDown') ? 1
+			: (e.key === 'ArrowLeft' || e.key === 'ArrowUp') ? -1 : 0;
+		if (!step) return;
+		e.preventDefault();
+		var next = order[(order.indexOf(choice) + step + order.length) % order.length];
+		var btn = box.querySelector('[data-theme-value="' + next + '"]');
+		if (btn) btn.focus();
+		pick(next);
+	});
+
+	if (mq) {
+		var onChange = function () { if (choice === 'auto') paint(false); };
+		if (mq.addEventListener) mq.addEventListener('change', onChange);
+		else if (mq.addListener) mq.addListener(onChange);
+	}
+})();
+</script>
+</body>
+</html>
