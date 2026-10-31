@@ -1,0 +1,942 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="theme-color" id="themeColor" content="#4e6ef2">
+<title>AppSearch - (^_−)☆嘻嘻嘻~</title>
+<style>
+@charset "utf-8";
+/* v31.0 */
+
+:root {
+	--brand: #4e6ef2;
+	--brand-dark: #3a58e0;
+	--brand-soft: rgba(78, 110, 242, .16);
+	--bg: #f5f7fb;
+	--glow-1: rgba(78, 110, 242, .14);
+	--glow-2: rgba(122, 147, 255, .12);
+	--surface: #ffffff;
+	--surface-hover: #e5eeff;
+	--surface-active: #d9e5ff;
+	--btn-text: #3c434f;
+	--placeholder: #6b7482;
+	--ink: #1b1f27;
+	--ink-2: #454b56;
+	--muted: #696f7d;
+	--sep: #dfe3ec;
+	--ring: rgba(78, 110, 242, .26);
+	--cta-a: #5b7cff;
+	--cta-b: #4e6ef2;
+	--cta-c: #4a63ea;
+	--clock-a: #7d95ff;
+	--clock-b: #4e6ef2;
+	--clock-c: #6a55f0;
+	--switch-bg: #e4edff;
+	--switch-thumb: #ffffff;
+	--switch-text: #616b7a;
+	--toast-bg: #3a58e0;
+	--toast-fg: #ffffff;
+	--stroke-hover: #6a85f5;
+	--cta-border: #4e6ef2;
+	--shadow-input: 0 2px 8px rgba(24, 35, 75, .04);
+	--shadow-cta: 0 2px 8px rgba(78, 110, 242, .18);
+	--shadow-cta-hover: 0 6px 18px rgba(78, 110, 242, .28);
+	--shadow-cta-active: 0 3px 10px rgba(78, 110, 242, .22);
+	--ease: cubic-bezier(.22, .61, .36, 1);
+	--ease-spring: cubic-bezier(.45, 0, .25, 1.26);
+	color-scheme: light;
+}
+
+html[data-theme="dark"] {
+	--bg: #0f1319;
+	--glow-1: rgba(78, 110, 242, .22);
+	--glow-2: rgba(122, 147, 255, .10);
+	--surface: #242e3d;
+	--surface-hover: #2f3b4e;
+	--surface-active: #3a4860;
+	--btn-text: #cbd4e1;
+	--placeholder: #8e98a8;
+	--ink: #e7ebf3;
+	--ink-2: #b3bdcc;
+	--muted: #79839a;
+	--sep: #3c4657;
+	--brand: #7d93ec;
+	--brand-dark: #93a8f2;
+	--ring: rgba(96, 132, 255, .32);
+	--cta-a: #4c63cf;
+	--cta-b: #4257c0;
+	--cta-c: #3c4cae;
+	--clock-a: #93a6e8;
+	--clock-b: #7288dd;
+	--clock-c: #9182dc;
+	--switch-bg: #1d2531;
+	--switch-thumb: #313c4d;
+	--switch-text: #9aa4b6;
+	--toast-bg: #4257c0;
+	--toast-fg: #ffffff;
+	--stroke-hover: #95a8f4;
+	--cta-border: #3c4cae;
+	--shadow-input: 0 2px 8px rgba(0, 0, 0, .32);
+	--shadow-cta: 0 2px 8px rgba(0, 0, 0, .38);
+	--shadow-cta-hover: 0 6px 18px rgba(0, 0, 0, .50);
+	--shadow-cta-active: 0 3px 10px rgba(0, 0, 0, .44);
+	color-scheme: dark;
+}
+
+* {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+	font-family: HONOR-Sans, PingFang SC, Microsoft YaHei, sans-serif;
+	-webkit-appearance: none;
+}
+@font-face {
+	font-family: HONOR-Sans;
+	font-weight: 400 500;
+	font-display: swap;
+	src: url(https://ylyyg.github.io/fonts/HONORSans-Regular.ttf);
+}
+@font-face {
+	font-family: HONOR-Sans;
+	font-weight: bold;
+	font-display: swap;
+	src: url(https://ylyyg.github.io/fonts/HONORSans-Bold.ttf);
+}
+
+html,
+body {
+	min-height: 100%;
+}
+body {
+	background-color: var(--bg);
+	background-image:
+		radial-gradient(760px 380px at 50% -140px, var(--glow-1), rgba(78, 110, 242, 0) 72%),
+		radial-gradient(520px 300px at 88% 2%, var(--glow-2), rgba(122, 147, 255, 0) 70%);
+	background-repeat: no-repeat;
+	color: var(--ink);
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	transition: background-color .3s var(--ease), color .3s var(--ease);
+}
+::selection {
+	background: var(--brand-soft);
+	color: var(--brand-dark);
+}
+
+@keyframes rise {
+	from { opacity: 0; transform: translateY(10px); }
+	to { opacity: 1; transform: translateY(0); }
+}
+
+.theme-switch {
+	position: fixed;
+	top: 18px;
+	right: 22px;
+	z-index: 99;
+	display: flex;
+	padding: 3px;
+	border-radius: 999px;
+	background: var(--switch-bg);
+	transition: background-color .3s var(--ease);
+}
+.theme-switch .thumb {
+	position: absolute;
+	top: 3px;
+	left: 3px;
+	width: 58px;
+	height: 26px;
+	border-radius: 999px;
+	background: var(--switch-thumb);
+	transform: translateX(calc(var(--idx, 0) * 58px));
+	transition: transform .58s var(--ease-spring), background-color .3s var(--ease);
+}
+/* 支持独立变换属性时改用 translate，避免拉伸动画被位移叠加放大 */
+@supports (translate: 0 0) {
+	.theme-switch .thumb {
+		transform: none;
+		translate: calc(var(--idx, 0) * 58px) 0;
+		transition: translate .58s var(--ease-spring), background-color .3s var(--ease);
+	}
+}
+/* 滑动过程中横向拉伸、纵向压扁，回弹时有明显果冻感 */
+.theme-switch .thumb.is-sliding {
+	animation: thumb-glide .58s var(--ease);
+}
+@keyframes thumb-glide {
+	0% { scale: 1 1; }
+	26% { scale: 1.2 .82; }
+	60% { scale: .93 1.06; }
+	100% { scale: 1 1; }
+}
+.theme-switch button {
+	position: relative;
+	z-index: 1;
+	width: 58px;
+	height: 26px;
+	border: 0;
+	background: transparent;
+	font-size: 12px;
+	color: var(--switch-text);
+	letter-spacing: 0.5px;
+	cursor: pointer;
+	outline: none;
+	transition: color .22s var(--ease);
+}
+.theme-switch button.is-active {
+	color: var(--brand-dark);
+	font-weight: bold;
+}
+.theme-switch button:focus-visible {
+	outline: 4px solid var(--ring);
+	outline-offset: 2px;
+	border-radius: 999px;
+}
+
+.logo {
+	height: 100px;
+	width: 100%;
+	min-width: 1180px;
+	margin: 40px auto 0;
+	position: relative;
+	animation: rise .55s var(--ease) both;
+}
+.nav-logo {
+	position: relative;
+	z-index: 2;
+	height: 100px;
+	width: 240px;
+	margin: auto;
+	font-size: 56px;
+	font-weight: bold;
+	line-height: 100px;
+	text-align: center;
+	letter-spacing: 3px;
+	font-variant-numeric: tabular-nums;
+	background: linear-gradient(140deg, var(--clock-a) 0%, var(--clock-b) 48%, var(--clock-c) 100%);
+	-webkit-background-clip: text;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+	color: var(--brand);
+	filter: drop-shadow(0 8px 18px rgba(78, 110, 242, .18));
+}
+
+.content {
+	height: 382px;
+	width: 1180px;
+	margin: 30px auto 0;
+}
+.search-main {
+	height: auto;
+	width: 1180px;
+	margin: 0px auto 0;
+}
+
+.search-bar {
+	height: 46px;
+	width: 700px;
+	margin: auto;
+	position: relative;
+	animation: rise .55s var(--ease) .06s both;
+}
+
+.search-bar::after {
+	content: "";
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	border-radius: 10px;
+	box-shadow: 0 0 0 4px var(--ring);
+	opacity: 0;
+	transform: scale(.985);
+	transition: opacity .2s var(--ease), transform .28s var(--ease);
+	pointer-events: none;
+}
+.search-bar:focus-within::after {
+	opacity: 1;
+	transform: scale(1);
+}
+
+.search-text {
+	height: 42px;
+	width: 560px;
+	padding-left: 15px;
+	padding-right: 15px;
+	outline: none;
+	border-left: 2px solid var(--brand);
+	border-top: 2px solid var(--brand);
+	border-bottom: 2px solid var(--brand);
+	border-right: 0;
+	border-radius: 10px 0 0 10px;
+	background: var(--surface);
+	font-size: 15px;
+	float: left;
+	letter-spacing: 0.5px;
+	color: var(--ink);
+	transition: box-shadow .25s var(--ease), border-color .25s var(--ease),
+		background-color .3s var(--ease);
+	box-shadow: var(--shadow-input);
+}
+.search-text::placeholder {
+	color: var(--placeholder);
+	letter-spacing: 0.5px;
+}
+.search-bar:hover .search-text,
+.search-bar:focus-within .search-text {
+	border-color: var(--stroke-hover);
+}
+.search-text:focus {
+	border-color: var(--brand);
+}
+
+.search-btn-bd {
+	height: 46px;
+	width: 108px;
+	background: linear-gradient(135deg, var(--cta-a) 0%, var(--cta-b) 55%, var(--cta-c) 100%);
+	outline: none;
+	color: #fff;
+	font-size: 15px;
+	border: 1px solid var(--cta-border);
+	float: left;
+	border-radius: 0 10px 10px 0;
+	cursor: pointer;
+	letter-spacing: 1px;
+	font-weight: bold;
+	transition: filter .2s var(--ease), box-shadow .25s var(--ease);
+	box-shadow: var(--shadow-cta);
+}
+.search-bar:hover .search-btn-bd,
+.search-btn-bd:hover {
+	filter: brightness(1.06) saturate(1.05);
+	box-shadow: var(--shadow-cta-hover);
+}
+.search-btn-bd:active {
+	filter: brightness(.97);
+	box-shadow: var(--shadow-cta-active);
+}
+
+.search-btn-main {
+	height: 276px;
+	width: 1180px;
+	margin: 40px auto 20px;
+	animation: rise .55s var(--ease) .12s both;
+}
+.search-btn-left,
+.search-btn-right {
+	height: 92px;
+	width: 560px;
+	float: left;
+	margin: 0 15px 0 15px;
+}
+.search-btn-title {
+	height: 32px;
+	width: 560px;
+	font-size: 14px;
+	color: var(--brand-dark);
+	float: left;
+	font-weight: bold;
+	letter-spacing: 0.8px;
+	line-height: 32px;
+}
+.search-btn-content {
+	height: 60px;
+	width: 560px;
+	float: left;
+}
+
+.search-btn-btn,
+.search-btn-btn1 {
+	height: 36px;
+	width: 100px;
+	float: left;
+	box-sizing: border-box;
+	background-color: var(--surface);
+	border: 0;
+	border-radius: 9px;
+	outline: none;
+	font-size: 14px;
+	font-weight: 500;
+	color: var(--btn-text);
+	cursor: pointer;
+	letter-spacing: 0.4px;
+	transition: background-color .18s var(--ease), color .3s var(--ease);
+}
+.search-btn-btn {
+	margin-right: 15px;
+}
+.search-btn-btn:hover,
+.search-btn-btn1:hover {
+	background-color: var(--surface-hover);
+}
+.search-btn-btn:active,
+.search-btn-btn1:active {
+	background-color: var(--surface-active);
+}
+
+.link-main {
+	width: 1180px;
+	height: 212px;
+	margin: auto;
+	animation: rise .55s var(--ease) .18s both;
+}
+.link-list {
+	width: 235px;
+	float: left;
+	font-size: 14px;
+	line-height: 32px;
+	background: var(--surface);
+	border-radius: 10px;
+	margin: 0 15px 0 15px;
+	padding: 10px 15px 10px 15px;
+	letter-spacing: 0.5px;
+	transition: background-color .3s var(--ease);
+}
+.link-list a {
+	text-decoration: none;
+	color: var(--ink-2);
+	padding-left: 18px;
+	transition: color .18s var(--ease);
+}
+.link-list a:hover {
+	color: var(--brand);
+}
+.link-list span.s1,
+.link-list span.s2 {
+	height: 32px;
+	width: 190px;
+	font-size: 14px;
+	color: var(--brand);
+	font-weight: bold;
+	display: block;
+	line-height: 32px;
+	letter-spacing: 0.8px;
+}
+
+.toast {
+	position: fixed;
+	left: 50%;
+	top: 22px;
+	z-index: 200;
+	max-width: 80vw;
+	padding: 10px 18px;
+	border-radius: 10px;
+	background: var(--toast-bg);
+	color: var(--toast-fg);
+	font-size: 13px;
+	line-height: 20px;
+	letter-spacing: 0.5px;
+	text-align: center;
+	opacity: 0;
+	transform: translate(-50%, -10px);
+	pointer-events: none;
+	box-shadow: 0 8px 24px rgba(58, 88, 224, .22);
+	transition: opacity .22s var(--ease), transform .22s var(--ease),
+		background-color .3s var(--ease);
+}
+.toast.is-show {
+	opacity: 1;
+	transform: translate(-50%, 0);
+}
+
+.footer {
+	height: 30px;
+	width: 1180px;
+	margin: 50px auto 0;
+	font-size: 13px;
+	line-height: 30px;
+	text-align: center;
+	color: var(--muted);
+	letter-spacing: 0.5px;
+	animation: rise .55s var(--ease) .24s both;
+}
+.footer a {
+	text-decoration: none;
+	color: var(--muted);
+	transition: color .18s var(--ease);
+}
+.footer a:hover {
+	color: var(--brand);
+}
+.footer span {
+	color: var(--sep);
+	padding-left: 8px;
+	padding-right: 8px;
+}
+
+.search-btn-btn:focus-visible,
+.search-btn-btn1:focus-visible {
+	outline: 4px solid var(--ring);
+	outline-offset: 2px;
+}
+.link-list a:focus-visible,
+.footer a:focus-visible {
+	outline: 4px solid var(--ring);
+	outline-offset: 3px;
+	border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	* {
+		animation: none !important;
+		transition: none !important;
+	}
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+	animation: none;
+	mix-blend-mode: normal;
+}
+::view-transition-old(root) {
+	z-index: 1;
+}
+::view-transition-new(root) {
+	z-index: 2;
+}
+html.vt-switching *,
+html.vt-switching *::before,
+html.vt-switching *::after {
+	transition: none !important;
+}
+/* 圆形扩散期间仍保留滑块的位移过渡，否则滑块会瞬移 */
+html.vt-switching .theme-switch .thumb {
+	transition: translate .58s var(--ease-spring), transform .58s var(--ease-spring) !important;
+}
+</style>
+<script>
+(function () {
+	var choice = 'light';
+	try { choice = localStorage.getItem('theme') || 'light'; } catch (e) {}
+	var dark = choice === 'auto'
+		? !!(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)
+		: choice === 'dark';
+	var root = document.documentElement;
+	root.setAttribute('data-theme', dark ? 'dark' : 'light');
+	var meta = document.getElementById('themeColor');
+	if (meta) meta.setAttribute('content', dark ? '#0f1319' : '#4e6ef2');
+})();
+</script>
+</head>
+<body>
+<div class="theme-switch" role="radiogroup" aria-label="主题切换">
+	<span class="thumb" aria-hidden="true"></span>
+	<button type="button" role="radio" aria-checked="true" tabindex="0" data-theme-value="light">浅色</button>
+	<button type="button" role="radio" aria-checked="false" tabindex="-1" data-theme-value="dark">深色</button>
+	<button type="button" role="radio" aria-checked="false" tabindex="-1" data-theme-value="auto" aria-label="跟随系统">跟随</button>
+</div>
+<div class="logo">
+  <div class="nav-logo">
+    <div id="mytime"></div>
+  </div>
+</div>
+<script>
+function updateTime() {
+	var now = new Date();
+	var h = now.getHours();
+	var m = now.getMinutes();
+	document.getElementById('mytime').textContent =
+		(h < 10 ? '0' + h : h) + ':' + (m < 10 ? '0' + m : m);
+	setTimeout(updateTime, 1000 - now.getMilliseconds());
+}
+document.addEventListener('DOMContentLoaded', function () { updateTime(); });
+</script>
+<div class="content">
+  <div class="search-main">
+  <form name="app-form" target="_blank" onsubmit="return false;">
+    <div class="search-bar">
+      <input type="text" id="astext" class="search-text" autocomplete="off" placeholder="开始你的搜索" onKeyUp="enterSearch(event)">
+      <input type="button" class="search-btn-bd" value="百度一下" onClick="baiduWeb()">
+    </div>
+    <div class="search-btn-main">
+      <!--应用名称1-->
+      <div class="search-btn-left">
+        <div class="search-btn-title">&gt;&nbsp; 搜应用名称</div>
+        <div class="search-btn-content">
+          <input type="button" class="search-btn-btn" value="华为市场" onClick="huaweiName()">
+          <input type="button" class="search-btn-btn" value="vivo(七麦)" title="七麦数据的vivo搜索结果" onClick="qimaivivoName()">
+          <input type="button" class="search-btn-btn" value="OPPO(七麦)" title="七麦数据的OPPO搜索结果" onClick="qimaioppoName()">
+          <input type="button" class="search-btn-btn" value="小米(七麦)" title="七麦数据的小米搜索结果" onClick="qimaixiaomiName()">
+          <input type="button" class="search-btn-btn1" value="TapTap" onClick="taptapName()">
+        </div>
+      </div>
+      <!--应用名称2-->
+      <div class="search-btn-right">
+        <div class="search-btn-title">&gt;&nbsp; 搜应用名称</div>
+        <div class="search-btn-content">
+          <input type="button" class="search-btn-btn" value="豌豆荚" onClick="wandoujiaName()">
+          <input type="button" class="search-btn-btn" value="百度助手" onClick="baiduName()">
+          <input type="button" class="search-btn-btn" value="点点数据" title="点点数据的华为搜索结果" onClick="diandianName()">
+          <input type="button" class="search-btn-btn" value="App Store" onClick="appstoreName()">
+          <input type="button" class="search-btn-btn1" value="Google Play" onClick="googleplayName()">
+        </div>
+      </div>
+      <!--应用包名-->
+      <div class="search-btn-left">
+        <div class="search-btn-title">&gt;&nbsp; 搜应用包名</div>
+        <div class="search-btn-content">
+          <input type="button" class="search-btn-btn" value="应用宝" onClick="yingyongbaoPackage()">
+          <input type="button" class="search-btn-btn" value="Google Play" onClick="googleplayPackage()">
+          <input type="button" class="search-btn-btn" value="豌豆荚" onClick="wandoujiaPackage()">
+          <input type="button" class="search-btn-btn" value="酷传" title="酷传支持包名模糊查询" onClick="comingSoon()">
+          <input type="button" class="search-btn-btn1" value="七麦数据" onClick="qimaioppoName()">
+        </div>
+      </div>
+      <!--资质信息-->
+      <div class="search-btn-right">
+        <div class="search-btn-title">&gt;&nbsp; 搜资质信息</div>
+        <div class="search-btn-content">
+          <input type="button" class="search-btn-btn" value="爱企查" title="爱企查的公司注册信息搜索结果" onClick="aiqichaCompany()">
+          <input type="button" class="search-btn-btn" value="天眼查" title="天眼查的公司注册信息搜索结果" onClick="tianyanchaCompany()">
+          <input type="button" class="search-btn-btn" value="商标信息" title="天眼查的商标信息搜索结果" onClick="tianyanchaBrand()">
+          <input type="button" class="search-btn-btn" value="软著信息" title="天眼查的软著信息搜索结果" onClick="tianyanchaSoft()">
+          <input type="button" class="search-btn-btn1" value="ICP备案" title="爱站网的ICP搜索结果" onClick="aizhanDomain()">
+        </div>
+      </div>
+      <!--开放平台文档-->
+      <div class="search-btn-left">
+        <div class="search-btn-title">&gt;&nbsp; 搜平台文档</div>
+        <div class="search-btn-content">
+          <input type="button" class="search-btn-btn" value="华为文档" title="华为开发者联盟文档搜索结果" onClick="huaweiDocs()">
+          <input type="button" class="search-btn-btn" value="OPPO文档" title="OPPO开放平台文档搜索结果" onClick="oppoDocs()">
+          <input type="button" class="search-btn-btn" value="vivo文档" title="vivo开放平台文档搜索结果" onClick="vivoDocs()">
+          <input type="button" class="search-btn-btn" value="小米文档" title="小米开放平台文档搜索结果" onClick="xiaomiDocs()">
+          <input type="button" class="search-btn-btn1" value="荣耀文档" title="荣耀开发者服务平台文档搜索结果" onClick="honorDocs()">
+        </div>
+      </div>
+      <!--常用站点-->
+      <div class="search-btn-right">
+        <div class="search-btn-title">&gt;&nbsp; 搜常用站点</div>
+        <div class="search-btn-content">
+          <input type="button" class="search-btn-btn" value="微博搜索" onClick="weiboWeb()">
+          <input type="button" class="search-btn-btn" value="抖音搜索" onClick="douyinWeb()">
+          <input type="button" class="search-btn-btn" value="bilibili搜索" onClick="bilibiliWeb()">
+          <input type="button" class="search-btn-btn" value="知乎搜索" onClick="zhihuWeb()">
+          <input type="button" class="search-btn-btn1" value="Google搜索" onClick="googleWeb()">
+        </div>
+      </div>
+    </div>
+  </form>
+  </div>
+</div>
+<div class="link-main">
+  <div class="link-list">
+    <p><span class="s1">&gt;&nbsp; 常用直达</span></p>
+    <p><a href="https://cli.im/" target="_blank" rel="noopener">草料二维码</a></p>
+    <p><a href="https://www.qimai.cn/andapp/shelves/appid/102" target="_blank" rel="noopener">七麦数据</a></p>
+    <p><a href="https://app.diandian.com/" target="_blank" rel="noopener">点点数据</a></p>
+    <p><a href="https://www.taptap.com/" target="_blank" rel="noopener">TapTap</a></p>
+    <p><a href="https://www.wandoujia.com/" target="_blank" rel="noopener">豌豆荚</a></p>
+  </div>
+  <div class="link-list">
+    <p><span class="s1">&gt;&nbsp; 数据看板</span></p>
+    <p><a href="https://www.qimai.cn/rank/marketRank" target="_blank" rel="noopener">七麦安卓榜单</a></p>
+    <p><a href="https://app.diandian.com/rank/android/" target="_blank" rel="noopener">点点安卓榜单</a></p>
+    <p><span class="s2">&gt;&nbsp; 效率工具</span></p>
+    <p><a href="https://www.xmind.net/" target="_blank" rel="noopener">Xmind</a></p>
+    <p><a href="https://www.dida365.com/" target="_blank" rel="noopener">滴答清单</a></p>
+  </div>
+  <div class="link-list">
+    <p><span class="s1">&gt;&nbsp; 开放平台</span></p>
+    <p><a href="https://dev.vivo.com.cn/" target="_blank" rel="noopener">vivo开放平台</a></p>
+    <p><a href="https://dev.mi.com/console/" target="_blank" rel="noopener">小米开放平台</a></p>
+    <p><a href="https://open.oppomobile.com/" target="_blank" rel="noopener">OPPO开放平台</a></p>
+    <p><a href="https://developer.hihonor.com/cn/" target="_blank" rel="noopener">荣耀开发者服务平台</a></p>
+    <p><a href="https://developer.huawei.com/consumer/cn/" target="_blank" rel="noopener">华为开发者联盟</a></p>
+  </div>
+  <div class="link-list">
+    <p><span class="s1">&gt;&nbsp; 资质查询</span></p>
+    <p><a href="https://register.ccopyright.com.cn/query.html" target="_blank" rel="noopener">软著查询服务平台</a></p>
+    <p><a href="http://xkz.nfra.gov.cn/jr/" target="_blank" rel="noopener">金融许可证信息</a></p>
+    <p><a href="https://www.nppa.gov.cn/bsfw/jggs/yxspjg/" target="_blank" rel="noopener">游戏审批结果</a></p>
+    <p><a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">ICP备案信息查询</a></p>
+    <p><a href="http://wcjs.sbj.cnipa.gov.cn/" target="_blank" rel="noopener">注册商标信息查询</a></p>
+  </div>
+</div>
+<div class="footer"> &copy;&nbsp; 2018 - 2026<span>/</span> DESIGNED BY <a href="https://ylyyg.github.io/" target="_blank" rel="noopener">POETRY.</a> <span>/</span> POWERED BY <a href="https://github.com/" target="_blank" rel="noopener">GITHUB.</a> <span>/</span> v31.0 <span>/</span> 2026.11.01 </div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<!--js部分-->
+<script>
+
+var searchInput = document.getElementById('astext');
+
+//仅在非触屏设备（鼠标 / 触控板）自动聚焦，避免手机上一进来就弹软键盘
+(function () {
+	var mq = window.matchMedia ? window.matchMedia('(hover: hover) and (pointer: fine)') : null;
+	if (mq && mq.matches && searchInput) {
+		try { searchInput.focus({ preventScroll: true }); } catch (e) { searchInput.focus(); }
+	}
+})();
+
+//轻提示
+var toastTimer = null;
+function showToast(msg) {
+	var el = document.getElementById('toast');
+	if (!el) return;
+	el.textContent = msg;
+	el.classList.add('is-show');
+	clearTimeout(toastTimer);
+	toastTimer = setTimeout(function () { el.classList.remove('is-show'); }, 2200);
+}
+
+function comingSoon() {
+	showToast('该选项暂不支持点击，请点击其他选项继续使用');
+}
+
+//主搜索
+
+//统一出口：先校验关键词，再做 URL 编码后打开
+function go(base){
+	var kw = searchInput.value.trim();
+	if (!kw) { showToast('请输入搜索关键词，再试试吧'); return; }
+	window.open(base + encodeURIComponent(kw), '_blank', 'noopener');
+}
+
+function enterSearch(e){
+	e = e || window.event;
+	if (!e || e.key !== 'Enter' || e.isComposing) return;
+	baiduWeb();
+}
+
+function baiduWeb(){
+	go('https://www.baidu.com/s?wd=');
+}
+
+//应用名称
+
+function huaweiName(){
+	go('https://appgallery.huawei.com/#/search/');
+}
+
+function qimaivivoName(){
+	go('https://www.qimai.cn/search/android/market/8/search/');
+}
+
+function qimaioppoName(){
+	go('https://www.qimai.cn/search/android/market/9/search/');
+}
+
+function qimaixiaomiName(){
+	go('https://www.qimai.cn/search/android/market/4/search/');
+}
+
+function taptapName(){
+	go('https://www.taptap.com/search/');
+}
+
+function wandoujiaName(){
+	go('https://www.wandoujia.com/search/?key=');
+}
+
+function baiduName(){
+	go('https://shouji.baidu.com/search?w=');
+}
+
+function diandianName(){
+	go('https://app.diandian.com/search/android-2-');
+}
+
+function appstoreName(){
+	go('https://apps.apple.com/cn/iphone/search?term=');
+}
+
+function googleplayName(){
+	go('https://play.google.com/store/search?q=');
+}
+
+//应用包名
+
+function yingyongbaoPackage(){
+	go('https://sj.qq.com/myapp/detail.htm?apkName=');
+}
+
+function googleplayPackage(){
+	go('https://play.google.com/store/apps/details?id=');
+}
+
+function wandoujiaPackage(){
+	go('https://www.wandoujia.com/apps/');
+}
+
+//资质信息
+
+function aiqichaCompany(){
+	go('https://aiqicha.baidu.com/s?q=');
+}
+
+function tianyanchaCompany(){
+	go('https://www.tianyancha.com/search?key=');
+}
+
+function tianyanchaBrand(){
+	go('https://www.tianyancha.com/search/t401?key=');
+}
+
+function tianyanchaSoft(){
+	go('https://www.tianyancha.com/search/t403?key=');
+}
+
+function aizhanDomain(){
+	go('https://icp.aizhan.com/');
+}
+
+//开放平台文档
+
+function huaweiDocs(){
+	go('https://developer.huawei.com/consumer/cn/doc/search?type=doc&val=');
+}
+
+function oppoDocs(){
+	go('https://open.oppomobile.com/new/searchWiki?keyword=');
+}
+
+function vivoDocs(){
+	go('https://dev.vivo.com.cn/documentCenter/search?keyword=');
+}
+
+function xiaomiDocs(){
+	go('https://dev.mi.com/distribute/doc/search?keyword=');
+}
+
+function honorDocs(){
+	go('https://developer.hihonor.com/cn/search?val=');
+}
+
+//常用站点
+
+function weiboWeb(){
+	go('https://s.weibo.com/weibo?q=');
+}
+
+function douyinWeb(){
+	go('https://www.douyin.com/search/');
+}
+
+function bilibiliWeb(){
+	go('https://search.bilibili.com/all?keyword=');
+}
+
+function zhihuWeb(){
+	go('https://www.zhihu.com/search?type=content&q=');
+}
+
+function googleWeb(){
+	go('https://www.google.com/search?q=');
+}
+
+</script>
+<script>
+(function () {
+	var root = document.documentElement;
+	var box = document.querySelector('.theme-switch');
+	if (!box) return;
+	var btns = box.querySelectorAll('button');
+	var thumb = box.querySelector('.thumb');
+	var order = ['light', 'dark', 'auto'];
+	var meta = document.getElementById('themeColor');
+	var mq = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+	var choice = 'light';
+
+	try {
+		var saved = localStorage.getItem('theme');
+		if (order.indexOf(saved) >= 0) choice = saved;
+	} catch (e) {}
+
+	function resolved() {
+		if (choice === 'auto') return (mq && mq.matches) ? 'dark' : 'light';
+		return choice;
+	}
+
+	function paint(save) {
+		var v = resolved();
+		root.setAttribute('data-theme', v);
+		if (meta) meta.setAttribute('content', v === 'dark' ? '#0f1319' : '#4e6ef2');
+		box.style.setProperty('--idx', order.indexOf(choice));
+		for (var i = 0; i < btns.length; i++) {
+			var on = btns[i].getAttribute('data-theme-value') === choice;
+			btns[i].classList.toggle('is-active', on);
+			btns[i].setAttribute('aria-checked', on ? 'true' : 'false');
+			btns[i].tabIndex = on ? 0 : -1;
+		}
+		if (save) {
+			try { localStorage.setItem('theme', choice); } catch (e) {}
+		}
+	}
+
+	// 从右上角开关的位置，用圆形扩散把新主题铺满全屏
+	function switchTheme(value, x, y) {
+		var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+		function commit() { choice = value; paint(true); }
+		if (!document.startViewTransition || reduced) { commit(); return; }
+		root.classList.add('vt-switching');
+		var vt = document.startViewTransition(commit);
+		vt.finished.finally(function () { root.classList.remove('vt-switching'); });
+		vt.ready.then(function () {
+			var w = window.innerWidth, h = window.innerHeight;
+			var far = Math.max(
+				Math.sqrt(x * x + y * y),
+				Math.sqrt((w - x) * (w - x) + y * y),
+				Math.sqrt(x * x + (h - y) * (h - y)),
+				Math.sqrt((w - x) * (w - x) + (h - y) * (h - y))
+			);
+			document.documentElement.animate(
+				[
+					{ clipPath: 'circle(0px at ' + x + 'px ' + y + 'px)' },
+					{ clipPath: 'circle(' + far + 'px at ' + x + 'px ' + y + 'px)' }
+				],
+				{
+					duration: 640,
+					easing: 'cubic-bezier(.65, 0, .35, 1)',
+					pseudoElement: '::view-transition-new(root)'
+				}
+			);
+		}).catch(function () {});
+	}
+
+	function pick(value) {
+		if (order.indexOf(value) < 0 || value === choice) return;
+		if (thumb) {
+			thumb.classList.remove('is-sliding');
+			void thumb.offsetWidth; // 重启动画
+			thumb.classList.add('is-sliding');
+		}
+		var btn = box.querySelector('[data-theme-value="' + value + '"]');
+		var rect = btn.getBoundingClientRect();
+		switchTheme(value, rect.left + rect.width / 2, rect.top + rect.height / 2);
+	}
+
+	if (thumb) {
+		thumb.addEventListener('animationend', function () {
+			thumb.classList.remove('is-sliding');
+		});
+	}
+
+	paint(false);
+
+	for (var i = 0; i < btns.length; i++) {
+		btns[i].addEventListener('click', function () {
+			pick(this.getAttribute('data-theme-value'));
+		});
+	}
+
+	box.addEventListener('keydown', function (e) {
+		var step = (e.key === 'ArrowRight' || e.key === 'ArrowDown') ? 1
+			: (e.key === 'ArrowLeft' || e.key === 'ArrowUp') ? -1 : 0;
+		if (!step) return;
+		e.preventDefault();
+		var next = order[(order.indexOf(choice) + step + order.length) % order.length];
+		var btn = box.querySelector('[data-theme-value="' + next + '"]');
+		if (btn) btn.focus();
+		pick(next);
+	});
+
+	if (mq) {
+		var onChange = function () { if (choice === 'auto') paint(false); };
+		if (mq.addEventListener) mq.addEventListener('change', onChange);
+		else if (mq.addListener) mq.addListener(onChange);
+	}
+})();
+</script>
+</body>
+</html>
