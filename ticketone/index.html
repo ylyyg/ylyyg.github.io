@@ -1,0 +1,1250 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TicketOne | 纪念票根生成器</title>
+<style>
+  @font-face{
+    font-family:'DIN-Fonts';
+    font-weight:normal;
+    font-style:normal;
+    font-display:swap;
+    src:url("https://ylyyg.github.io/fonts/DIN-Fonts.otf") format("opentype");
+  }
+
+  :root{
+    --ui-bg:#f4f7fb;
+    --ui-card:#ffffff;
+    --ui-line:#dcdfe6;      /* el-border */
+    --ui-text:#303133;      /* el-text-primary */
+    --ui-accent:#409EFF;    /* el-color-primary */
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{height:100%;}
+  body{
+    font-family:"DIN-Fonts","Microsoft YaHei",sans-serif;
+    background:var(--ui-bg);color:var(--ui-text);
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .topbar{
+    height:60px;background:var(--ui-card);border-bottom:1px solid var(--ui-line);
+    padding:0 24px;position:sticky;top:0;z-index:20;
+  }
+  .topbar::after{content:"";display:block;clear:both;}
+  .logo{float:left;margin-top:12px;width:36px;height:36px;}
+  .logo svg{display:block;width:36px;height:36px;overflow:visible;}
+  .title{
+    float:left;margin-left:12px;height:60px;line-height:60px;overflow:hidden;
+    font-size:20px;font-weight:700;letter-spacing:.2px;white-space:nowrap;
+  }
+  .title .sub{font-size:17px;font-weight:700;color:#303133;letter-spacing:0;}
+  .title .sep{
+    display:inline-block;width:1px;height:16px;background:#dcdfe6;
+    margin:0 12px;vertical-align:middle;
+  }
+  .type-pick{position:relative;float:left;margin:14px 0 0 14px;}
+  .type-pick select{
+    appearance:none;-webkit-appearance:none;-moz-appearance:none;
+    height:32px;line-height:30px;padding:0 26px 0 12px;border-radius:4px;
+    border:1px solid #e4e7ed;background:#f5f7fa;color:#a8abb2;
+    font-size:14px;font-weight:400;font-family:inherit;cursor:not-allowed;
+  }
+  .type-pick select:disabled{opacity:1;}
+  .type-pick .caret{position:absolute;right:9px;top:50%;margin-top:-6px;pointer-events:none;}
+  .topbar .actions{float:right;padding-top:14px;}
+  .topbar .actions::after{content:"";display:block;clear:both;}
+  .btn{
+    float:left;margin-left:8px;height:32px;padding:0 16px;border-radius:4px;
+    border:1px solid var(--ui-line);background:#fff;color:var(--ui-text);
+    font-size:16px;font-family:inherit;cursor:pointer;line-height:30px;
+    transition:.16s;white-space:nowrap;
+  }
+  .btn:hover{border-color:#b3d8ff;background:#ecf5ff;color:#409EFF;}
+  .btn:active{transform:translateY(1px);}
+  .btn.primary{background:var(--ui-accent);border-color:var(--ui-accent);color:#fff;}
+  .btn.primary:hover{background:#66b1ff;border-color:#66b1ff;color:#fff;}
+
+  .app{height:calc(100vh - 60px);}
+  .app::after{content:"";display:block;clear:both;}
+
+  .preview{
+    position:relative;overflow:auto;
+    float:left;width:65%;height:100%;padding:24px;
+    background:radial-gradient(circle at 1px 1px,#dde5f0 1px,transparent 0) 0 0/24px 24px, var(--ui-bg);
+  }
+
+  .stage{display:table;width:100%;height:100%;}
+  .stage-cell{display:table-cell;vertical-align:middle;text-align:center;font-size:0;line-height:0;}
+  .wrap{position:relative;display:inline-block;vertical-align:middle;
+    text-align:left;width:506px;height:318px;}
+
+  .ticket{
+    position:absolute;left:0;top:0;
+    width:506px;height:318px;box-sizing:border-box;
+    padding:18px 24px 0;
+    border-radius:10px;
+    background:#f3fcff;overflow:hidden;
+    box-shadow:0 10px 26px rgba(31,58,92,.16),0 1px 2px rgba(31,58,92,.10);
+    color:#111;
+    user-select:none;
+  }
+  .ticket span,.ticket div{white-space:nowrap;}
+  .ticket > * + *{margin-top:8px;}
+
+  .tk-row{height:24px;line-height:24px;font-size:17px;}
+  .ticket > .tk-row.tight{margin-top:4px;}
+  .tk-row.b6{position:absolute;left:24px;right:24px;bottom:80px;margin:0;}
+  .tk-row.b5{position:absolute;left:24px;right:24px;bottom:108px;margin:0;}
+  .tk-row::after{content:"";display:block;clear:both;}
+  .tk-row .l{float:left;}
+  .tk-row .r{float:right;}
+  .tk-row .l + .l{margin-left:16px;}
+  .ticket .num{font-weight:700;}
+
+  .tk-no{
+    float:left;font-size:20px;font-weight:600;letter-spacing:.5px;color:#ff0000;
+  }
+  .tk-gate{float:right;font-size:17px;letter-spacing:.5px;text-align:right;}
+
+  .tk-stations{height:54px;}
+  .tk-stations::after{content:"";display:block;clear:both;}
+  .tk-st-l{float:left;width:179px;}
+  .tk-st-r{float:right;width:179px;}
+  .tk-cn{height:32px;line-height:32px;font-size:26px;font-weight:700;text-align:center;}
+  .tk-cn .ch{display:inline-block;}
+  .tk-en{height:18px;line-height:18px;margin-top:4px;font-size:18px;text-align:center;}
+  .tk-cn .zhan{
+    font-size:20px;line-height:1;display:inline-block;vertical-align:middle;
+    position:relative;top:-2px;font-weight:700;
+  }
+  .tk-st-m{
+    float:left;width:100px;height:54px;box-sizing:border-box;
+    padding:9px 0;text-align:center;
+  }
+  .tk-code{height:24px;font-size:18px;font-weight:700;line-height:24px;letter-spacing:0;}
+  .tk-arrow{display:block;margin:0 auto;width:54px;height:12px;}
+  .tk-arrow path{fill:none;stroke:#111;stroke-width:2;stroke-linecap:butt;}
+
+  .tk-tips{
+    position:absolute;left:24px;bottom:36px;margin:0;
+    width:220px;height:40px;box-sizing:border-box;
+    border:2px dashed #666;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    font-size:12px;line-height:15px;color:#111;letter-spacing:1px;
+    padding:0 2px;text-align:center;
+  }
+  .tk-tips div{white-space:nowrap;}
+  .tk-qr{
+    position:absolute;right:24px;bottom:36px;
+    width:96px;height:96px;background:#bce2ee;
+    border-radius:4px;overflow:hidden;
+  }
+
+  .tk-foot{
+    position:absolute;left:0;bottom:0;width:506px;height:32px;line-height:32px;
+    box-sizing:border-box;padding:0 24px;
+    background:#bce2ee;font-size:13px;color:#111;letter-spacing:.3px;
+  }
+  .tk-foot::after{content:"";display:block;clear:both;}
+  .tk-foot .sn{float:left;}
+  .tk-foot .seller{float:left;margin-left:16px;}
+
+  .panel{
+    background:var(--ui-card);border-left:1px solid var(--ui-line);
+    float:right;width:35%;height:100%;
+    overflow-y:auto;padding:24px;
+  }
+  .panel::-webkit-scrollbar{width:8px;}
+  .panel::-webkit-scrollbar-thumb{background:#dcdfe6;border-radius:8px;}
+
+  .group{margin-bottom:0;}
+  .group + .group{margin-top:16px;padding-top:16px;border-top:1px solid #ebeef5;}
+
+  .grid{margin-right:-20px;}
+  .grid::after{content:"";display:block;clear:both;}
+  .field{float:left;width:calc(50% - 20px);margin:0 20px 36px 0;min-width:0;}
+  .field.full{width:calc(100% - 20px);}
+  .grid > .field:nth-last-child(-n+2){margin-bottom:0;}
+  .field label{display:block;font-size:16px;line-height:20px;color:#000;margin-bottom:8px;}
+  .field input.auto{
+    background:#f5f7fa;color:#a8abb2;border-color:#e4e7ed;cursor:not-allowed;
+  }
+  .field input.auto:hover{border-color:#e4e7ed;}
+  .seat-row{position:relative;}
+  .seat-row #fSeat{width:100%;padding-right:76px;}
+  .seat-row #fSeat:disabled{background:#f5f7fa;border-color:#e4e7ed;color:#606266;cursor:not-allowed;}
+  .seat-row .ck-noseat{
+    position:absolute;right:12px;top:0;height:40px;margin:0;
+    display:flex;flex-direction:row;align-items:center;justify-content:flex-end;gap:6px;
+    line-height:40px;
+    font-size:16px;color:#000;cursor:pointer;user-select:none;white-space:nowrap;
+  }
+  .ck-noseat input[type=checkbox]{
+    position:absolute;width:0;height:0;margin:0;padding:0;border:0;opacity:0;pointer-events:none;
+  }
+  .ck-noseat .ck-box{
+    position:relative;flex:0 0 auto;box-sizing:border-box;
+    width:16px;height:16px;border:1px solid #dcdfe6;border-radius:2px;background:#fff;
+    transition:background-color .15s,border-color .15s;
+  }
+  .ck-noseat:hover .ck-box{border-color:#409EFF;}
+  .ck-noseat input:checked + .ck-box{background:#409EFF;border-color:#409EFF;}
+  .ck-noseat input:focus-visible + .ck-box{box-shadow:0 0 0 2px #c6e2ff;}
+  .ck-box::after{
+    content:"";position:absolute;left:4px;top:1px;width:5px;height:9px;
+    border:2px solid #fff;border-top:0;border-left:0;
+    transform:rotate(45deg) scale(.4);opacity:0;
+    transition:transform .12s ease,opacity .12s ease;
+  }
+  .ck-noseat input:checked + .ck-box::after{transform:rotate(45deg) scale(1);opacity:1;}
+  .info{
+    position:relative;display:inline-block;vertical-align:middle;margin-left:6px;
+    width:16px;height:16px;border-radius:50%;border:1px solid #a3a9b3;background:transparent;
+    color:#828a95;font-style:normal;font-weight:700;
+    font-size:12px;line-height:13px;padding-top:1px;text-align:center;
+    cursor:help;user-select:none;transition:border-color .14s,color .14s;
+  }
+  .info:hover{border-color:#409EFF;color:#409EFF;}
+  .info::after{
+    content:attr(data-tip);
+    position:absolute;left:-4px;top:24px;
+    width:max-content;max-width:240px;
+    background:#303133;color:#fff;font-size:12px;font-weight:400;font-style:normal;
+    line-height:1.5;
+    padding:8px 12px;border-radius:4px;white-space:normal;text-align:left;letter-spacing:0;
+    opacity:0;pointer-events:none;transition:.14s;z-index:40;
+    box-shadow:0 6px 18px rgba(20,30,45,.22);
+  }
+  .info[data-align="right"]::after{left:auto;right:-4px;}
+  .info:hover::after{opacity:1;}
+  .field input{
+    display:block;height:40px;border:1px solid var(--ui-line);border-radius:4px;padding:0 12px;
+    font-size:16px;font-family:inherit;color:#000;background:#fff;
+    outline:none;transition:.15s;width:100%;color-scheme:light;
+  }
+  .field input::placeholder{color:#a8abb2;}
+  .field input:hover{border-color:#c0c4cc;}
+  .field input:focus{border-color:var(--ui-accent);}
+
+  .ep-wrap{position:relative;}
+  .ep-trigger{
+    position:relative;display:block;
+    height:40px;line-height:38px;border:1px solid var(--ui-line);border-radius:4px;padding:0 32px 0 12px;
+    font-size:16px;color:#000;background:#fff;cursor:pointer;
+    transition:.15s;user-select:none;
+  }
+  .ep-wrap:hover .ep-trigger{border-color:#c0c4cc;}
+  .ep-wrap.open .ep-trigger{border-color:var(--ui-accent);}
+  .ep-caret{position:absolute;right:12px;top:50%;margin-top:-6px;transition:transform .2s;}
+  .ep-wrap.open .ep-caret{transform:rotate(180deg);}
+  .ep-val{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .ep-trigger svg.ic{position:absolute;right:12px;top:50%;margin-top:-7px;}
+  .ep-dropdown{
+    display:none;position:absolute;top:calc(100% + 8px);left:0;z-index:60;min-width:100%;
+    background:#fff;border:1px solid #e4e7ed;border-radius:4px;
+    box-shadow:0 2px 12px 0 rgba(0,0,0,.1);
+    padding:6px 0;
+  }
+  .ep-dropdown::before,.ep-dropdown::after{
+    content:"";position:absolute;bottom:100%;width:0;height:0;border-style:solid;
+  }
+  .ep-dropdown::before{left:29px;border-width:7px;border-color:transparent transparent #e4e7ed;}
+  .ep-dropdown::after{left:30px;border-width:6px;border-color:transparent transparent #fff;}
+  .ep-list{max-height:274px;overflow-y:auto;}
+  .ep-wrap.open .ep-dropdown{display:block;}
+  .ep-opt{
+    position:relative;height:34px;line-height:34px;
+    padding:0 32px 0 20px;font-size:14px;color:#606266;cursor:pointer;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  }
+  .ep-opt:hover{background:#f5f7fa;}
+  .ep-opt.sel{color:#409EFF;font-weight:700;}
+  .ep-opt .ck{
+    position:absolute;right:12px;top:0;line-height:34px;
+    color:#409EFF;font-weight:700;display:none;
+  }
+  .ep-opt.sel .ck{display:block;}
+  #epDTPop{
+    display:none;position:fixed;left:0;top:0;width:340px;min-width:0;
+    padding:0;overflow:visible;max-height:none;z-index:70;border-radius:4px;
+  }
+  #epDTPop::before,#epDTPop::after{content:none;}
+  .ep-wrap.open #epDTPop{display:block;}
+  .dt-head{display:flex;gap:10px;padding:12px 12px 10px;border-bottom:1px solid #ebeef5;}
+  .dt-box{
+    flex:1;height:34px;line-height:32px;border:1px solid #dcdfe6;border-radius:4px;
+    padding:0 10px;font-size:14px;color:#606266;cursor:pointer;background:#fff;
+    white-space:nowrap;overflow:hidden;box-sizing:border-box;
+  }
+  .dt-box:hover{border-color:#c0c4cc;}
+  .dt-box.act{border-color:#409EFF;}
+  .dt-cal{padding:6px 12px 2px;}
+  .cal-head{position:relative;height:32px;margin:2px 0 4px;}
+  .cal-title{line-height:32px;text-align:center;font-size:16px;color:#303133;}
+  .cal-title em{font-style:normal;color:#409EFF;}
+  .cal-nav{position:absolute;top:0;display:flex;gap:2px;}
+  .cal-nav.l{left:0;}
+  .cal-nav.r{right:0;}
+  .cal-nav span{width:22px;height:32px;line-height:32px;text-align:center;cursor:pointer;color:#606266;font-size:14px;border-radius:4px;}
+  .cal-nav span:hover{color:#409EFF;}
+  .cal-grid{overflow:hidden;border-top:1px solid #ebeef5;padding-top:6px;}
+  .cal-wd{float:left;width:14.2857%;height:30px;line-height:30px;text-align:center;font-size:14px;color:#606266;}
+  .cal-day{float:left;width:14.2857%;height:32px;line-height:32px;text-align:center;font-size:14px;color:#000;cursor:pointer;}
+  .cal-day i{display:inline-block;width:24px;height:24px;line-height:24px;border-radius:50%;font-style:normal;}
+  .cal-day:hover i{background:#f5f7fa;}
+  .cal-day.dim{color:#c0c4cc;}
+  .cal-day.today{color:#409EFF;font-weight:600;}
+  .cal-day.sel i{background:#409EFF;color:#fff;font-weight:600;}
+  .dt-ft{display:flex;justify-content:flex-end;align-items:center;gap:4px;padding:6px 12px 10px;border-top:1px solid #ebeef5;margin-top:6px;}
+  .dt-now{border:0;background:transparent;color:#409EFF;font-size:14px;cursor:pointer;padding:6px 8px;font-family:inherit;border-radius:4px;}
+  .dt-now:hover{background:#ecf5ff;}
+  .dt-ok{height:32px;padding:0 16px;border:1px solid #dcdfe6;border-radius:4px;background:#fff;font-size:14px;color:#606266;cursor:pointer;font-family:inherit;}
+  .dt-ok:hover{border-color:#409EFF;color:#409EFF;}
+  .dt-tp{
+    display:none;position:absolute;z-index:5;background:#fff;
+    border:1px solid #e4e7ed;border-radius:4px;box-shadow:0 2px 12px rgba(0,0,0,.12);
+  }
+  .dt-tp.on{display:block;}
+  .dt-tp .tp{height:180px;width:112px;}
+  .tp{overflow:hidden;}
+  .tp-col{float:left;width:50%;height:100%;overflow-y:auto;border-right:1px solid #ebeef5;scrollbar-width:thin;}
+  .tp-col:last-child{border-right:0;}
+  .tp-hd{height:32px;line-height:32px;text-align:center;font-size:12px;color:#909399;background:#f5f7fa;position:sticky;top:0;z-index:1;}
+  .tp-item{height:32px;line-height:32px;text-align:center;font-size:16px;color:#000;cursor:pointer;}
+  .tp-item:hover{background:#f5f7fa;}
+  .tp-item.sel{background:#409EFF;color:#fff;font-weight:600;}
+
+  .mask{
+    position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:90;
+    display:none;align-items:center;justify-content:center;padding:24px;
+  }
+  .mask.on{display:flex;}
+  .dlg{
+    width:460px;max-width:100%;background:#fff;border-radius:8px;
+    box-shadow:0 12px 32px rgba(0,0,0,.18);overflow:hidden;
+    transform:translateY(-8px);opacity:0;transition:.18s;
+  }
+  .mask.on .dlg{transform:none;opacity:1;}
+  .dlg-hd{
+    padding:20px 24px 0;font-size:18px;font-weight:600;color:#303133;
+    display:flex;align-items:center;
+  }
+  .dlg-bd{padding:12px 24px 4px;font-size:14px;line-height:1.75;color:#606266;}
+  .dlg-bd .warn{color:#f5222d;font-weight:600;}
+  .dlg-ft{padding:16px 24px 20px;display:flex;justify-content:flex-end;gap:12px;}
+  .dlg-ft .btn{height:36px;padding:0 18px;font-size:14px;}
+  .toast{
+    position:fixed;left:50%;top:72px;transform:translate(-50%,-14px);
+    background:#f0f9eb;border:1px solid #e1f3d8;color:#67c23a;font-size:16px;padding:12px 20px;
+    border-radius:4px;opacity:0;pointer-events:none;transition:.25s;z-index:99;
+    box-shadow:0 2px 12px rgba(0,0,0,.1);
+  }
+  .toast.show{opacity:1;transform:translate(-50%,0);}
+
+  @media (max-width:920px){
+    .app{height:auto;}
+    .preview,.panel{float:none;width:100%;height:auto;}
+    .preview{padding:24px 16px;}
+    .panel{border-left:0;border-top:1px solid var(--ui-line);overflow:visible;}
+    .stage{display:block;height:auto;}
+    .stage-cell{display:block;padding:0;}
+    .wrap{display:block;margin:0 auto;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo" aria-hidden="true">
+    <svg viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
+      <rect x="0.8" y="0.8"  width="34.4" height="17" rx="5" fill="#D9ECFF"/>
+      <rect x="0.8" y="9.5"  width="34.4" height="17" rx="5" fill="#A0CFFF"/>
+      <rect x="0.8" y="18.2" width="34.4" height="17" rx="5" fill="#409EFF"/>
+    </svg>
+  </div>
+  <div class="title">
+    <span>TicketOne</span><i class="sep" aria-hidden="true"></i><span class="sub">纪念票根生成器</span>
+  </div>
+  <div class="type-pick">
+    <select id="fType" disabled aria-label="票根类型" title="当前仅支持火车票票根">
+      <option>火车票票根</option>
+    </select>
+    <svg class="caret" width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5L6 8l3.5-3.5" fill="none" stroke="#a8abb2" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </div>
+  <div class="actions">
+    <button class="btn" id="btnReset">恢复示例</button>
+    <button class="btn primary" id="btnDownload">下载票根</button>
+  </div>
+</div>
+
+<div class="app">
+  <div class="preview">
+    <div class="stage">
+      <div class="stage-cell">
+      <div class="wrap" id="wrap">
+        <div class="ticket" id="ticket">
+          <div class="tk-row">
+            <span class="tk-no" id="tTicketNo">E123456789</span>
+            <span class="tk-gate" id="tGate">检票：18A</span>
+          </div>
+
+          <div class="tk-stations">
+            <div class="tk-st-l">
+              <div class="tk-cn" id="tFromCn">南京南站</div>
+              <div class="tk-en" id="tFromEn">Nanjingnan</div>
+            </div>
+            <div class="tk-st-m">
+              <div class="tk-code" id="tTrain">G1717</div>
+              <svg class="tk-arrow" viewBox="0 0 54 12" aria-hidden="true">
+                <path d="M0 8.5H52"/><path d="M44 2.5L52 8.5"/>
+              </svg>
+            </div>
+            <div class="tk-st-r">
+              <div class="tk-cn" id="tToCn">杭州西站</div>
+              <div class="tk-en" id="tToEn">Hangzhouxi</div>
+            </div>
+          </div>
+
+          <div class="tk-row">
+            <span class="l" id="tDatetime"><b class="num">2024</b>年<b class="num">03</b>月<b class="num">16</b>日<b class="num">13</b>:<b class="num">34</b>开</span>
+            <span class="r" id="tCarSeat"><b class="num">01</b>车<b class="num">01F</b>号</span>
+          </div>
+
+          <div class="tk-row tight">
+            <span class="l" id="tPrice">¥<b class="num">263.0</b>元</span>
+            <span class="r" id="tClass">二等座</span>
+          </div>
+
+          <div class="tk-row b5">
+            <span class="l">限乘当日当次车</span>
+          </div>
+
+          <div class="tk-row b6">
+            <span class="l" id="tId">1234567890****1234</span>
+            <span class="l" id="tName">张三</span>
+          </div>
+
+          <div class="tk-tips">
+            <div>买票请到12306 发货请到95306</div>
+            <div>中国铁路祝您旅途愉快</div>
+          </div>
+          <div class="tk-qr"></div>
+
+          <div class="tk-foot">
+            <span class="sn" id="tSerial">20230405121500012</span>
+            <span class="seller" id="tSeller">南京南售</span>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel">
+
+    <div class="group">
+      <div class="grid">
+
+        <div class="field full">
+          <label>车次<i class="info" data-tip="列车车次，如 G1234，英文字母会自动转大写">!</i></label>
+          <input id="fTrain" value="G1234" maxlength="10" spellcheck="false">
+        </div>
+
+        <div class="field">
+          <label>席别</label>
+          <input type="hidden" id="fClass" value="二等座">
+          <div class="ep-wrap" id="epClass">
+            <div class="ep-trigger">
+              <span class="ep-val" id="epClassVal">二等座</span>
+              <svg class="ep-caret" width="12" height="12" viewBox="0 0 12 12"><path d="M2.5 4.5L6 8l3.5-3.5" fill="none" stroke="#a8abb2" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="ep-dropdown" id="epClassPop"></div>
+          </div>
+        </div>
+        <div class="field">
+          <label>检票口<i class="info" data-align="right" data-tip="1–10 个字符，如 18A">!</i></label>
+          <input id="fGate" value="18A" maxlength="10" spellcheck="false">
+        </div>
+
+        <div class="field">
+          <label>始发站（中文）<i class="info" data-tip="1–7 个字，票面自动补“站”字，如：南京南">!</i></label>
+          <input id="fFromCn" value="南京南" maxlength="7">
+        </div>
+        <div class="field">
+          <label>始发站（英文）<i class="info" data-align="right" data-tip="按中文站名自动翻译，无需手动填写">!</i></label>
+          <input id="fFromEn" class="auto" value="Nanjingnan" readonly tabindex="-1">
+        </div>
+
+        <div class="field">
+          <label>终到站（中文）<i class="info" data-tip="1–7 个字，票面自动补“站”字，如：杭州西">!</i></label>
+          <input id="fToCn" value="杭州西" maxlength="7">
+        </div>
+        <div class="field">
+          <label>终到站（英文）<i class="info" data-align="right" data-tip="按中文站名自动翻译，无需手动填写">!</i></label>
+          <input id="fToEn" class="auto" value="Hangzhouxi" readonly tabindex="-1">
+        </div>
+
+        <div class="field">
+          <label>乘车时间<i class="info" data-tip="格式 YYYY-MM-DD HH:MM，点开可选日期与时间">!</i></label>
+          <input type="hidden" id="fDateTime" value="">
+          <div class="ep-wrap" id="epDT">
+            <div class="ep-trigger">
+              <span class="ep-val" id="epDTVal"></span>
+              <svg class="ic" width="14" height="14" viewBox="0 0 14 14"><rect x="1.2" y="2.2" width="11.6" height="10.6" rx="1.4" fill="none" stroke="#a8abb2" stroke-width="1.2"/><path d="M1.2 5.4h11.6M4.4 1v2.4M9.6 1v2.4" stroke="#a8abb2" stroke-width="1.2" stroke-linecap="round"/></svg>
+            </div>
+            <div class="ep-dropdown" id="epDTPop">
+              <div class="dt-head">
+                <div class="dt-box" id="dtDateBox">2026-11-01</div>
+                <div class="dt-box" id="dtTimeBox">19:31</div>
+              </div>
+              <div class="dt-cal" id="dtCal"></div>
+              <div class="dt-ft">
+                <button type="button" class="dt-now" id="dtNow">此刻</button>
+                <button type="button" class="dt-ok" id="dtOk">确定</button>
+              </div>
+              <div class="dt-tp" id="dtTp">
+                <div class="tp">
+                  <div class="tp-col" id="dtH"></div>
+                  <div class="tp-col" id="dtM"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="field">
+          <label>票价（元）<i class="info" data-align="right" data-tip="0.5 ~ 9999.5，最多 4 位整数，小数只能是 0 或 5">!</i></label>
+          <input id="fPrice" type="text" inputmode="decimal" maxlength="6"
+                 value="117.5" autocomplete="off">
+        </div>
+
+        <div class="field">
+          <label>车厢号<i class="info" data-tip="2 位数字，不足两位自动在前面补 0">!</i></label>
+          <input id="fCar" value="01" maxlength="2" inputmode="numeric" autocomplete="off">
+        </div>
+        <div class="field">
+          <label>座位号<i class="info" data-align="right" data-tip="3 位：3 个数字（如 012）或 2 个数字 + 1 个字母（如 01F）">!</i></label>
+          <div class="seat-row">
+            <input id="fSeat" value="01F" maxlength="3" autocomplete="off">
+            <label class="ck-noseat" for="fNoSeat"><input type="checkbox" id="fNoSeat"><i class="ck-box"></i><span>无座</span></label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>姓名<i class="info" data-tip="2–10 个字">!</i></label>
+          <input id="fName" value="张三" maxlength="10">
+        </div>
+        <div class="field">
+          <label>证件号码<i class="info" data-align="right" data-tip="18 位证件号，票面自动把第 11–14 位替换为 * 号">!</i></label>
+          <input id="fId" value="123456123456781234" maxlength="18" spellcheck="false">
+        </div>
+
+      </div>
+    </div>
+
+    <input type="hidden" id="fTicketNo" value="E123456789">
+    <input type="hidden" id="fSerial" value="20230405121500012">
+
+  </div>
+</div>
+
+<div class="mask" id="dlgMask">
+  <div class="dlg" role="dialog" aria-modal="true" aria-labelledby="dlgTitle">
+    <div class="dlg-hd" id="dlgTitle">下载前请确认</div>
+    <div class="dlg-bd">
+      请注意：本工具生成的火车票图片为<span class="warn">非官方纪念票根</span>，仅供个人留念，<span class="warn">不具有任何法律效力</span>，<span class="warn">不能作为乘车凭证、退改签依据、报销凭证或任何官方证明使用</span>。生成内容由用户自行填写，<span class="warn">不得用于违规用途</span>，<span class="warn">由此产生的一切后果由使用者自行承担</span>。
+    </div>
+    <div class="dlg-ft">
+      <button class="btn" id="dlgCancel">取消</button>
+      <button class="btn primary" id="dlgOk">确认下载</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const $ = id => document.getElementById(id);
+
+const PINYIN = {
+  "南京":"Nanjing","南京南":"Nanjingnan","南京南站":"Nanjingnan",
+  "杭州":"Hangzhou","杭州西":"Hangzhouxi","杭州东":"Hangzhoudong",
+  "北京":"Beijing","北京南":"Beijingnan","北京西":"Beijingxi",
+  "上海":"Shanghai","上海虹桥":"Shanghai Hongqiao","上海南":"Shanghainan",
+  "广州":"Guangzhou","广州南":"Guangzhounan","广州东":"Guangzhoudong",
+  "深圳":"Shenzhen","深圳北":"Shenzhenbei",
+  "成都":"Chengdu","成都东":"Chengdudong","重庆":"Chongqing","重庆北":"Chongqingbei",
+  "武汉":"Wuhan","长沙":"Changsha","长沙南":"Changshanan",
+  "西安":"Xi'an","西安北":"Xi'anbei","郑州":"Zhengzhou","郑州东":"Zhengzhoudong",
+  "济南":"Jinan","济南西":"Jinanxi","青岛":"Qingdao","天津":"Tianjin",
+  "苏州":"Suzhou","苏州北":"Suzhoubei","无锡":"Wuxi","常州":"Changzhou",
+  "合肥":"Hefei","合肥南":"Hefeinan","福州":"Fuzhou","厦门":"Xiamen","厦门北":"Xiamenbei",
+  "南昌":"Nanchang","南宁":"Nanning","昆明":"Kunming","贵阳":"Guiyang",
+  "兰州":"Lanzhou","银川":"Yinchuan","西宁":"Xining","乌鲁木齐":"Wulumuqi",
+  "哈尔滨":"Haerbin","沈阳":"Shenyang","大连":"Dalian","长春":"Changchun",
+  "石家庄":"Shijiazhuang","太原":"Taiyuan","呼和浩特":"Huhehaote",
+  "宁波":"Ningbo","温州":"Wenzhou","徐州":"Xuzhou","洛阳":"Luoyang",
+  "桂林":"Guilin","三亚":"Sanya","海口":"Haikou","拉萨":"Lasa",
+  "黄山":"Huangshan","黄山北":"Huangshanbei",
+  "六安":"Luan","六盘水":"Liupanshui","乐清":"Yueqing","番禺":"Panyu"
+};
+const PY_CHAR_RAW =
+  "啊a,阿a,埃ai,挨ai,哎ai,唉ai,哀ai,皑ai,癌ai,蔼ai,矮ai,艾ai,碍ai,爱ai,隘ai,鞍an,氨an,安an,俺an,按an,暗an,岸an,胺an,案an,肮ang,昂ang,盎ang,凹ao,敖ao,熬ao,翱ao,袄ao,傲ao,奥ao,懊ao,澳ao,芭ba,捌ba,扒ba,叭ba,吧ba,笆ba,八ba,疤ba,巴ba,拔ba,跋ba,靶ba,把ba,耙ba,坝ba,霸ba,罢ba,爸ba,白bai,柏bai,百bai,摆bai,佰bai,败bai,拜bai,稗bai,斑ban,班ban,搬ban,扳ban,般ban,颁ban,板ban,版ban,扮ban,拌ban,伴ban,瓣ban,半ban,办ban,绊ban,邦bang,帮bang,梆bang,榜bang,膀bang,绑bang,棒bang,磅bang,蚌bang,镑bang,傍bang,谤bang,苞bao,胞bao,包bao,褒bao,剥bo,薄bao,雹bao,保bao,堡bao,饱bao,宝bao,抱bao,报bao,暴bao,豹bao,鲍bao,爆bao,杯bei,碑bei,悲bei,卑bei,北bei,辈bei,背bei,贝bei,钡bei,倍bei,狈bei,备bei,惫bei,焙bei," +
+  "被bei,奔ben,苯ben,本ben,笨ben,崩beng,绷beng,甭beng,泵beng,蹦beng,迸beng,逼bi,鼻bi,比bi,鄙bi,笔bi,彼bi,碧bi,蓖bi,蔽bi,毕bi,毙bi,毖bi,币bi,庇bi,痹bi,闭bi,敝bi,弊bi,必bi,辟pi,壁bi,臂bi,避bi,陛bi,鞭bian,边bian,编bian,贬bian,扁bian,便bian,变bian,卞bian,辨bian,辩bian,辫bian,遍bian,标biao,彪biao,膘biao,表biao,鳖bie,憋bie,别bie,瘪bie,彬bin,斌bin,濒bin,滨bin,宾bin,摈bin,兵bing,冰bing,柄bing,丙bing,秉bing,饼bing,炳bing,病bing,并bing,玻bo,菠bo,播bo,拨bo,钵bo,波bo,博bo,勃bo,搏bo,铂bo,箔bo,伯bo,帛bo,舶bo,脖bo,膊bo,渤bo,泊po,驳bo,捕bu,卜bo,哺bu,补bu,埠bu,不bu,布bu,步bu,簿bu,部bu,怖bu,擦ca,猜cai,裁cai,材cai,才cai,财cai,睬cai,踩cai,采cai,彩cai,菜cai,蔡cai,餐can,参can,蚕can,残can,惭can,惨can,灿can,苍cang," +
+  "舱cang,仓cang,沧cang,藏cang,操cao,糙cao,槽cao,曹cao,草cao,厕ce,策ce,侧ce,册ce,测ce,层ceng,蹭ceng,插cha,叉cha,茬cha,茶cha,查cha,碴cha,搽cha,察cha,岔cha,差cha,诧cha,拆chai,柴chai,豺chai,搀chan,掺can,蝉chan,馋chan,谗chan,缠chan,铲chan,产chan,阐chan,颤chan,昌chang,猖chang,场chang,尝chang,常chang,长zhang,偿chang,肠chang,厂chang,敞chang,畅chang,唱chang,倡chang,超chao,抄chao,钞chao,朝chao,嘲chao,潮chao,巢chao,吵chao,炒chao,车che,扯che,撤che,掣che,彻che,澈che,郴chen,臣chen,辰chen,尘chen,晨chen,忱chen,沉chen,陈chen,趁chen,衬chen,撑cheng,称cheng,城cheng,橙cheng,成cheng,呈cheng,乘cheng,程cheng,惩cheng,澄cheng,诚cheng,承cheng,逞cheng,骋cheng,秤cheng,吃chi,痴chi,持chi,匙shi,池chi,迟chi,弛chi,驰chi,耻chi,齿chi,侈chi,尺chi,赤chi,翅chi,斥chi,炽chi,充chong,冲chong,虫chong,崇chong,宠chong,抽chou,酬chou,畴chou,踌chou,稠chou,愁chou," +
+  "筹chou,仇chou,绸chou,瞅chou,丑chou,臭chou,初chu,出chu,橱chu,厨chu,躇chu,锄chu,雏chu,滁chu,除chu,楚chu,础chu,储chu,矗chu,搐chu,触chu,处chu,揣chuai,川chuan,穿chuan,椽chuan,传chuan,船chuan,喘chuan,串chuan,疮chuang,窗chuang,幢chuang,床chuang,闯chuang,创chuang,吹chui,炊chui,捶chui,锤chui,垂chui,春chun,椿chun,醇chun,唇chun,淳chun,纯chun,蠢chun,戳chuo,绰chuo,疵ci,茨ci,磁ci,雌ci,辞ci,慈ci,瓷ci,词ci,此ci,刺ci,赐ci,次ci,聪cong,葱cong,囱cong,匆cong,从cong,丛cong,凑cou,粗cu,醋cu,簇cu,促cu,蹿cuan,篡cuan,窜cuan,摧cui,崔cui,催cui,脆cui,瘁cui,粹cui,淬cui,翠cui,村cun,存cun,寸cun,磋cuo,撮cuo,搓cuo,措cuo,挫cuo,错cuo,搭da,达da,答da,瘩da,打da,大da,呆dai,歹dai,傣dai,戴dai,带dai,殆dai,代dai,贷dai,袋dai,待dai,逮dai,怠dai,耽dan,担dan,丹dan,单dan,郸dan,掸dan,胆dan,旦dan,氮dan," +
+  "但dan,惮dan,淡dan,诞dan,弹dan,蛋dan,当dang,挡dang,党dang,荡dang,档dang,刀dao,捣dao,蹈dao,倒dao,岛dao,祷dao,导dao,到dao,稻dao,悼dao,道dao,盗dao,德de,得de,的de,蹬deng,灯deng,登deng,等deng,瞪deng,凳deng,邓deng,堤di,低di,滴di,迪di,敌di,笛di,狄di,涤di,翟di,嫡di,抵di,底di,地di,蒂di,第di,帝di,弟di,递di,缔di,颠dian,掂dian,滇dian,碘dian,点dian,典dian,靛dian,垫dian,电dian,佃dian,甸dian,店dian,惦dian,奠dian,淀dian,殿dian,碉diao,叼diao,雕diao,凋diao,刁diao,掉diao,吊diao,钓diao,调diao,跌die,爹die,碟die,蝶die,迭die,谍die,叠die,丁ding,盯ding,叮ding,钉ding,顶ding,鼎ding,锭ding,定ding,订ding,丢diu,东dong,冬dong,董dong,懂dong,动dong,栋dong,侗dong,恫dong,冻dong,洞dong,兜dou,抖dou,斗dou,陡dou,豆dou,逗dou,痘dou,都dou,督du,毒du,犊du,独du,读du,堵du,睹du,赌du," +
+  "杜du,镀du,肚du,度du,渡du,妒du,端duan,短duan,锻duan,段duan,断duan,缎duan,堆dui,兑dui,队dui,对dui,墩dun,吨dun,蹲dun,敦dun,顿dun,囤dun,钝dun,盾dun,遁dun,掇duo,哆duo,多duo,夺duo,垛duo,躲duo,朵duo,跺duo,舵duo,剁duo,惰duo,堕duo,蛾e,峨e,鹅e,俄e,额e,讹e,娥e,恶e,厄e,扼e,遏e,鄂e,饿e,恩en,而er,儿er,耳er,尔er,饵er,洱er,二er,贰er,发fa,罚fa,筏fa,伐fa,乏fa,阀fa,法fa,珐fa,藩fan,帆fan,番fan,翻fan,樊fan,矾fan,钒fan,繁fan,凡fan,烦fan,反fan,返fan,范fan,贩fan,犯fan,饭fan,泛fan,坊fang,芳fang,方fang,肪fang,房fang,防fang,妨fang,仿fang,访fang,纺fang,放fang,菲fei,非fei,啡fei,飞fei,肥fei,匪fei,诽fei,吠fei,肺fei,废fei,沸fei,费fei,芬fen,酚fen,吩fen,氛fen,分fen,纷fen,坟fen,焚fen,汾fen,粉fen,奋fen,份fen,忿fen," +
+  "愤fen,粪fen,丰feng,封feng,枫feng,蜂feng,峰feng,锋feng,风feng,疯feng,烽feng,逢feng,冯feng,缝feng,讽feng,奉feng,凤feng,佛fu,否fou,夫fu,敷fu,肤fu,孵fu,扶fu,拂fu,辐fu,幅fu,氟fu,符fu,伏fu,俘fu,服fu,浮fu,涪fu,福fu,袱fu,弗fu,甫fu,抚fu,辅fu,俯fu,釜fu,斧fu,脯pu,腑fu,府fu,腐fu,赴fu,副fu,覆fu,赋fu,复fu,傅fu,付fu,阜fu,父fu,腹fu,负fu,富fu,讣fu,附fu,妇fu,缚fu,咐fu,噶ga,嘎ga,该gai,改gai,概gai,钙gai,盖gai,溉gai,干gan,甘gan,杆gan,柑gan,竿gan,肝gan,赶gan,感gan,秆gan,敢gan,赣gan,冈gang,刚gang,钢gang,缸gang,肛gang,纲gang,岗gang,港gang,杠gang,篙gao,皋gao,高gao,膏gao,羔gao,糕gao,搞gao,镐gao,稿gao,告gao,哥ge,歌ge,搁ge,戈ge,鸽ge,胳ge,疙ge,割ge,革ge,葛ge,格ge,蛤ha,阁ge,隔ge,铬ge,个ge,各ge,给gei," +
+  "根gen,跟gen,耕geng,更geng,庚geng,羹geng,埂geng,耿geng,梗geng,工gong,攻gong,功gong,恭gong,龚gong,供gong,躬gong,公gong,宫gong,弓gong,巩gong,汞gong,拱gong,贡gong,共gong,钩gou,勾gou,沟gou,苟gou,狗gou,垢gou,构gou,购gou,够gou,辜gu,菇gu,咕gu,箍gu,估gu,沽gu,孤gu,姑gu,鼓gu,古gu,蛊gu,骨gu,谷gu,股gu,故gu,顾gu,固gu,雇gu,刮gua,瓜gua,剐gua,寡gua,挂gua,褂gua,乖guai,拐guai,怪guai,棺guan,关guan,官guan,冠guan,观guan,管guan,馆guan,罐guan,惯guan,灌guan,贯guan,光guang,广guang,逛guang,瑰gui,规gui,圭gui,硅gui,归gui,龟gui,闺gui,轨gui,鬼gui,诡gui,癸gui,桂gui,柜gui,跪gui,贵gui,刽gui,辊gun,滚gun,棍gun,锅guo,郭guo,国guo,果guo,裹guo,过guo,哈ha,骸hai,孩hai,海hai,氦hai,亥hai,害hai,骇hai,酣han,憨han,邯han,韩han,含han,涵han,寒han,函han,喊han,罕han,翰han,撼han,捍han," +
+  "旱han,憾han,悍han,焊han,汗han,汉han,夯hang,杭hang,航hang,壕hao,嚎hao,豪hao,毫hao,郝hao,好hao,耗hao,号hao,浩hao,呵he,喝he,荷he,菏he,核he,禾he,和he,何he,合he,盒he,貉hao,阂he,河he,涸he,赫he,褐he,鹤he,贺he,嘿hei,黑hei,痕hen,很hen,狠hen,恨hen,哼heng,亨heng,横heng,衡heng,恒heng,轰hong,哄hong,烘hong,虹hong,鸿hong,洪hong,宏hong,弘hong,红hong,喉hou,侯hou,猴hou,吼hou,厚hou,候hou,后hou,呼hu,乎hu,忽hu,瑚hu,壶hu,葫hu,胡hu,蝴hu,狐hu,糊hu,湖hu,弧hu,虎hu,唬hu,护hu,互hu,沪hu,户hu,花hua,哗hua,华hua,猾hua,滑hua,画hua,划hua,化hua,话hua,槐huai,徊huai,怀huai,淮huai,坏huai,欢huan,环huan,桓huan,还hai,缓huan,换huan,患huan,唤huan,痪huan,豢huan,焕huan,涣huan,宦huan,幻huan,荒huang,慌huang,黄huang,磺huang,蝗huang,簧huang,皇huang,凰huang,惶huang,煌huang,晃huang," +
+  "幌huang,恍huang,谎huang,灰hui,挥hui,辉hui,徽hui,恢hui,蛔hui,回hui,毁hui,悔hui,慧hui,卉hui,惠hui,晦hui,贿hui,秽hui,会hui,烩hui,汇hui,讳hui,诲hui,绘hui,荤hun,昏hun,婚hun,魂hun,浑hun,混hun,豁huo,活huo,伙huo,火huo,获huo,或huo,惑huo,霍huo,货huo,祸huo,击ji,圾ji,基ji,机ji,畸ji,稽ji,积ji,箕ji,肌ji,饥ji,迹ji,激ji,讥ji,鸡ji,姬ji,绩ji,缉ji,吉ji,极ji,棘ji,辑ji,籍ji,集ji,及ji,急ji,疾ji,汲ji,即ji,嫉ji,级ji,挤ji,几ji,脊ji,己ji,蓟ji,技ji,冀ji,季ji,伎ji,祭ji,剂ji,悸ji,济ji,寄ji,寂ji,计ji,记ji,既ji,忌ji,际ji,妓ji,继ji,纪ji,嘉jia,枷jia,夹jia,佳jia,家jia,加jia,荚jia,颊jia,贾jia,甲jia,钾jia,假jia,稼jia,价jia,架jia,驾jia,嫁jia,歼jian,监jian,坚jian,尖jian,笺jian,间jian,煎jian,兼jian,肩jian,艰jian," +
+  "奸jian,缄jian,茧jian,检jian,柬jian,碱jian,硷jian,拣jian,捡jian,简jian,俭jian,剪jian,减jian,荐jian,槛kan,鉴jian,践jian,贱jian,见jian,键jian,箭jian,件jian,健jian,舰jian,剑jian,饯jian,渐jian,溅jian,涧jian,建jian,僵jiang,姜jiang,将jiang,浆jiang,江jiang,疆jiang,蒋jiang,桨jiang,奖jiang,讲jiang,匠jiang,酱jiang,降jiang,蕉jiao,椒jiao,礁jiao,焦jiao,胶jiao,交jiao,郊jiao,浇jiao,骄jiao,娇jiao,嚼jue,搅jiao,铰jiao,矫jiao,侥jiao,脚jiao,狡jiao,角jiao,饺jiao,缴jiao,绞jiao,剿jiao,教jiao,酵jiao,轿jiao,较jiao,叫jiao,窖jiao,揭jie,接jie,皆jie,秸jie,街jie,阶jie,截jie,劫jie,节jie,桔ju,杰jie,捷jie,睫jie,竭jie,洁jie,结jie,解jie,姐jie,戒jie,藉ji,芥jie,界jie,借jie,介jie,疥jie,诫jie,届jie,巾jin,筋jin,斤jin,金jin,今jin,津jin,襟jin,紧jin,锦jin,仅jin,谨jin,进jin,靳jin,晋jin,禁jin,近jin,烬jin,浸jin,尽jin,劲jin,荆jing,兢jing," +
+  "茎jing,睛jing,晶jing,鲸jing,京jing,惊jing,精jing,粳jing,经jing,井jing,警jing,景jing,颈jing,静jing,境jing,敬jing,镜jing,径jing,痉jing,靖jing,竟jing,竞jing,净jing,炯jiong,窘jiong,揪jiu,究jiu,纠jiu,玖jiu,韭jiu,久jiu,灸jiu,九jiu,酒jiu,厩jiu,救jiu,旧jiu,臼jiu,舅jiu,咎jiu,就jiu,疚jiu,鞠ju,拘ju,狙ju,疽ju,居ju,驹ju,菊ju,局ju,咀ju,矩ju,举ju,沮ju,聚ju,拒ju,据ju,巨ju,具ju,距ju,踞ju,锯ju,俱ju,句ju,惧ju,炬ju,剧ju,捐juan,鹃juan,娟juan,倦juan,眷juan,卷juan,绢juan,撅jue,攫jue,抉jue,掘jue,倔jue,爵jue,觉jue,决jue,诀jue,绝jue,均jun,菌jun,钧jun,军jun,君jun,峻jun,俊jun,竣jun,浚jun,郡jun,骏jun,喀ka,咖ka,卡ka,咯ge,开kai,揩kai,楷kai,凯kai,慨kai,刊kan,堪kan,勘kan,坎kan,砍kan,看kan,康kang,慷kang,糠kang,扛kang,抗kang,亢kang,炕kang,考kao,拷kao,烤kao," +
+  "靠kao,坷ke,苛ke,柯ke,棵ke,磕ke,颗ke,科ke,壳ke,咳ke,可ke,渴ke,克ke,刻ke,客ke,课ke,肯ken,啃ken,垦ken,恳ken,坑keng,吭keng,空kong,恐kong,孔kong,控kong,抠kou,口kou,扣kou,寇kou,枯ku,哭ku,窟ku,苦ku,酷ku,库ku,裤ku,夸kua,垮kua,挎kua,跨kua,胯kua,块kuai,筷kuai,侩kuai,快kuai,宽kuan,款kuan,匡kuang,筐kuang,狂kuang,框kuang,矿kuang,眶kuang,旷kuang,况kuang,亏kui,盔kui,岿kui,窥kui,葵kui,奎kui,魁kui,傀gui,馈kui,愧kui,溃kui,坤kun,昆kun,捆kun,困kun,括kuo,扩kuo,廓kuo,阔kuo,垃la,拉la,喇la,蜡la,腊la,辣la,啦la,莱lai,来lai,赖lai,蓝lan,婪lan,栏lan,拦lan,篮lan,阑lan,兰lan,澜lan,谰lan,揽lan,览lan,懒lan,缆lan,烂lan,滥lan,琅lang,榔lang,狼lang,廊lang,郎lang,朗lang,浪lang,捞lao,劳lao,牢lao,老lao,佬lao,姥lao,酪lao,烙lao,涝lao,勒lei,乐le,雷lei,镭lei," +
+  "蕾lei,磊lei,累lei,儡lei,垒lei,擂lei,肋le,类lei,泪lei,棱leng,楞leng,冷leng,厘li,梨li,犁li,黎li,篱li,狸li,离li,漓li,理li,李li,里li,鲤li,礼li,莉li,荔li,吏li,栗li,丽li,厉li,励li,砾li,历li,利li,傈li,例li,俐li,痢li,立li,粒li,沥li,隶li,力li,璃li,哩li,俩lia,联lian,莲lian,连lian,镰lian,廉lian,怜lian,涟lian,帘lian,敛lian,脸lian,链lian,恋lian,炼lian,练lian,粮liang,凉liang,梁liang,粱liang,良liang,两liang,辆liang,量liang,晾liang,亮liang,谅liang,撩liao,聊liao,僚liao,疗liao,燎liao,寥liao,辽liao,潦lao,了le,撂liao,镣liao,廖liao,料liao,列lie,裂lie,烈lie,劣lie,猎lie,琳lin,林lin,磷lin,霖lin,临lin,邻lin,鳞lin,淋lin,凛lin,赁lin,吝lin,拎lin,玲ling,菱ling,零ling,龄ling,铃ling,伶ling,羚ling,凌ling,灵ling,陵ling,岭ling,领ling,另ling,令ling,溜liu,琉liu,榴liu,硫liu," +
+  "馏liu,留liu,刘liu,瘤liu,流liu,柳liu,六liu,龙long,聋long,咙long,笼long,窿long,隆long,垄long,拢long,陇long,楼lou,娄lou,搂lou,篓lou,漏lou,陋lou,芦lu,卢lu,颅lu,庐lu,炉lu,掳lu,卤lu,虏lu,鲁lu,麓lu,碌lu,露lu,路lu,赂lu,鹿lu,潞lu,禄lu,录lu,陆lu,戮lu,驴lv,吕lv,铝lv,侣lv,旅lv,履lv,屡lv,缕lv,虑lv,氯lv,律lv,率lv,滤lv,绿lv,峦luan,挛luan,孪luan,滦luan,卵luan,乱luan,掠lve,略lve,抡lun,轮lun,伦lun,仑lun,沦lun,纶lun,论lun,萝luo,螺luo,罗luo,逻luo,锣luo,箩luo,骡luo,裸luo,落luo,洛luo,骆luo,络luo,妈ma,麻ma,玛ma,码ma,蚂ma,马ma,骂ma,嘛ma,吗ma,埋mai,买mai,麦mai,卖mai,迈mai,脉mai,瞒man,馒man,蛮man,满man,蔓man,曼man,慢man,漫man,谩man,芒mang,茫mang,盲mang,氓mang,忙mang,莽mang,猫mao,茅mao,锚mao,毛mao,矛mao,铆mao,卯mao," +
+  "茂mao,冒mao,帽mao,貌mao,贸mao,么me,玫mei,枚mei,梅mei,酶mei,霉mei,煤mei,没mei,眉mei,媒mei,镁mei,每mei,美mei,昧mei,寐mei,妹mei,媚mei,门men,闷men,们men,萌meng,蒙meng,檬meng,盟meng,锰meng,猛meng,梦meng,孟meng,眯mi,醚mi,靡mi,糜mi,迷mi,谜mi,弥mi,米mi,秘mi,觅mi,泌mi,蜜mi,密mi,幂mi,棉mian,眠mian,绵mian,冕mian,免mian,勉mian,娩mian,缅mian,面mian,苗miao,描miao,瞄miao,藐miao,秒miao,渺miao,庙miao,妙miao,蔑mie,灭mie,民min,抿min,皿min,敏min,悯min,闽min,明ming,螟ming,鸣ming,铭ming,名ming,命ming,谬miu,摸mo,摹mo,蘑mo,模mo,膜mo,磨mo,摩mo,魔mo,抹mo,末mo,莫mo,墨mo,默mo,沫mo,漠mo,寞mo,陌mo,谋mou,牟mou,某mou,拇mu,牡mu,亩mu,姆mu,母mu,墓mu,暮mu,幕mu,募mu,慕mu,木mu,目mu,睦mu,牧mu,穆mu,拿na,哪na,呐na,钠na,那na,娜na," +
+  "纳na,氖nai,乃nai,奶nai,耐nai,奈nai,南nan,男nan,难nan,囊nang,挠nao,脑nao,恼nao,闹nao,淖nao,呢ne,馁nei,内nei,嫩nen,能neng,妮ni,霓ni,倪ni,泥ni,尼ni,拟ni,你ni,匿ni,腻ni,逆ni,溺ni,蔫nian,拈nian,年nian,碾nian,撵nian,捻nian,念nian,娘niang,酿niang,鸟niao,尿niao,捏nie,聂nie,孽nie,啮nie,镊nie,镍nie,涅nie,您nin,柠ning,狞ning,凝ning,宁ning,拧ning,泞ning,牛niu,扭niu,钮niu,纽niu,脓nong,浓nong,农nong,弄nong,奴nu,努nu,怒nu,女nv,暖nuan,虐nve,疟nve,挪nuo,懦nuo,糯nuo,诺nuo,哦o,欧ou,鸥ou,殴ou,藕ou,呕ou,偶ou,沤ou,啪pa,趴pa,爬pa,帕pa,怕pa,琶pa,拍pai,排pai,牌pai,徘pai,湃pai,派pai,攀pan,潘pan,盘pan,磐pan,盼pan,畔pan,判pan,叛pan,乓pang,庞pang,旁pang,耪pang,胖pang,抛pao,咆pao,刨pao,炮pao,袍pao,跑pao,泡pao,呸pei,胚pei,培pei,裴pei,赔pei," +
+  "陪pei,配pei,佩pei,沛pei,喷pen,盆pen,砰peng,抨peng,烹peng,澎peng,彭peng,蓬peng,棚peng,硼peng,篷peng,膨peng,朋peng,鹏peng,捧peng,碰peng,坯pi,砒pi,霹pi,批pi,披pi,劈pi,琵pi,毗pi,啤pi,脾pi,疲pi,皮pi,匹pi,痞pi,僻pi,屁pi,譬pi,篇pian,偏pian,片pian,骗pian,飘piao,漂piao,瓢piao,票piao,撇pie,瞥pie,拼pin,频pin,贫pin,品pin,聘pin,乒ping,坪ping,苹ping,萍ping,平ping,凭ping,瓶ping,评ping,屏ping,坡po,泼po,颇po,婆po,破po,魄po,迫po,粕po,剖pou,扑pu,铺pu,仆pu,莆pu,葡pu,菩pu,蒲pu,埔pu,朴pu,圃pu,普pu,浦pu,谱pu,曝pu,瀑pu,期qi,欺qi,栖qi,戚qi,妻qi,七qi,凄qi,漆qi,柒qi,沏qi,其qi,棋qi,奇qi,歧qi,畦qi,崎qi,脐qi,齐qi,旗qi,祈qi,祁qi,骑qi,起qi,岂qi,乞qi,企qi,启qi,契qi,砌qi,器qi,气qi,迄qi,弃qi,汽qi,泣qi," +
+  "讫qi,掐qia,恰qia,洽qia,牵qian,扦qian,钎qian,铅qian,千qian,迁qian,签qian,仟qian,谦qian,乾qian,黔qian,钱qian,钳qian,前qian,潜qian,遣qian,浅qian,谴qian,堑qian,嵌qian,欠qian,歉qian,枪qiang,呛qiang,腔qiang,羌qiang,墙qiang,蔷qiang,强qiang,抢qiang,橇qiao,锹qiao,敲qiao,悄qiao,桥qiao,瞧qiao,乔qiao,侨qiao,巧qiao,鞘qiao,撬qiao,翘qiao,峭qiao,俏qiao,窍qiao,切qie,茄jia,且qie,怯qie,窃qie,钦qin,侵qin,亲qin,秦qin,琴qin,勤qin,芹qin,擒qin,禽qin,寝qin,沁qin,青qing,轻qing,氢qing,倾qing,卿qing,清qing,擎qing,晴qing,氰qing,情qing,顷qing,请qing,庆qing,琼qiong,穷qiong,秋qiu,丘qiu,邱qiu,球qiu,求qiu,囚qiu,酋qiu,泅qiu,趋qu,区qu,蛆qu,曲qu,躯qu,屈qu,驱qu,渠qu,取qu,娶qu,龋qu,趣qu,去qu,圈quan,颧quan,权quan,醛quan,泉quan,全quan,痊quan,拳quan,犬quan,券quan,劝quan,缺que,炔gui,瘸que,却que,鹊que,榷que,确que,雀que," +
+  "裙qun,群qun,然ran,燃ran,冉ran,染ran,瓤rang,壤rang,攘rang,嚷rang,让rang,饶rao,扰rao,绕rao,惹re,热re,壬ren,仁ren,人ren,忍ren,韧ren,任ren,认ren,刃ren,妊ren,纫ren,扔reng,仍reng,日ri,戎rong,茸rong,蓉rong,荣rong,融rong,熔rong,溶rong,容rong,绒rong,冗rong,揉rou,柔rou,肉rou,茹ru,蠕ru,儒ru,孺ru,如ru,辱ru,乳ru,汝ru,入ru,褥ru,软ruan,阮ruan,蕊rui,瑞rui,锐rui,闰run,润run,若ruo,弱ruo,撒sa,洒sa,萨sa,腮sai,鳃sai,塞sai,赛sai,三san,叁san,伞san,散san,桑sang,嗓sang,丧sang,搔sao,骚sao,扫sao,嫂sao,瑟se,色se,涩se,森sen,僧seng,莎sha,砂sha,杀sha,刹sha,沙sha,纱sha,傻sha,啥sha,煞sha,筛shai,晒shai,珊shan,苫shan,杉shan,山shan,删shan,煽shan,衫shan,闪shan,陕shan,擅shan,赡shan,膳shan,善shan,汕shan,扇shan,缮shan,墒shang,伤shang,商shang,赏shang,晌shang,上shang,尚shang,裳shang,梢shao," +
+  "捎shao,稍shao,烧shao,芍shao,勺shao,韶shao,少shao,哨shao,邵shao,绍shao,奢she,赊she,蛇she,舌she,舍she,赦she,摄she,射she,慑she,涉she,社she,设she,砷shen,申shen,呻shen,伸shen,身shen,深shen,娠shen,绅shen,神shen,沈shen,审shen,婶shen,甚shen,肾shen,慎shen,渗shen,声sheng,生sheng,甥sheng,牲sheng,升sheng,绳sheng,省sheng,盛sheng,剩sheng,胜sheng,圣sheng,师shi,失shi,狮shi,施shi,湿shi,诗shi,尸shi,虱shi,十shi,石shi,拾shi,时shi,什shen,食shi,蚀shi,实shi,识shi,史shi,矢shi,使shi,屎shi,驶shi,始shi,式shi,示shi,士shi,世shi,柿shi,事shi,拭shi,誓shi,逝shi,势shi,是shi,嗜shi,噬shi,适shi,仕shi,侍shi,释shi,饰shi,氏shi,市shi,恃shi,室shi,视shi,试shi,收shou,手shou,首shou,守shou,寿shou,授shou,售shou,受shou,瘦shou,兽shou,蔬shu,枢shu,梳shu,殊shu,抒shu,输shu,叔shu,舒shu,淑shu,疏shu,书shu,赎shu,孰shu,熟shu," +
+  "薯shu,暑shu,曙shu,署shu,蜀shu,黍shu,鼠shu,属shu,术shu,述shu,树shu,束shu,戍shu,竖shu,墅shu,庶shu,数shu,漱shu,恕shu,刷shua,耍shua,摔shuai,衰shuai,甩shuai,帅shuai,栓shuan,拴shuan,霜shuang,双shuang,爽shuang,谁shui,水shui,睡shui,税shui,吮shun,瞬shun,顺shun,舜shun,说shuo,硕shuo,朔shuo,烁shuo,斯si,撕si,嘶si,思si,私si,司si,丝si,死si,肆si,寺si,嗣si,四si,伺ci,似shi,饲si,巳si,松song,耸song,怂song,颂song,送song,宋song,讼song,诵song,搜sou,艘sou,擞sou,嗽sou,苏su,酥su,俗su,素su,速su,粟su,僳su,塑su,溯su,宿su,诉su,肃su,酸suan,蒜suan,算suan,虽sui,隋sui,随sui,绥sui,髓sui,碎sui,岁sui,穗sui,遂sui,隧sui,祟sui,孙sun,损sun,笋sun,蓑suo,梭suo,唆suo,缩suo,琐suo,索suo,锁suo,所suo,塌ta,他ta,它ta,她ta,塔ta,獭ta,挞ta,蹋ta,踏ta,胎tai,苔tai,抬tai,台tai," +
+  "泰tai,酞tai,太tai,态tai,汰tai,坍tan,摊tan,贪tan,瘫tan,滩tan,坛tan,檀tan,痰tan,潭tan,谭tan,谈tan,坦tan,毯tan,袒tan,碳tan,探tan,叹tan,炭tan,汤tang,塘tang,搪tang,堂tang,棠tang,膛tang,唐tang,糖tang,倘tang,躺tang,淌tang,趟tang,烫tang,掏tao,涛tao,滔tao,绦tao,萄tao,桃tao,逃tao,淘tao,陶tao,讨tao,套tao,特te,藤teng,腾teng,疼teng,誊teng,梯ti,剔ti,踢ti,锑ti,提ti,题ti,蹄ti,啼ti,体ti,替ti,嚏ti,惕ti,涕ti,剃ti,屉ti,天tian,添tian,填tian,田tian,甜tian,恬tian,舔tian,腆tian,挑tiao,条tiao,迢tiao,眺tiao,跳tiao,贴tie,铁tie,帖tie,厅ting,听ting,烃ting,汀ting,廷ting,停ting,亭ting,庭ting,挺ting,艇ting,通tong,桐tong,酮tong,瞳tong,同tong,铜tong,彤tong,童tong,桶tong,捅tong,筒tong,统tong,痛tong,偷tou,投tou,头tou,透tou,凸tu,秃tu,突tu,图tu,徒tu,途tu,涂tu,屠tu,土tu,吐tu," +
+  "兔tu,湍tuan,团tuan,推tui,颓tui,腿tui,蜕tui,褪tui,退tui,吞tun,屯tun,臀tun,拖tuo,托tuo,脱tuo,鸵tuo,陀tuo,驮tuo,驼tuo,椭tuo,妥tuo,拓tuo,唾tuo,挖wa,哇wa,蛙wa,洼wa,娃wa,瓦wa,袜wa,歪wai,外wai,豌wan,弯wan,湾wan,玩wan,顽wan,丸wan,烷wan,完wan,碗wan,挽wan,晚wan,皖wan,惋wan,宛wan,婉wan,万wan,腕wan,汪wang,王wang,亡wang,枉wang,网wang,往wang,旺wang,望wang,忘wang,妄wang,威wei,巍wei,微wei,危wei,韦wei,违wei,桅wei,围wei,唯wei,惟wei,为wei,潍wei,维wei,苇wei,萎wei,委wei,伟wei,伪wei,尾wei,纬wei,未wei,蔚wei,味wei,畏wei,胃wei,喂wei,魏wei,位wei,渭wei,谓wei,尉wei,慰wei,卫wei,瘟wen,温wen,蚊wen,文wen,闻wen,纹wen,吻wen,稳wen,紊wen,问wen,嗡weng,翁weng,瓮weng,挝wo,蜗wo,涡wo,窝wo,我wo,斡wo,卧wo,握wo,沃wo,巫wu,呜wu,钨wu,乌wu,污wu,诬wu," +
+  "屋wu,无wu,芜wu,梧wu,吾wu,吴wu,毋wu,武wu,五wu,捂wu,午wu,舞wu,伍wu,侮wu,坞wu,戊wu,雾wu,晤wu,物wu,勿wu,务wu,悟wu,误wu,昔xi,熙xi,析xi,西xi,硒xi,矽xi,晰xi,嘻xi,吸xi,锡xi,牺xi,稀xi,息xi,希xi,悉xi,膝xi,夕xi,惜xi,熄xi,烯xi,溪xi,汐xi,犀xi,檄xi,袭xi,席xi,习xi,媳xi,喜xi,铣xi,洗xi,系xi,隙xi,戏xi,细xi,瞎xia,虾xia,匣xia,霞xia,辖xia,暇xia,峡xia,侠xia,狭xia,下xia,厦sha,夏xia,吓xia,掀xian,锨xian,先xian,仙xian,鲜xian,纤xian,咸xian,贤xian,衔xian,舷xian,闲xian,涎xian,弦xian,嫌xian,显xian,险xian,现xian,献xian,县xian,腺xian,馅xian,羡xian,宪xian,陷xian,限xian,线xian,相xiang,厢xiang,镶xiang,香xiang,箱xiang,襄xiang,湘xiang,乡xiang,翔xiang,祥xiang,详xiang,想xiang,响xiang,享xiang,项xiang,巷xiang,橡xiang,像xiang,向xiang,象xiang,萧xiao,硝xiao,霄xiao," +
+  "削xue,哮xiao,嚣xiao,销xiao,消xiao,宵xiao,淆xiao,晓xiao,小xiao,孝xiao,校xiao,肖xiao,啸xiao,笑xiao,效xiao,楔xie,些xie,歇xie,蝎xie,鞋xie,协xie,挟xie,携xie,邪xie,斜xie,胁xie,谐xie,写xie,械xie,卸xie,蟹xie,懈xie,泄xie,泻xie,谢xie,屑xie,薪xin,芯xin,锌xin,欣xin,辛xin,新xin,忻xin,心xin,信xin,衅xin,星xing,腥xing,猩xing,惺xing,兴xing,刑xing,型xing,形xing,邢xing,行xing,醒xing,幸xing,杏xing,性xing,姓xing,兄xiong,凶xiong,胸xiong,匈xiong,汹xiong,雄xiong,熊xiong,休xiu,修xiu,羞xiu,朽xiu,嗅xiu,锈xiu,秀xiu,袖xiu,绣xiu,墟xu,戌xu,需xu,虚xu,嘘xu,须xu,徐xu,许xu,蓄xu,酗xu,叙xu,旭xu,序xu,畜chu,恤xu,絮xu,婿xu,绪xu,续xu,轩xuan,喧xuan,宣xuan,悬xuan,旋xuan,玄xuan,选xuan,癣xuan,眩xuan,绚xuan,靴xue,薛xue,学xue,穴xue,雪xue,血xue,勋xun,熏xun,循xun,旬xun,询xun,寻xun,驯xun,巡xun," +
+  "殉xun,汛xun,训xun,讯xun,逊xun,迅xun,压ya,押ya,鸦ya,鸭ya,呀ya,丫ya,芽ya,牙ya,蚜ya,崖ya,衙ya,涯ya,雅ya,哑ya,亚ya,讶ya,焉yan,咽yan,阉yan,烟yan,淹yan,盐yan,严yan,研yan,蜒yan,岩yan,延yan,言yan,颜yan,阎yan,炎yan,沿yan,奄yan,掩yan,眼yan,衍yan,演yan,艳yan,堰yan,燕yan,厌yan,砚yan,雁yan,唁yan,彦yan,焰yan,宴yan,谚yan,验yan,殃yang,央yang,鸯yang,秧yang,杨yang,扬yang,佯yang,疡yang,羊yang,洋yang,阳yang,氧yang,仰yang,痒yang,养yang,样yang,漾yang,邀yao,腰yao,妖yao,瑶yao,摇yao,尧yao,遥yao,窑yao,谣yao,姚yao,咬yao,舀yao,药yao,要yao,耀yao,椰ye,噎ye,耶ye,爷ye,野ye,冶ye,也ye,页ye,掖ye,业ye,叶ye,曳ye,腋ye,夜ye,液ye,一yi,壹yi,医yi,揖yi,铱yi,依yi,伊yi,衣yi,颐yi,夷yi,遗yi,移yi,仪yi,胰yi,疑yi,沂yi,宜yi,姨yi," +
+  "彝yi,椅yi,蚁yi,倚yi,已yi,乙yi,矣yi,以yi,艺yi,抑yi,易yi,邑yi,屹yi,亿yi,役yi,臆yi,逸yi,肄yi,疫yi,亦yi,裔yi,意yi,毅yi,忆yi,义yi,益yi,溢yi,诣yi,议yi,谊yi,译yi,异yi,翼yi,翌yi,绎yi,茵yin,荫yin,因yin,殷yin,音yin,阴yin,姻yin,吟yin,银yin,淫yin,寅yin,饮yin,尹yin,引yin,隐yin,印yin,英ying,樱ying,婴ying,鹰ying,应ying,缨ying,莹ying,萤ying,营ying,荧ying,蝇ying,迎ying,赢ying,盈ying,影ying,颖ying,硬ying,映ying,哟yo,拥yong,佣yong,臃yong,痈yong,庸yong,雍yong,踊yong,蛹yong,咏yong,泳yong,涌yong,永yong,恿yong,勇yong,用yong,幽you,优you,悠you,忧you,尤you,由you,邮you,铀you,犹you,油you,游you,酉you,有you,友you,右you,佑you,釉you,诱you,又you,幼you,迂yu,淤yu,于yu,盂yu,榆yu,虞yu,愚yu,舆yu,余yu,俞yu,逾yu,鱼yu,愉yu,渝yu,渔yu," +
+  "隅yu,予yu,娱yu,雨yu,与yu,屿yu,禹yu,宇yu,语yu,羽yu,玉yu,域yu,芋yu,郁yu,吁xu,遇yu,喻yu,峪yu,御yu,愈yu,欲yu,狱yu,育yu,誉yu,浴yu,寓yu,裕yu,预yu,豫yu,驭yu,鸳yuan,渊yuan,冤yuan,元yuan,垣yuan,袁yuan,原yuan,援yuan,辕yuan,园yuan,员yuan,圆yuan,猿yuan,源yuan,缘yuan,远yuan,苑yuan,愿yuan,怨yuan,院yuan,曰yue,约yue,越yue,跃yue,钥yao,岳yue,粤yue,月yue,悦yue,阅yue,耘yun,云yun,郧yun,匀yun,陨yun,允yun,运yun,蕴yun,酝yun,晕yun,韵yun,孕yun,匝za,砸za,杂za,栽zai,哉zai,灾zai,宰zai,载zai,再zai,在zai,咱zan,攒zan,暂zan,赞zan,赃zang,脏zang,葬zang,遭zao,糟zao,凿zao,藻zao,枣zao,早zao,澡zao,蚤zao,躁zao,噪zao,造zao,皂zao,灶zao,燥zao,责ze,择ze,则ze,泽ze,贼zei,怎zen,增zeng,憎zeng,曾ceng,赠zeng,扎zha,喳zha,渣zha,札zha,轧ya,铡zha,闸zha," +
+  "眨zha,栅zha,榨zha,咋za,乍zha,炸zha,诈zha,摘zhai,斋zhai,宅zhai,窄zhai,债zhai,寨zhai,瞻zhan,毡zhan,詹zhan,粘zhan,沾zhan,盏zhan,斩zhan,辗nian,崭zhan,展zhan,蘸zhan,栈zhan,占zhan,战zhan,站zhan,湛zhan,绽zhan,樟zhang,章zhang,彰zhang,漳zhang,张zhang,掌zhang,涨zhang,杖zhang,丈zhang,帐zhang,账zhang,仗zhang,胀zhang,瘴zhang,障zhang,招zhao,昭zhao,找zhao,沼zhao,赵zhao,照zhao,罩zhao,兆zhao,肇zhao,召zhao,遮zhe,折zhe,哲zhe,蛰zhe,辙zhe,者zhe,锗zhe,蔗zhe,这zhe,浙zhe,珍zhen,斟zhen,真zhen,甄zhen,砧zhen,臻zhen,贞zhen,针zhen,侦zhen,枕zhen,疹zhen,诊zhen,震zhen,振zhen,镇zhen,阵zhen,蒸zheng,挣zheng,睁zheng,征zheng,狰zheng,争zheng,怔zheng,整zheng,拯zheng,正zheng,政zheng,帧zhen,症zheng,郑zheng,证zheng,芝zhi,枝zhi,支zhi,吱zhi,蜘zhi,知zhi,肢zhi,脂zhi,汁zhi,之zhi,织zhi,职zhi,直zhi,植zhi,殖zhi,执zhi,值zhi,侄zhi,址zhi,指zhi,止zhi,趾zhi,只zhi,旨zhi," +
+  "纸zhi,志zhi,挚zhi,掷zhi,至zhi,致zhi,置zhi,帜zhi,峙zhi,制zhi,智zhi,秩zhi,稚zhi,质zhi,炙zhi,痔zhi,滞zhi,治zhi,窒zhi,中zhong,盅zhong,忠zhong,钟zhong,衷zhong,终zhong,种zhong,肿zhong,重zhong,仲zhong,众zhong,舟zhou,周zhou,州zhou,洲zhou,诌zhou,粥zhou,轴zhou,肘zhou,帚zhou,咒zhou,皱zhou,宙zhou,昼zhou,骤zhou,珠zhu,株zhu,蛛zhu,朱zhu,猪zhu,诸zhu,诛zhu,逐zhu,竹zhu,烛zhu,煮zhu,拄zhu,瞩zhu,嘱zhu,主zhu,著zhu,柱zhu,助zhu,蛀zhu,贮zhu,铸zhu,筑zhu,住zhu,注zhu,祝zhu,驻zhu,抓zhua,爪zhao,拽zhuai,专zhuan,砖zhuan,转zhuan,撰zhuan,赚zhuan,篆zhuan,桩zhuang,庄zhuang,装zhuang,妆zhuang,撞zhuang,壮zhuang,状zhuang,椎chui,锥zhui,追zhui,赘zhui,坠zhui,缀zhui,谆zhun,准zhun,捉zhuo,拙zhuo,卓zhuo,桌zhuo,琢zuo,茁zhuo,酌zhuo,啄zhuo,着zhe,灼zhuo,浊zhuo,兹zi,咨zi,资zi,姿zi,滋zi,淄zi,孜zi,紫zi,仔zai,籽zi,滓zi,子zi,自zi,渍zi,字zi," +
+  "鬃zong,棕zong,踪zong,宗zong,综zong,总zong,纵zong,邹zou,走zou,奏zou,揍zou,租zu,足zu,卒zu,族zu,祖zu,诅zu,阻zu,组zu,钻zuan,纂zuan,嘴zui,醉zui,最zui,罪zui,尊zun,遵zun,昨zuo,左zuo,佐zuo,柞zha,做zuo,作zuo,坐zuo,座zuo,亍chu,丌ji,兀wu,丐gai,廿nian,卅sa,丕pi,亘gen,丞cheng,鬲ge,孬nao,噩e,丨gun,禺yu,丿pie,匕bi,乇tuo,夭yao,爻yao,卮zhi,氐di,囟xin,胤yin,馗kui,毓yu,睾gao,鼗tao,丶zhu,亟ji,鼐nai,乜mie,乩ji,亓qi,芈mi,孛bei,啬se,嘏gu,仄ze,厍she,厝cuo,厣yan,厥jue,厮si,靥ye,赝yan,匚fang,叵po,匦gui,匮kui,匾bian,赜ze,卦gua,卣you,刂dao,刈yi,刎wen,刭jing,刳ku,刿gui,剀kai,剌la,剞ji,剡shan,剜wan,蒯kuai,剽piao,劂jue,劁qiao,劐huo,劓yi,冂jiong,罔wang,亻ren,仃ding,仉zhang,仂le,仨sa,仡ge,仫mu,仞ren,伛yu,仳pi,伢ya,佤wa,仵wu," +
+  "伥chang,伧cang,伉kang,伫zhu,佞ning,佧ka,攸you,佚yi,佝gou,佟tong,佗tuo,伲ni,伽ga,佶ji,佴er,侑you,侉kua,侃kan,侏zhu,佾yi,佻tiao,侪chai,佼jiao,侬nong,侔mou,俦chou,俨yan,俪li,俅qiu,俚li,俣yu,俜ping,俑yong,俟qi,俸feng,倩qian,偌ruo,俳pai,倬zhuo,倏shu,倮luo,倭wo,俾bi,倜ti,倌guan,倥kong,倨ju,偾fen,偃yan,偕xie,偈ji,偎wei,偬zong,偻lou,傥tang,傧bin,傩nuo,傺chi,僖xi,儆jing,僭jian,僬jiao,僦jiu,僮tong,儇xuan,儋dan,仝tong,氽tun,佘she,佥qian,俎zu,龠yue,汆cuan,籴di,兮xi,巽xun,黉hong,馘guo,冁chan,夔kui,勹bao,匍pu,訇hong,匐fu,凫fu,夙su,兕si,亠tou,兖yan,亳bo,衮gun,袤mao,亵xie,脔luan,裒pou,禀bing,嬴ying,蠃luo,羸lei,冫bing,冱hu,冽lie,冼xian,凇song,冖mi,冢zhong,冥ming,讠yan,讦jie,讧hong,讪shan,讴ou,讵ju,讷ne,诂gu,诃he,诋di,诏zhao,诎qu,诒yi," +
+  "诓kuang,诔lei,诖gua,诘ji,诙hui,诜shen,诟gou,诠quan,诤zheng,诨hun,诩xu,诮qiao,诰gao,诳kuang,诶ei,诹zou,诼zhuo,诿wei,谀yu,谂shen,谄chan,谇sui,谌chen,谏jian,谑xue,谒ye,谔e,谕yu,谖xuan,谙an,谛di,谘zi,谝pian,谟mo,谠dang,谡su,谥shi,谧mi,谪zhe,谫jian,谮zen,谯qiao,谲jue,谳yan,谵zhan,谶chen,卩jie,卺jin,阝fu,阢wu,阡qian,阱jing,阪ban,阽dian,阼zuo,陂bei,陉xing,陔gai,陟zhi,陧nie,陬zou,陲chui,陴pi,隈wei,隍huang,隗kui,隰xi,邗han,邛qiong,邝kuang,邙mang,邬wu,邡fang,邴bing,邳pi,邶bei,邺ye,邸di,邰tai,郏jia,郅zhi,邾zhu,郐kuai,郄qie,郇huan,郓yun,郦li,郢ying,郜gao,郗xi,郛fu,郫pi,郯tan,郾yan,鄄juan,鄢yan,鄞yin,鄣zhang,鄱po,鄯shan,鄹zou,酃ling,酆feng,刍chu,奂huan,劢mai,劬qu,劭shao,劾he,哿ge,勐meng,勖xu,勰xie,叟sou,燮xie,矍jue,廴yin,凵qian,凼dang,鬯chang," +
+  "厶si,弁bian,畚ben,巯qiu,坌ben,垩e,垡fa,塾shu,墼ji,壅yong,壑he,圩wei,圬wu,圪ge,圳zhen,圹kuang,圮pi,圯yi,坜li,圻qi,坂ban,坩gan,垅long,坫dian,垆lu,坼che,坻chi,坨tuo,坭ni,坶mu,坳ao,垭ya,垤die,垌dong,垲kai,埏shan,垧shang,垴nao,垓gai,垠yin,埕cheng,埘shi,埚guo,埙xun,埒lie,垸yuan,埴zhi,埯an,埸yi,埤pi,埝nian,堋peng,堍tu,埽sao,埭dai,堀ku,堞die,堙yin,塄leng,堠hou,塥ge,塬yuan,墁man,墉yong,墚liang,墀chi,馨xin,鼙pi,懿yi,艹cao,艽jiao,艿nai,芏du,芊qian,芨ji,芄wan,芎qiong,芑qi,芗xiang,芙fu,芫yan,芸yun,芾fei,芰ji,苈li,苊e,苣ju,芘pi,芷zhi,芮rui,苋xian,苌chang,苁cong,芩qin,芴wu,芡qian,芪qi,芟shan,苄bian,苎zhu,芤kou,苡yi,茉mo,苷gan,苤pie,茏long,茇ba,苜mu,苴ju,苒ran,苘qing,茌chi,苻fu,苓ling,茑niao,茚yin,茆mao,茔ying,茕qiong,苠min," +
+  "苕shao,茜qian,荑ti,荛rao,荜bi,茈ci,莒ju,茼tong,茴hui,茱zhu,莛ting,荞qiao,茯fu,荏ren,荇xing,荃quan,荟hui,荀xun,茗ming,荠ji,茭jiao,茺chong,茳jiang,荦luo,荥xing,荨xun,茛gen,荩jin,荬mai,荪sun,荭hong,荮zhou,莰kan,荸bi,莳shi,莴wo,莠you,莪e,莓mei,莜you,莅li,荼tu,莶xian,莩fu,荽sui,莸you,荻di,莘shen,莞guan,莨lang,莺ying,莼chun,菁jing,萁qi,菥xi,菘song,堇jin,萘nai,萋qi,菝ba,菽shu,菖chang,萜tie,萸yu,萑huan,萆bi,菔fu,菟tu,萏dan,萃cui,菸yan,菹ju,菪dang,菅jian,菀wan,萦ying,菰gu,菡han,葜qia,葑feng,葚ren,葙xiang,葳wei,蒇chan,蒈kai,葺qi,蒉kui,葸xi,萼e,葆bao,葩pa,葶ting,蒌lou,蒎pai,萱xuan,葭jia,蓁zhen,蓍shi,蓐ru,蓦mo,蒽en,蓓bei,蓊weng,蒿hao,蒺ji,蓠li,蒡bang,蒹jian,蒴shuo,蒗lang,蓥ying,蓣yu,蔌su,甍meng,蔸dou,蓰xi,蔹lian,蔟cu,蔺lin,蕖qu," +
+  "蔻kou,蓿xu,蓼liao,蕙hui,蕈xun,蕨jue,蕤rui,蕞zui,蕺ji,瞢meng,蕃fan,蕲qi,蕻hong,薤xie,薨hong,薇wei,薏yi,蕹weng,薮sou,薜bi,薅hao,薹tai,薷ru,薰xun,藓xian,藁gao,藜li,藿huo,蘧qu,蘅heng,蘩fan,蘖nie,蘼mi,廾gong,弈yi,夼kuang,奁lian,耷da,奕yi,奚xi,奘zang,匏pao,尢you,尥liao,尬ga,尴gan,扌shou,扪men,抟tuan,抻chen,拊fu,拚pan,拗ao,拮jie,挢jiao,拶za,挹yi,捋lv,捃jun,掭tian,揶ye,捱ai,捺na,掎ji,掴guai,捭bai,掬ju,掊pou,捩lie,掮qian,掼guan,揲die,揸zha,揠ya,揿qin,揄yu,揞an,揎xuan,摒bing,揆kui,掾yuan,摅shu,摁en,搋chuai,搛jian,搠shuo,搌zhan,搦nuo,搡sang,摞luo,撄ying,摭zhi,撖han,摺zhe,撷xie,撸lu,撙zun,撺cuan,擀gan,擐huan,擗pi,擤xing,擢zhuo,攉huo,攥zuan,攮nang,弋yi,忒te,甙dai,弑shi,卟bu,叱chi,叽ji,叩kou,叨dao,叻le,吒zha,吖ya,吆yao,呋fu," +
+  "呒wu,呓yi,呔dai,呖li,呃e,吡bi,呗bei,呙guo,吣qin,吲yin,咂za,咔ka,呷ga,呱gu,呤ling,咚dong,咛ning,咄duo,呶nao,呦you,咝si,哐kuang,咭ji,哂shen,咴hui,哒da,咧lie,咦yi,哓xiao,哔bi,呲ci,咣guang,哕hui,咻xiu,咿yi,哌pai,哙kuai,哚duo,哜ji,咩mie,咪mi,咤zha,哝nong,哏gen,哞mou,唛ma,哧chi,唠lao,哽geng,唔wu,哳zha,唢suo,唣zao,唏xi,唑zuo,唧ji,唪feng,啧ze,喏nuo,喵miao,啉lin,啭zhuan,啁zhao,啕tao,唿hu,啐cui,唼sha,唷yo,啖dan,啵bo,啶ding,啷lang,唳li,唰shua,啜chuai,喋die,嗒da,喃nan,喱li,喹kui,喈jie,喁yong,喟kui,啾jiu,嗖sou,喑yin,啻chi,嗟jie,喽lou,喾ku,喔o,喙hui,嗪qin,嗷ao,嗉su,嘟du,嗑ke,嗫nie,嗬he,嗔chen,嗦suo,嗝ge,嗄a,嗯n,嗥hao,嗲die,嗳ai,嗌ai,嗍suo,嗨hai,嗵tong,嗤chi,辔pei,嘞lei,嘈cao,嘌piao,嘁qi,嘤ying,嘣beng,嗾sou," +
+  "嘀di,嘧mi,嘭peng,噘jue,嘹liao,噗pu,嘬chuai,噍jiao,噢o,噙qin,噜lu,噌ceng,噔deng,嚆hao,噤jin,噱jue,噫yi,噻sai,噼pi,嚅ru,嚓ca,嚯huo,囔nang,囗wei,囝jian,囡nan,囵lun,囫hu,囹ling,囿you,圄yu,圊qing,圉yu,圜huan,帏wei,帙zhi,帔pei,帑tang,帱chou,帻ze,帼guo,帷wei,幄wo,幔man,幛zhang,幞fu,幡fan,岌ji,屺qi,岍qian,岐qi,岖qu,岈ya,岘xian,岙ao,岑cen,岚lan,岜ba,岵hu,岢ke,岽dong,岬jia,岫xiu,岱dai,岣gou,峁mao,岷min,峄yi,峒dong,峤jiao,峋xun,峥zheng,崂lao,崃lai,崧song,崦yan,崮gu,崤xiao,崞guo,崆kong,崛jue,嵘rong,崾yao,崴wai,崽zai,嵬wei,嵛yu,嵯cuo,嵝lou,嵫zi,嵋mei,嵊sheng,嵩song,嵴ji,嶂zhang,嶙lin,嶝deng,豳bin,嶷yi,巅dian,彳chi,彷pang,徂cu,徇xun,徉yang,後hou,徕lai,徙xi,徜chang,徨huang,徭yao,徵zheng,徼jiao,衢qu,彡shan,犭quan,犰qiu,犴an,犷guang,犸ma," +
+  "狃niu,狁yun,狎xia,狍pao,狒fei,狨rong,狯kuai,狩shou,狲sun,狴bi,狷juan,猁li,狳yu,猃xian,狺yin,狻suan,猗yi,猓guo,猡luo,猊ni,猞she,猝cu,猕mi,猢hu,猹cha,猥wei,猬wei,猸mei,猱nao,獐zhang,獍jing,獗jue,獠liao,獬xie,獯xun,獾huan,舛chuan,夥huo,飧sun,夤yin,夂zhi,饣shi,饧tang,饨tun,饩xi,饪ren,饫yu,饬chi,饴yi,饷xiang,饽bo,馀yu,馄hun,馇cha,馊sou,馍mo,馐xiu,馑jin,馓san,馔zhuan,馕nang,庀pi,庑wu,庋gui,庖pao,庥xiu,庠xiang,庹tuo,庵an,庾yu,庳bi,赓geng,廒ao,廑jin,廛chan,廨xie,廪lin,膺ying,忄xin,忉dao,忖cun,忏chan,怃wu,忮zhi,怄ou,忡chong,忤wu,忾kai,怅chang,怆chuang,忪song,忭bian,忸niu,怙hu,怵chu,怦peng,怛da,怏yang,怍zuo,怩ni,怫fu,怊chao,怿yi,怡yi,恸tong,恹yan,恻ce,恺kai,恂xun,恪ke,恽yun,悖bei,悚song,悭qian,悝kui,悃kun,悒yi,悌ti,悛quan,惬qie," +
+  "悻xing,悱fei,惝chang,惘wang,惆chou,惚hu,悴cui,愠yun,愦kui,愕e,愣leng,惴zhui,愀qiao,愎bi,愫su,慊qian,慵yong,憬jing,憔qiao,憧chong,憷chu,懔lin,懵meng,忝tian,隳hui,闩shuan,闫yan,闱wei,闳hong,闵min,闶kang,闼ta,闾lv,阃kun,阄jiu,阆lang,阈yu,阊chang,阋xi,阌wen,阍hun,阏e,阒qu,阕que,阖he,阗tian,阙que,阚han,丬qiang,爿pan,戕qiang,氵shui,汔qi,汜si,汊cha,沣feng,沅yuan,沐mu,沔mian,沌dun,汨mi,汩gu,汴bian,汶wen,沆hang,沩wei,泐le,泔gan,沭shu,泷long,泸lu,泱yang,泗si,沲tuo,泠ling,泖mao,泺luo,泫xuan,泮pan,沱tuo,泓hong,泯min,泾jing,洹huan,洧wei,洌lie,浃jia,浈zhen,洇yin,洄hui,洙zhu,洎ji,洫xu,浍hui,洮tao,洵xun,洚jiang,浏liu,浒hu,浔xun,洳ru,涑su,浯wu,涞lai,涠wei,浞zhuo,涓juan,涔cen,浜bang,浠xi,浼mei,浣huan,渚zhu,淇qi,淅xi,淞song,渎du,涿zhuo,淠pi,渑mian," +
+  "淦gan,淝fei,淙cong,渖shen,涫guan,渌lu,涮shuan,渫xie,湮yan,湎mian,湫jiao,溲sou,湟huang,溆xu,湓pen,湔jian,渲xuan,渥wo,湄mei,滟yan,溱qin,溘ke,滠she,漭mang,滢ying,溥pu,溧li,溽ru,溻ta,溷hun,滗bi,溴xiu,滏fu,溏tang,滂pang,溟ming,潢huang,潆ying,潇xiao,漤lan,漕cao,滹hu,漯luo,漶huan,潋lian,潴zhu,漪yi,漉lu,漩xuan,澉gan,澍shu,澌si,潸shan,潲shao,潼tong,潺chan,濑lai,濉sui,澧li,澹dan,澶chan,濂lian,濡ru,濮pu,濞bi,濠hao,濯zhuo,瀚han,瀣xie,瀛ying,瀹yue,瀵fen,灏hao,灞ba,宀mian,宄gui,宕dang,宓mi,宥you,宸chen,甯ning,骞qian,搴qian,寤wu,寮liao,褰qian,寰huan,蹇jian,謇jian,辶chuo,迓ya,迕wu,迥jiong,迮ze,迤yi,迩er,迦jia,迳jing,迨dai,逅hou,逄pang,逋bu,逦li,逑qiu,逍xiao,逖ti,逡qun,逵kui,逶wei,逭huan,逯lu,遄chuan,遑huang,遒qiu,遐xia,遨ao,遘gou,遢ta,遛liu,暹xian," +
+  "遴lin,遽ju,邂xie,邈miao,邃sui,邋la,彐ji,彗hui,彖tuan,彘zhi,尻kao,咫zhi,屐ji,屙e,孱can,屣xi,屦ju,羼chan,弪jing,弩nu,弭mi,艴fu,弼bi,鬻yu,屮che,妁shuo,妃fei,妍yan,妩wu,妪yu,妣bi,妗jin,姊zi,妫gui,妞niu,妤yu,姒si,妲da,妯zhou,姗shan,妾qie,娅ya,娆rao,姝shu,娈luan,姣jiao,姘pin,姹cha,娌li,娉ping,娲wa,娴xian,娑suo,娣di,娓wei,婀e,婧jing,婊biao,婕jie,娼chang,婢bi,婵chan,胬nu,媪ao,媛yuan,婷ting,婺wu,媾gou,嫫mo,媲pi,嫒ai,嫔pin,媸chi,嫠li,嫣yan,嫱qiang,嫖piao,嫦chang,嫘lei,嫜zhang,嬉xi,嬗shan,嬖bi,嬲niao,嬷ma,孀shuang,尕ga,尜ga,孚fu,孥nu,孳zi,孑jie,孓jue,孢bao,驵zang,驷si,驸fu,驺zou,驿yi,驽nu,骀dai,骁xiao,骅hua,骈pian,骊li,骐qi,骒ke,骓zhui,骖can,骘zhi,骛wu,骜ao,骝liu,骟shan,骠biao,骢cong,骣chan,骥ji,骧xiang,纟si," +
+  "纡yu,纣zhou,纥ge,纨wan,纩kuang,纭yun,纰pi,纾shu,绀gan,绁xie,绂fu,绉zhou,绋fu,绌chu,绐dai,绔ku,绗hang,绛jiang,绠geng,绡xiao,绨ti,绫ling,绮qi,绯fei,绱shang,绲gun,缍duo,绶shou,绺liu,绻quan,绾wan,缁zi,缂ke,缃xiang,缇ti,缈miao,缋hui,缌si,缏bian,缑gou,缒zhui,缗min,缙jin,缜zhen,缛ru,缟gao,缡li,缢yi,缣jian,缤bin,缥piao,缦man,缧lei,缪mou,缫sao,缬xie,缭liao,缯zeng,缰jiang,缱qian,缲qiao,缳huan,缵zuan,幺yao,畿ji,巛chuan,甾zai,邕yong,玎ding,玑ji,玮wei,玢bin,玟wen,珏jue,珂ke,珑long,玷dian,玳dai,珀po,珉min,珈jia,珥er,珙gong,顼xu,琊ya,珩hang,珧yao,珞luo,玺xi,珲hui,琏lian,琪qi,瑛ying,琦qi,琥hu,琨kun,琰yan,琮cong,琬wan,琛chen,琚ju,瑁mao,瑜yu,瑗yuan,瑕xia,瑙nao,瑷ai,瑭tang,瑾jin,璜huang,璎ying,璀cui,璁cong,璇xuan,璋zhang,璞pu,璨can,璩qu,璐lu,璧bi," +
+  "瓒zan,璺wen,韪wei,韫yun,韬tao,杌wu,杓biao,杞qi,杈cha,杩ma,枥li,枇pi,杪miao,杳yao,枘rui,枧jian,杵chu,枨cheng,枞cong,枭xiao,枋fang,杷pa,杼zhu,柰nai,栉zhi,柘zhe,栊long,柩jiu,枰ping,栌lu,柙xia,枵xiao,柚you,枳zhi,柝tuo,栀zhi,柃ling,枸gou,柢di,栎li,柁duo,柽cheng,栲kao,栳lao,桠ya,桡rao,桎zhi,桢zhen,桄guang,桤qi,梃ting,栝gua,桕jiu,桦hua,桁heng,桧gui,桀jie,栾luan,桊juan,桉an,栩xu,梵fan,梏gu,桴fu,桷jue,梓zi,桫suo,棂ling,楮chu,棼fen,椟du,椠qian,棹zhao,椤luo,棰chui,椋liang,椁guo,楗jian,棣di,椐ju,楱zou,椹shen,楠nan,楂zha,楝lian,榄lan,楫ji,榀pin,榘ju,楸qiu,椴duan,槌chui,榇chen,榈lv,槎cha,榉ju,楦xuan,楣mei,楹ying,榛zhen,榧fei,榻ta,榫sun,榭xie,槔gao,榱cui,槁gao,槊shuo,槟bin,榕rong,槠zhu,榍xie,槿jin,樯qiang,槭qi,樗chu,樘tang,橥zhu,槲hu,橄gan," +
+  "樾yue,檠qing,橐tuo,橛jue,樵qiao,檎qin,橹lu,樽zun,樨xi,橘ju,橼yuan,檑lei,檐yan,檩lin,檗bo,檫cha,猷you,獒ao,殁mo,殂cu,殇shang,殄tian,殒yun,殓lian,殍piao,殚dan,殛ji,殡bin,殪yi,轫ren,轭e,轱gu,轲ke,轳lu,轵zhi,轶yi,轸zhen,轷hu,轹li,轺yao,轼shi,轾zhi,辁quan,辂lu,辄zhe,辇nian,辋wang,辍chuo,辎zi,辏cou,辘lu,辚lin,軎wei,戋jian,戗qiang,戛jia,戟ji,戢ji,戡kan,戥deng,戤gai,戬jian,臧zang,瓯ou,瓴ling,瓿bu,甏beng,甑zeng,甓pi,攴pu,旮ga,旯la,旰gan,昊hao,昙tan,杲gao,昃ze,昕xin,昀yun,炅jiong,曷he,昝zan,昴mao,昱yu,昶chang,昵ni,耆qi,晟cheng,晔ye,晁chao,晏yan,晖hui,晡bu,晗han,晷gui,暄xuan,暌kui,暧ai,暝ming,暾tun,曛xun,曜yao,曦xi,曩nang,贲ben,贳shi,贶kuang,贻yi,贽zhi,赀zi,赅gai,赆jin,赈zhen,赉lai,赇qiu,赍ji,赕dan,赙fu,觇chan,觊ji," +
+  "觋xi,觌di,觎yu,觏gou,觐jin,觑qu,牮jian,犟jiang,牝pin,牦mao,牯gu,牾wu,牿gu,犄ji,犋ju,犍jian,犏pian,犒kao,挈qie,挲sa,掰bai,搿ge,擘bai,耄mao,毪mu,毳cui,毽jian,毵san,毹shu,氅chang,氇lu,氆pu,氍qu,氕pie,氘dao,氙xian,氚chuan,氡dong,氩ya,氤yin,氪ke,氲yun,攵pu,敕chi,敫jiao,牍du,牒die,牖you,爰yuan,虢guo,刖yue,肟wo,肜rong,肓huang,肼jing,朊ruan,肽tai,肱gong,肫zhun,肭na,肴yao,肷qian,胧long,胨dong,胩ka,胪lu,胛jia,胂shen,胄zhou,胙zuo,胍gua,胗zhen,朐qu,胝zhi,胫jing,胱guang,胴dong,胭yan,脍kuai,脎sa,胲hai,胼pian,朕zhen,脒mi,豚tun,脶luo,脞cuo,脬pao,脘wan,脲niao,腈jing,腌yan,腓fei,腴yu,腙zong,腚ding,腱jian,腠cou,腩nan,腼mian,腽wa,腭e,腧shu,塍cheng,媵ying,膈ge,膂lv,膑bin,滕teng,膣zhi,膪chuai,臌gu,朦meng,臊sao,膻shan,臁lian,膦lin,欤yu,欷xi,欹yi," +
+  "歃sha,歆xin,歙she,飑biao,飒sa,飓ju,飕sou,飙biao,飚biao,殳shu,彀gou,毂gu,觳hu,斐fei,齑ji,斓lan,於yu,旆pei,旄mao,旃zhan,旌jing,旎ni,旒liu,旖yi,炀yang,炜wei,炖dun,炝qiang,炻shi,烀hu,炷zhu,炫xuan,炱tai,烨ye,烊yang,焐wu,焓han,焖men,焯chao,焱yan,煳hu,煜yu,煨wei,煅duan,煲bao,煊xuan,煸bian,煺tui,熘liu,熳man,熵shang,熨yun,熠yi,燠yu,燔fan,燧sui,燹xian,爝jue,爨cuan,灬biao,焘dao,煦xu,熹xi,戾li,戽hu,扃jiong,扈hu,扉fei,礻shi,祀si,祆xian,祉zhi,祛qu,祜hu,祓fu,祚zuo,祢mi,祗zhi,祠ci,祯zhen,祧tiao,祺qi,禅chan,禊xi,禚zhuo,禧xi,禳rang,忑te,忐tan,怼dui,恝jia,恚hui,恧nv,恁nen,恙yang,恣zi,悫que,愆qian,愍min,慝te,憩qi,憝dui,懋mao,懑men,戆gang,肀yu,聿yu,沓da,泶xue,淼miao,矶ji,矸gan,砀dang,砉huo,砗che,砘dun,砑ya,斫zhuo,砭bian,砜feng," +
+  "砝fa,砹ai,砺li,砻long,砟zha,砼tong,砥di,砬la,砣tuo,砩fu,硎xing,硭mang,硖xia,硗qiao,砦zhai,硐dong,硇nao,硌ge,硪wo,碛qi,碓dui,碚bei,碇ding,碜chen,碡du,碣jie,碲di,碹xuan,碥bian,磔zhe,磙gun,磉sang,磬qing,磲qu,礅dun,磴deng,礓jiang,礤ca,礞meng,礴bo,龛kan,黹zhi,黻fu,黼fu,盱xu,眄mian,眍kou,盹dun,眇miao,眈dan,眚sheng,眢yuan,眙yi,眭sui,眦zi,眵chi,眸mou,睐lai,睑jian,睇di,睃suo,睚ya,睨ni,睢sui,睥pi,睿rui,瞍sou,睽kui,瞀mao,瞌ke,瞑ming,瞟piao,瞠cheng,瞰kan,瞵lin,瞽gu,町ting,畀bi,畎quan,畋tian,畈fan,畛zhen,畲she,畹wan,疃tuan,罘fu,罡gang,罟gu,詈li,罨yan,罴pi,罱lan,罹li,羁ji,罾zeng,盍he,盥guan,蠲juan,钅jin,钆ga,钇yi,钋po,钊zhao,钌liao,钍tu,钏chuan,钐shan,钔men,钗chai,钕nv,钚bu,钛tai,钜ju,钣ban,钤qian,钫fang,钪kang,钭tou,钬huo,钯ba," +
+  "钰yu,钲zheng,钴gu,钶ke,钷po,钸bu,钹bo,钺yue,钼mu,钽tan,钿dian,铄shuo,铈shi,铉xuan,铊ta,铋bi,铌ni,铍pi,铎duo,铐kao,铑lao,铒er,铕you,铖cheng,铗jia,铙nao,铘ye,铛dang,铞diao,铟yin,铠kai,铢zhu,铤ding,铥diu,铧hua,铨quan,铪ha,铩sha,铫diao,铮zheng,铯se,铳chong,铴tang,铵an,铷ru,铹lao,铼lai,铽te,铿keng,锃zeng,锂li,锆gao,锇e,锉cuo,锊lve,锍liu,锎kai,锏jian,锒lang,锓qin,锔ju,锕a,锖qiang,锘nuo,锛ben,锝de,锞ke,锟kun,锢gu,锪huo,锫pei,锩juan,锬tan,锱zi,锲qie,锴kai,锶si,锷e,锸cha,锼sou,锾huan,锿ai,镂lou,锵qiang,镄fei,镅mei,镆mo,镉ge,镌juan,镎na,镏liu,镒yi,镓jia,镔bin,镖biao,镗tang,镘man,镙luo,镛yong,镞zu,镟xuan,镝di,镡chan,镢jue,镤pu,镥lu,镦dui,镧lan,镨pu,镩cuan,镪qiang,镫deng,镬huo,镯zhuo,镱yi,镲cha,镳biao,锺zhong,矧shen,矬cuo," +
+  "雉zhi,秕bi,秭zi,秣mo,秫shu,稆lv,嵇ji,稃fu,稂lang,稞ke,稔ren,稹zhen,稷ji,穑se,黏nian,馥fu,穰rang,皈gui,皎jiao,皓hao,皙xi,皤po,瓞die,瓠hu,甬yong,鸠jiu,鸢yuan,鸨bao,鸩zhen,鸪gu,鸫dong,鸬lu,鸲qu,鸱chi,鸶si,鸸er,鸷zhi,鸹gua,鸺xiu,鸾luan,鹁bo,鹂li,鹄gu,鹆yu,鹇xian,鹈ti,鹉wu,鹋miao,鹌an,鹎bei,鹑chun,鹕hu,鹗e,鹚ci,鹛mei,鹜wu,鹞yao,鹣jian,鹦ying,鹧zhe,鹨liu,鹩liao,鹪jiao,鹫jiu,鹬yu,鹱hu,鹭lu,鹳guan,疒ne,疔ding,疖jie,疠li,疝shan,疬li,疣you,疳gan,疴ke,疸dan,痄zha,疱pao,疰zhu,痃xuan,痂jia,痖ya,痍yi,痣zhi,痨lao,痦wu,痤cuo,痫xian,痧sha,瘃zhu,痱fei,痼gu,痿wei,瘐yu,瘀yu,瘅dan,瘌la,瘗yi,瘊hou,瘥chai,瘘lou,瘕jia,瘙sao,瘛chi,瘼mo,瘢ban,瘠ji,癀huang,瘭biao,瘰luo,瘿ying,瘵zhai,癃long,瘾yin,瘳chou,癍ban,癞lai,癔yi," +
+  "癜dian,癖pi,癫dian,癯qu,翊yi,竦song,穸xi,穹qiong,窀zhun,窆bian,窈yao,窕tiao,窦dou,窠ke,窬yu,窨xun,窭ju,窳yu,衤yi,衩cha,衲na,衽ren,衿jin,袂mei,袢pan,裆dang,袷jia,袼ge,裉ken,裢lian,裎cheng,裣lian,裥jian,裱biao,褚chu,裼ti,裨bi,裾ju,裰duo,褡da,褙bei,褓bao,褛lv,褊bian,褴lan,褫chi,褶zhe,襁qiang,襦ru,襻pan,疋pi,胥xu,皲jun,皴cun,矜jin,耒lei,耔zi,耖chao,耜si,耠huo,耢lao,耥tang,耦ou,耧lou,耩jiang,耨nou,耱mo,耋die,耵ding,聃dan,聆ling,聍ning,聒gua,聩kui,聱ao,覃tan,顸han,颀qi,颃hang,颉jie,颌he,颍ying,颏ke,颔han,颚e,颛zhuan,颞nie,颟man,颡sang,颢hao,颥ru,颦pin,虍hu,虔qian,虬qiu,虮ji,虿chai,虺hui,虼ge,虻meng,蚨fu,蚍pi,蚋rui,蚬xian,蚝hao,蚧jie,蚣gong,蚪dou,蚓yin,蚩chi,蚶han,蛄gu,蚵he,蛎li,蚰you,蚺ran,蚱zha,蚯qiu,蛉ling,蛏cheng," +
+  "蚴you,蛩qiong,蛱jia,蛲nao,蛭zhi,蛳si,蛐qu,蜓ting,蛞kuo,蛴qi,蛟jiao,蛘yang,蛑mou,蜃shen,蜇zhe,蛸shao,蜈wu,蜊li,蜍chu,蜉fu,蜣qiang,蜻qing,蜞qi,蜥xi,蜮yu,蜚fei,蜾guo,蝈guo,蜴yi,蜱pi,蜩tiao,蜷quan,蜿wan,螂lang,蜢meng,蝽chun,蝾rong,蝻nan,蝠fu,蝰kui,蝌ke,蝮fu,螋sou,蝓yu,蝣you,蝼lou,蝤qiu,蝙bian,蝥mao,螓qin,螯ao,螨man,蟒mang,蟆ma,螈yuan,螅xi,螭chi,螗tang,螃pang,螫shi,蟥huang,螬cao,螵piao,螳tang,蟋xi,蟓xiang,螽zhong,蟑zhang,蟀shuai,蟊mao,蟛peng,蟪hui,蟠pan,蟮shan,蠖huo,蠓meng,蟾chan,蠊lian,蠛mie,蠡li,蠹du,蠼qu,缶fou,罂ying,罄qing,罅xia,舐shi,竺zhu,竽yu,笈ji,笃du,笄ji,笕jian,笊zhao,笫zi,笏hu,筇qiong,笸po,笪da,笙sheng,笮ze,笱gou,笠li,笥si,笤tiao,笳jia,笾bian,笞chi,筘kou,筚bi,筅xian,筵yan,筌quan,筝zheng,筠yun,筮shi,筻gang,筢pa,筲shao,筱xiao," +
+  "箐qing,箦ze,箧qie,箸zhu,箬ruo,箝qian,箨tuo,箅bi,箪dan,箜kong,箢yuan,箫xiao,箴zhen,篑kui,篁huang,篌hou,篝gou,篚fei,篥li,篦bi,篪chi,簌su,篾mie,篼dou,簏lu,簖duan,簋gui,簟dian,簪zan,簦deng,簸bo,籁lai,籀zhou,臾yu,舁yu,舂chong,舄xi,臬nie,衄nv,舡chuan,舢shan,舣yi,舭bi,舯zhong,舨ban,舫fang,舸ge,舻lu,舳zhu,舴ze,舾xi,艄shao,艉wei,艋meng,艏shou,艚cao,艟chong,艨meng,衾qin,袅niao,袈jia,裘qiu,裟sha,襞bi,羝di,羟qiang,羧suo,羯jie,羰tang,羲xi,籼xian,敉mi,粑ba,粝li,粜tiao,粞xi,粢zi,粲can,粼lin,粽zong,糁san,糇hou,糌zan,糍ci,糈xu,糅rou,糗qiu,糨jiang,艮gen,暨ji,羿yi,翎ling,翕xi,翥zhu,翡fei,翦jian,翩pian,翮he,翳yi,糸mi,絷zhi,綦qi,綮qi,繇yao,纛dao,麸fu,麴qu,赳jiu,趄ju,趔lie,趑zi,趱zan,赧nan,赭zhe,豇jiang,豉shi,酊ding,酐gan,酎zhou,酏yi," +
+  "酤gu,酢cu,酡tuo,酰xian,酩ming,酯zhi,酽yan,酾shai,酲cheng,酴tu,酹lei,醌kun,醅pei,醐hu,醍ti,醑xu,醢hai,醣tang,醪lao,醭bu,醮jiao,醯xi,醵ju,醴li,醺xun,豕shi,鹾cuo,趸dun,跫qiong,踅xue,蹙cu,蹩bie,趵bao,趿ta,趼jian,趺fu,跄qiang,跖zhi,跗fu,跚shan,跞li,跎tuo,跏jia,跛bo,跆tai,跬kui,跷qiao,跸bi,跣xian,跹xian,跻ji,跤jiao,踉liang,跽ji,踔chuo,踝huai,踟chi,踬zhi,踮dian,踣bo,踯zhi,踺jian,蹀die,踹chuai,踵zhong,踽ju,踱duo,蹉cuo,蹁pian,蹂rou,蹑nie,蹒pan,蹊qi,蹰chu,蹶jue,蹼pu,蹯fan,蹴cu,躅zhu,躏lin,躔chan,躐lie,躜zuan,躞xie,豸zhi,貂diao,貊mo,貅xiu,貘mo,貔pi,斛hu,觖jue,觞shang,觚gu,觜zi,觥gong,觫su,觯zhi,訾zi,謦qing,靓jing,雩yu,雳li,雯wen,霆ting,霁ji,霈pei,霏fei,霎sha,霪yin,霭ai,霰xian,霾mai,龀chen,龃ju,龅bao,龆tiao,龇zi,龈ken,龉yu," +
+  "龊chuo,龌wo,黾min,鼋yuan,鼍tuo,隹zhui,隼sun,隽juan,雎ju,雒luo,瞿qu,雠chou,銎qiong,銮luan,鋈wu,錾zan,鍪mou,鏊ao,鎏liu,鐾bei,鑫xin,鱿you,鲂fang,鲅ba,鲆ping,鲇nian,鲈lu,稣su,鲋fu,鲎hou,鲐tai,鲑gui,鲒jie,鲔wei,鲕er,鲚ji,鲛jiao,鲞xiang,鲟xun,鲠geng,鲡li,鲢lian,鲣jian,鲥shi,鲦tiao,鲧gun,鲨sha,鲩huan,鲫ji,鲭qing,鲮ling,鲰zou,鲱fei,鲲kun,鲳chang,鲴gu,鲵ni,鲶nian,鲷diao,鲺shi,鲻zi,鲼fen,鲽die,鳄e,鳅qiu,鳆fu,鳇huang,鳊bian,鳋sao,鳌ao,鳍qi,鳎ta,鳏guan,鳐yao,鳓le,鳔biao,鳕xue,鳗man,鳘min,鳙yong,鳜gui,鳝shan,鳟zun,鳢li,靼da,鞅yang,鞑da,鞒qiao,鞔man,鞯jian,鞫ju,鞣rou,鞲gou,鞴bei,骱jie,骰tou,骷ku,鹘gu,骶di,骺hou,骼ge,髁ke,髀bi,髅lou,髂qia,髋kuan,髌bin,髑du,魅mei,魃ba,魇yan,魉liang,魈xiao,魍wang,魑chi,飨xiang,餍yan,餮tie,饕tao,饔yong," +
+  "髟biao,髡kun,髦mao,髯ran,髫tiao,髻ji,髭zi,髹xiu,鬈quan,鬏jiu,鬓bin,鬟huan,鬣lie,麽mo,麾hui,縻mi,麂ji,麇jun,麈zhu,麋mi,麒qi,鏖ao,麝she,麟lin,黛dai,黜chu,黝you,黠xia,黟yi,黢qu,黩du,黧li,黥qing,黪can,黯an,鼢fen,鼬you,鼯wu,鼹yan,鼷xi,鼽qiu,鼾han,齄zha,";
+const PY_CHAR = (() => {
+  const o = {};
+  PY_CHAR_RAW.split(",").forEach(p => { if (p) o[p.charAt(0)] = p.slice(1); });
+  return o;
+})();
+const PY_FIX = { "长":"chang", "厦":"xia", "重":"chong", "牟":"mu", "枞":"zong", "蔚":"yu" };
+
+const FIELDS = {
+  train:"fTrain", cls:"fClass",
+  fromCn:"fFromCn", fromEn:"fFromEn", toCn:"fToCn", toEn:"fToEn",
+  datetime:"fDateTime", car:"fCar", seat:"fSeat",
+  price:"fPrice", id:"fId", name:"fName", gate:"fGate"
+};
+const DEFAULTS = {};
+Object.keys(FIELDS).forEach(k => DEFAULTS[k] = $(FIELDS[k]).value);
+
+function maskId(v){
+  v = (v || "").trim();
+  if (v.length <= 4) return v;
+  const head = v.slice(0, 10);
+  const maskLen = Math.min(4, Math.max(0, v.length - 10));
+  return head + "*".repeat(maskLen) + v.slice(10 + maskLen);
+}
+function fmtDate(d){
+  if (!d) return "";
+  const p = d.split("-");
+  return p.length === 3 ? p[0] + "年" + p[1] + "月" + p[2] + "日" : d;
+}
+const MIN_PRICE = 0.5;
+const MAX_PRICE = 9999.5;
+
+function fmtPrice(v){
+  let n = parseFloat(v);
+  if (isNaN(n) || n < MIN_PRICE) n = MIN_PRICE;
+  if (n > MAX_PRICE) n = MAX_PRICE;
+  return "¥" + n.toFixed(1) + "元";
+}
+
+function sanitizePrice(raw){
+  let v = String(raw || "").replace(/[^\d.]/g, "");
+  const dot = v.indexOf(".");
+  if (dot > -1) v = v.slice(0, dot + 1) + v.slice(dot + 1).replace(/\./g, "");
+  const parts = v.split(".");
+  const int = (parts[0] || "").slice(0, 4);
+  if (parts.length === 1) return int;
+  const dec = parts[1].replace(/[^05]/g, "").slice(0, 1);
+  return int + "." + dec;
+}
+
+function tidyPrice(){
+  const el = $("fPrice");
+  let n = parseFloat(sanitizePrice(el.value));
+  if (isNaN(n)) n = MIN_PRICE;
+  n = Math.min(Math.max(n, MIN_PRICE), MAX_PRICE);
+  el.value = n.toFixed(1);
+  render();
+}
+function genPinyin(name){
+  let out = "", i = 0;
+  while (i < name.length){
+    let hit = "";
+    for (const len of [3, 2]){
+      const seg = name.substr(i, len);
+      if (PINYIN[seg]){ hit = PINYIN[seg]; i += len; break; }
+    }
+    if (hit){ out += hit; continue; }
+    const ch = name.charAt(i);
+    out += PY_FIX[ch] || PY_CHAR[ch] || (/[A-Za-z0-9]/.test(ch) ? ch : "");
+    i++;
+  }
+  return out ? out.charAt(0).toUpperCase() + out.slice(1) : "";
+}
+
+const EN_FIXED = { "香港西九龙": "HKWestKowloon", "香港西九龙站": "HKWestKowloon" };
+
+function normEn(str){
+  const t = String(str || "").replace(/\s+/g, "");
+  return t ? t.charAt(0).toUpperCase() + t.slice(1).toLowerCase() : "";
+}
+
+function pinyinOf(cn){
+  const raw = (cn || "").trim();
+  if (!raw) return "";
+  const bare = raw.replace(/站+$/, "");
+  if (EN_FIXED[raw] || EN_FIXED[bare]) return EN_FIXED[raw] || EN_FIXED[bare];
+  return normEn(PINYIN[raw] || PINYIN[bare] || genPinyin(bare));
+}
+
+function randDigits(n){
+  let out = "";
+  for (let i = 0; i < n; i++) out += Math.floor(Math.random() * 10);
+  return out;
+}
+const pad2 = n => String(n).padStart(2, "0");
+
+function genTicketNo(){
+  $("fTicketNo").value = "E" + randDigits(9);
+}
+const pad3 = n => String(n).padStart(3, "0");
+
+function genSerial(){
+  const d = new Date();
+  $("fSerial").value =
+    d.getFullYear() + pad2(d.getMonth() + 1) + pad2(d.getDate()) +
+    pad2(d.getHours()) + pad2(d.getMinutes()) + pad2(d.getSeconds()) +
+    pad3(d.getMilliseconds());
+}
+function genCodes(){ genTicketNo(); genSerial(); }
+
+function withZhan(name){
+  const raw = (name || "").trim();
+  if (!raw) return "";
+  return /站$/.test(raw) ? raw : raw + "站";
+}
+
+const COL_W  = 179;
+const CN_FS  = 26;
+const ZH_W   = 20;
+const ZH_GAP = 2;
+
+function stationSpacing(name){
+  const n = Array.from(name || "").length;
+  if (n === 2) return 26;
+  if (n === 3) return 6;
+  const avail = COL_W - ZH_W - ZH_GAP;
+  if (n * CN_FS <= avail) return 0;
+  return Math.round(((avail - n * CN_FS) / (n - 1)) * 10) / 10;
+}
+
+const EN_FS = 18;
+let enCtx = null;
+
+function enMeasure(text){
+  if (!enCtx) enCtx = document.createElement("canvas").getContext("2d");
+  enCtx.font = EN_FS + 'px "DIN-Fonts","Microsoft YaHei",sans-serif';
+  const chars = Array.from(text || "");
+  let sum = 0;
+  for (const ch of chars) sum += enCtx.measureText(ch).width;
+  return { n: chars.length, full: enCtx.measureText(text || "").width, sum };
+}
+
+function enSpacing(text){
+  const m = enMeasure(text);
+  if (m.n < 2) return null;
+  if (m.full <= COL_W - 0.5) return null;
+  const ls = (COL_W - m.sum) / (m.n - 1);
+  return Math.max(Math.round(ls * 10) / 10, -8);
+}
+
+function setEnText(enEl, text){
+  const txt = text || "";
+  enEl.textContent = "";
+  if (!txt){ enEl.textContent = " "; return; }
+  const ls = enSpacing(txt);
+  if (ls === null){ enEl.textContent = txt; return; }
+  let first = true;
+  for (const ch of txt){
+    const sp = document.createElement("span");
+    if (!first) sp.style.marginLeft = ls + "px";
+    sp.textContent = ch;
+    enEl.appendChild(sp);
+    first = false;
+  }
+}
+
+function setStation(cnEl, enEl, cnText, enText){
+  const txt = cnText || "";
+  const chars = Array.from(txt);
+  const rawName = txt.replace(/站+$/, "");
+  const gap = stationSpacing(rawName);
+  cnEl.textContent = "";
+  if (!txt){
+    cnEl.textContent = " ";
+  } else {
+    chars.forEach((ch, i) => {
+      const sp = document.createElement("span");
+      if (ch === "站" && i === chars.length - 1){
+        sp.className = "zhan";
+        sp.style.marginLeft = "2px";
+      } else {
+        sp.className = "ch";
+        if (i > 0) sp.style.marginLeft = gap + "px";
+      }
+      sp.textContent = ch;
+      cnEl.appendChild(sp);
+    });
+  }
+  setEnText(enEl, enText);
+}
+
+function sanitizeCar(raw){
+  return String(raw || "").replace(/\D/g, "").slice(0, 2);
+}
+function sanitizeSeat(raw){
+  let v = String(raw || "").toUpperCase().replace(/[^0-9A-Z]/g, "");
+  if (!v) return "";
+  if (/^[A-Z]/.test(v)){
+    const letter = v[0];
+    const digits = v.slice(1).replace(/[^0-9]/g, "").slice(0, 2);
+    return (digits + letter).slice(0, 3);
+  }
+  const m = v.match(/^(\d{1,2})([A-Z])/);
+  if (m) return m[1] + m[2];
+  return v.replace(/[^0-9]/g, "").slice(0, 3);
+}
+
+function escHtml(str){
+  return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+function boldDigits(str){
+  return String(str).split(/([0-9A-Za-z]+)/)
+    .map((seg, i) => i % 2 ? '<b class="num">' + seg + '</b>' : escHtml(seg))
+    .join("");
+}
+
+function render(){
+  const v = k => $(FIELDS[k]).value;
+
+  $("tTicketNo").textContent = $("fTicketNo").value.trim() || " ";
+  $("tTrain").textContent = v("train").trim() || " ";
+  const fromEn = pinyinOf(v("fromCn")), toEn = pinyinOf(v("toCn"));
+  $("fFromEn").value = fromEn;
+  $("fToEn").value = toEn;
+  setStation($("tFromCn"), $("tFromEn"), withZhan(v("fromCn")), fromEn);
+  setStation($("tToCn"), $("tToEn"), withZhan(v("toCn")), toEn);
+
+  const dt = dtGet();
+  $("tDatetime").innerHTML = boldDigits(fmtDate(dt.d) + dt.h + ":" + dt.mi + "开");
+
+  const car = v("car").trim(), seat = v("seat").trim();
+  const noSeat = $("fNoSeat").checked;
+  const seatTxt = noSeat ? "无座" : (seat ? seat + "号" : "");
+  const csTxt = (car ? car + "车" : "") + seatTxt;
+  $("tCarSeat").innerHTML = csTxt ? boldDigits(csTxt) : " ";
+
+  const gate = v("gate").trim();
+  $("tGate").textContent = gate ? ("检票：" + gate) : " ";
+  syncPickers();
+
+  $("tPrice").textContent = fmtPrice(v("price"));
+  $("tClass").textContent = v("cls").trim() || " ";
+  $("tId").textContent = maskId(v("id")) || " ";
+  $("tName").textContent = v("name").trim() || " ";
+  $("tSerial").textContent = $("fSerial").value.trim() || " ";
+
+  const seller = (v("fromCn") || "").trim();
+  $("tSeller").textContent = seller ? seller + "售" : " ";
+}
+
+const SKIP_FIELDS = new Set([
+  FIELDS.fromEn, FIELDS.toEn,
+  FIELDS.price, FIELDS.train, FIELDS.car, FIELDS.seat
+]);
+Object.values(FIELDS).forEach(id => {
+  const el = $(id);
+  if (SKIP_FIELDS.has(id) || el.type === "hidden") return;
+  el.addEventListener("input", render);
+});
+$("fPrice").addEventListener("input", () => {
+  const el = $("fPrice");
+  const clean = sanitizePrice(el.value);
+  if (clean !== el.value) el.value = clean;
+  render();
+});
+$("fPrice").addEventListener("blur", tidyPrice);
+$("fName").addEventListener("blur", () => {
+  const v = $("fName").value.trim();
+  if (v && v.length < 2) toast("姓名至少 2 个字");
+});
+$("fTrain").addEventListener("input", () => {
+  const el = $("fTrain");
+  const up = el.value.toUpperCase();
+  if (up !== el.value) el.value = up;
+  render();
+});
+$("fCar").addEventListener("input", () => {
+  const el = $("fCar");
+  const c = sanitizeCar(el.value);
+  if (c !== el.value) el.value = c;
+  render();
+});
+$("fCar").addEventListener("blur", () => {
+  const el = $("fCar");
+  if (el.value) el.value = el.value.padStart(2, "0");
+  render();
+});
+$("fSeat").addEventListener("input", () => {
+  const el = $("fSeat");
+  const c = sanitizeSeat(el.value);
+  if (c !== el.value) el.value = c;
+  render();
+});
+$("fSeat").addEventListener("blur", () => {
+  const el = $("fSeat");
+  let v = sanitizeSeat(el.value);
+  if (/^\d+$/.test(v)) v = v.padStart(3, "0");
+  else if (/^\d[A-Z]$/.test(v)) v = "0" + v;
+  el.value = v;
+  render();
+});
+let lastSeat = "";
+$("fNoSeat").addEventListener("change", () => {
+  const el = $("fSeat"), on = $("fNoSeat").checked;
+  if (on){
+    if (el.value !== "无座") lastSeat = el.value;
+    el.value = "无座";
+    el.disabled = true;
+  } else {
+    el.disabled = false;
+    el.value = lastSeat;
+  }
+  render();
+});
+$("btnReset").addEventListener("click", () => {
+  Object.keys(FIELDS).forEach(k => $(FIELDS[k]).value = DEFAULTS[k]);
+  $("fNoSeat").checked = false;
+  $("fSeat").disabled = false;
+  lastSeat = "";
+  genCodes();
+  tidyPrice();
+  toast("已恢复示例内容");
+});
+function openDlg(){ $("dlgMask").classList.add("on"); }
+function closeDlg(){ $("dlgMask").classList.remove("on"); }
+$("btnDownload").addEventListener("click", openDlg);
+$("dlgCancel").addEventListener("click", closeDlg);
+$("dlgMask").addEventListener("click", e => { if (e.target === $("dlgMask")) closeDlg(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeDlg(); });
+
+function downloadName(){
+  const clean = s => String(s || "").replace(/[\\/:*?"<>|\s]/g, "");
+  const p = dtGet();
+  return [
+    clean($("fName").value) || "姓名",
+    clean($("fFromCn").value) || "始发站",
+    clean($("fToCn").value) || "终到站",
+    p.d.replace(/-/g, "") || ""
+  ].join("-") + ".png";
+}
+
+async function doDownload(){
+  const ticket = $("ticket");
+  try{
+    if (!window.html2canvas) await loadScript("https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js");
+    const canvas = await window.html2canvas(ticket, { backgroundColor:null, scale:3, useCORS:true });
+    const a = document.createElement("a");
+    a.download = downloadName();
+    a.href = canvas.toDataURL("image/png");
+    a.click();
+  }catch(e){
+    toast("下载失败，请检查网络后重试");
+  }
+}
+
+$("dlgOk").addEventListener("click", async () => {
+  closeDlg();
+  toast("提交成功，正在下载");
+  await doDownload();
+});
+const CLASSES = ["商务座","特等座","优选一等座","一等座","二等座","二等卧","一等卧","高级动卧","纵向卧铺（软卧）","多功能座","硬座","软座","硬卧","软卧","高级软卧","一人软包","特等软座","卧代座","硬卧代硬座","软卧代二等座"];
+
+function closePickers(){
+  document.querySelectorAll(".ep-wrap.open").forEach(w => w.classList.remove("open"));
+}
+function bindTrigger(wrapId, onOpen){
+  const wrap = $(wrapId);
+  wrap.querySelector(".ep-trigger").addEventListener("click", e => {
+    e.stopPropagation();
+    const willOpen = !wrap.classList.contains("open");
+    closePickers();
+    if (willOpen){ wrap.classList.add("open"); if (onOpen) onOpen(); }
+  });
+}
+document.addEventListener("click", () => closePickers());
+
+(function(){
+  const pop = $("epClassPop");
+  pop.innerHTML = '<div class="ep-list">' +
+    CLASSES.map(c => '<div class="ep-opt" data-v="' + c + '">' + c + '<span class="ck">✓</span></div>').join("") +
+    '</div>';
+  pop.addEventListener("click", e => {
+    const opt = e.target.closest(".ep-opt");
+    if (!opt) return;
+    $("fClass").value = opt.dataset.v;
+    render();
+    closePickers();
+  });
+  bindTrigger("epClass", () => {
+    const list = pop.querySelector(".ep-list"), sel = pop.querySelector(".ep-opt.sel");
+    if (sel) list.scrollTop = Math.max(0, sel.offsetTop - 120);
+  });
+})();
+
+const DT_RE = /^(\d{4})-(\d{2})-(\d{2})\s(\d{2}):(\d{2})(?::(\d{2}))?$/;
+
+function nowParts(){
+  const d = new Date();
+  return {
+    d: d.getFullYear() + "-" + pad2(d.getMonth() + 1) + "-" + pad2(d.getDate()),
+    h: pad2(d.getHours()), mi: pad2(d.getMinutes())
+  };
+}
+function dtGet(){
+  const m = ($("fDateTime").value || "").match(DT_RE);
+  if (m) return { d: m[1] + "-" + m[2] + "-" + m[3], h: m[4], mi: m[5] };
+  return nowParts();
+}
+function dtSet(p){
+  $("fDateTime").value = p.d + " " + p.h + ":" + p.mi + ":00";
+}
+function dtText(){
+  const p = dtGet();
+  return p.d + " " + p.h + ":" + p.mi;
+}
+
+let dtDraft = null;
+
+const calState = (() => { const d = new Date(); return { y: d.getFullYear(), m: d.getMonth() }; })();
+
+function buildCal(){
+  const y = calState.y, m = calState.m;
+  const first = new Date(y, m, 1).getDay();
+  const days  = new Date(y, m + 1, 0).getDate();
+  const prevDays = new Date(y, m, 0).getDate();
+  const sel = dtDraft.d;
+  const td = new Date();
+  const todayStr = td.getFullYear() + "-" + pad2(td.getMonth() + 1) + "-" + pad2(td.getDate());
+  const key = (yy, mm, dd) => yy + "-" + pad2(mm) + "-" + pad2(dd);
+  const cell = (ds, txt, extra) =>
+    '<span class="cal-day' + (extra || "") + '" data-d="' + ds + '"><i>' + txt + '</i></span>';
+
+  let cells = "";
+  for (let i = first - 1; i >= 0; i--){
+    const pm = m === 0 ? 12 : m, py = m === 0 ? y - 1 : y;
+    cells += cell(key(py, pm, prevDays - i), prevDays - i, " dim");
+  }
+  for (let d = 1; d <= days; d++){
+    const ds = key(y, m + 1, d);
+    const extra = ds === sel ? " sel" : ds === todayStr ? " today" : "";
+    cells += cell(ds, d, extra);
+  }
+  const rest = (7 - (first + days) % 7) % 7;
+  for (let d = 1; d <= rest; d++){
+    const nm = m === 11 ? 1 : m + 2, ny = m === 11 ? y + 1 : y;
+    cells += cell(key(ny, nm, d), d, " dim");
+  }
+
+  $("dtCal").innerHTML =
+    '<div class="cal-head">' +
+      '<div class="cal-nav l"><span data-n="py">«</span><span data-n="pm">‹</span></div>' +
+      '<div class="cal-title"><em>' + y + '</em> 年 ' + (m + 1) + ' 月</div>' +
+      '<div class="cal-nav r"><span data-n="nm">›</span><span data-n="ny">»</span></div>' +
+    '</div>' +
+    '<div class="cal-grid">' +
+      ["日","一","二","三","四","五","六"].map(w => '<span class="cal-wd">' + w + '</span>').join("") +
+      cells +
+    '</div>';
+}
+
+function buildTimeCol(id, count, cur, head){
+  let h = '<div class="tp-hd">' + head + '</div>';
+  for (let i = 0; i < count; i++){
+    const v = String(i).padStart(2, "0");
+    h += '<div class="tp-item' + (v === cur ? " sel" : "") + '" data-v="' + v + '">' + v + '</div>';
+  }
+  $(id).innerHTML = h;
+}
+function buildDTTime(){
+  buildTimeCol("dtH", 24, dtDraft.h, "时");
+  buildTimeCol("dtM", 60, dtDraft.mi, "分");
+  ["dtH","dtM"].forEach(id => {
+    const el = $(id).querySelector(".tp-item.sel");
+    if (el) $(id).scrollTop = Math.max(0, el.offsetTop - 60);
+  });
+}
+
+function renderDT(){
+  $("dtDateBox").textContent = dtDraft.d;
+  $("dtTimeBox").textContent = dtDraft.h + ":" + dtDraft.mi;
+  buildCal();
+  buildDTTime();
+}
+
+function showTimePanel(show){
+  const tp = $("dtTp"), box = $("dtTimeBox");
+  box.classList.toggle("act", !!show);
+  if (!show){ tp.classList.remove("on"); return; }
+  const pop = $("epDTPop").getBoundingClientRect();
+  const b = box.getBoundingClientRect();
+  tp.style.left = Math.round(b.left - pop.left) + "px";
+  tp.style.top = Math.round(b.bottom - pop.top + 4) + "px";
+  tp.classList.add("on");
+}
+
+$("dtCal").addEventListener("click", e => {
+  const nav = e.target.closest("[data-n]");
+  if (nav){
+    const n = nav.dataset.n;
+    if (n === "pm"){ calState.m--; if (calState.m < 0){ calState.m = 11; calState.y--; } }
+    if (n === "nm"){ calState.m++; if (calState.m > 11){ calState.m = 0; calState.y++; } }
+    if (n === "py") calState.y--;
+    if (n === "ny") calState.y++;
+    buildCal();
+    return;
+  }
+  const day = e.target.closest(".cal-day");
+  if (day){
+    dtDraft.d = day.dataset.d;
+    renderDT();
+    showTimePanel(false);
+  }
+});
+
+$("dtTimeBox").addEventListener("click", () => {
+  showTimePanel(!$("dtTp").classList.contains("on"));
+});
+$("dtTp").addEventListener("click", e => {
+  const it = e.target.closest(".tp-item");
+  if (!it) return;
+  if (it.closest("#dtH")) dtDraft.h = it.dataset.v;
+  else dtDraft.mi = it.dataset.v;
+  renderDT();
+  showTimePanel(true);
+});
+
+$("dtNow").addEventListener("click", () => {
+  dtDraft = nowParts();
+  calState.y = +dtDraft.d.slice(0, 4);
+  calState.m = +dtDraft.d.slice(5, 7) - 1;
+  renderDT();
+  showTimePanel(false);
+});
+$("dtOk").addEventListener("click", () => {
+  dtSet(dtDraft);
+  render();
+  closePickers();
+});
+
+$("epDTPop").addEventListener("click", e => e.stopPropagation());
+
+function placeDTPop(){
+  const pop = $("epDTPop");
+  const trg = $("epDT").querySelector(".ep-trigger").getBoundingClientRect();
+  const GAP = 8, EDGE = 12;
+  const h = pop.offsetHeight, w = pop.offsetWidth;
+  const below = window.innerHeight - trg.bottom - GAP - EDGE;
+  const above = trg.top - GAP - EDGE;
+
+  let top;
+  if (h <= below) top = trg.bottom + GAP;
+  else if (h <= above) top = trg.top - GAP - h;
+  else top = below >= above ? trg.bottom + GAP : trg.top - GAP - h;
+  const minTop = 72 + h + EDGE <= window.innerHeight ? 72 : EDGE;
+  top = Math.max(minTop, Math.min(top, window.innerHeight - h - EDGE));
+
+  pop.style.top = Math.round(top) + "px";
+  pop.style.left = Math.round(Math.max(EDGE, Math.min(trg.left, window.innerWidth - w - EDGE))) + "px";
+}
+bindTrigger("epDT", () => {
+  const p = dtGet();
+  dtDraft = { d: p.d, h: p.h, mi: p.mi };
+  calState.y = +p.d.slice(0, 4);
+  calState.m = +p.d.slice(5, 7) - 1;
+  renderDT();
+  showTimePanel(false);
+  placeDTPop();
+});
+function replaceDTPop(){ if ($("epDT").classList.contains("open")) placeDTPop(); }
+window.addEventListener("resize", replaceDTPop);
+window.addEventListener("scroll", replaceDTPop, true);
+
+function syncPickers(){
+  $("epClassVal").textContent = $("fClass").value;
+  $("epDTVal").textContent = dtText();
+  $("epClassPop").querySelectorAll(".ep-opt").forEach(o =>
+    o.classList.toggle("sel", o.dataset.v === $("fClass").value));
+}
+
+function loadScript(src){
+  return new Promise((res, rej) => {
+    const s = document.createElement("script");
+    s.src = src; s.onload = res; s.onerror = rej;
+    document.head.appendChild(s);
+  });
+}
+let toastTimer = null;
+function toast(msg){
+  const t = $("toast");
+  t.textContent = msg; t.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove("show"), 1900);
+}
+
+dtSet(nowParts());
+DEFAULTS.datetime = $("fDateTime").value;
+genCodes();
+tidyPrice();
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => render());
+</script>
+</body>
+</html>
