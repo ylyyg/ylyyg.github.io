@@ -6,7 +6,7 @@
 <title>AppSearch - (^_−)☆嘻嘻嘻~</title>
 <style>
 @charset "utf-8";
-/* v31.0 */
+/* v31.1 */
 
 :root {
 	--brand: #4e6ef2;
@@ -25,9 +25,6 @@
 	--muted: #696f7d;
 	--sep: #dfe3ec;
 	--ring: rgba(78, 110, 242, .26);
-	--cta-a: #5b7cff;
-	--cta-b: #4e6ef2;
-	--cta-c: #4a63ea;
 	--clock-a: #7d95ff;
 	--clock-b: #4e6ef2;
 	--clock-c: #6a55f0;
@@ -36,8 +33,8 @@
 	--switch-text: #616b7a;
 	--toast-bg: #3a58e0;
 	--toast-fg: #ffffff;
-	--stroke-hover: #6a85f5;
-	--cta-border: #4e6ef2;
+	--bar-glow: rgba(78, 110, 242, .16);
+	--input-border: #4e6ef2;
 	--shadow-input: 0 2px 8px rgba(24, 35, 75, .04);
 	--shadow-cta: 0 2px 8px rgba(78, 110, 242, .18);
 	--shadow-cta-hover: 0 6px 18px rgba(78, 110, 242, .28);
@@ -63,19 +60,16 @@ html[data-theme="dark"] {
 	--brand: #7d93ec;
 	--brand-dark: #93a8f2;
 	--ring: rgba(96, 132, 255, .32);
-	--cta-a: #4c63cf;
-	--cta-b: #4257c0;
-	--cta-c: #3c4cae;
 	--clock-a: #93a6e8;
 	--clock-b: #7288dd;
 	--clock-c: #9182dc;
 	--switch-bg: #1d2531;
 	--switch-thumb: #313c4d;
 	--switch-text: #9aa4b6;
-	--toast-bg: #4257c0;
+	--toast-bg: #4a58a3;
 	--toast-fg: #ffffff;
-	--stroke-hover: #95a8f4;
-	--cta-border: #3c4cae;
+	--bar-glow: rgba(81, 97, 177, .32);
+	--input-border: #5161b1;
 	--shadow-input: 0 2px 8px rgba(0, 0, 0, .32);
 	--shadow-cta: 0 2px 8px rgba(0, 0, 0, .38);
 	--shadow-cta-hover: 0 6px 18px rgba(0, 0, 0, .50);
@@ -247,7 +241,7 @@ body {
 	top: 0;
 	bottom: 0;
 	border-radius: 10px;
-	box-shadow: 0 0 0 4px var(--ring);
+	box-shadow: 0 0 0 3px var(--bar-glow);
 	opacity: 0;
 	transform: scale(.985);
 	transition: opacity .2s var(--ease), transform .28s var(--ease);
@@ -264,9 +258,9 @@ body {
 	padding-left: 15px;
 	padding-right: 15px;
 	outline: none;
-	border-left: 2px solid var(--brand);
-	border-top: 2px solid var(--brand);
-	border-bottom: 2px solid var(--brand);
+	border-left: 2px solid var(--input-border);
+	border-top: 2px solid var(--input-border);
+	border-bottom: 2px solid var(--input-border);
 	border-right: 0;
 	border-radius: 10px 0 0 10px;
 	background: var(--surface);
@@ -282,22 +276,17 @@ body {
 	color: var(--placeholder);
 	letter-spacing: 0.5px;
 }
-.search-bar:hover .search-text,
-.search-bar:focus-within .search-text {
-	border-color: var(--stroke-hover);
-}
-.search-text:focus {
-	border-color: var(--brand);
-}
+/* 描边颜色在所有状态下保持不变，始终与搜索按钮同色 */
 
 .search-btn-bd {
 	height: 46px;
 	width: 108px;
-	background: linear-gradient(135deg, var(--cta-a) 0%, var(--cta-b) 55%, var(--cta-c) 100%);
+	background: var(--input-border);
 	outline: none;
 	color: #fff;
 	font-size: 15px;
-	border: 1px solid var(--cta-border);
+	/* 不加描边：描边由输入框统一提供，避免接缝处出现异色 1px 线 */
+	border: 0;
 	float: left;
 	border-radius: 0 10px 10px 0;
 	cursor: pointer;
@@ -306,9 +295,9 @@ body {
 	transition: filter .2s var(--ease), box-shadow .25s var(--ease);
 	box-shadow: var(--shadow-cta);
 }
+/* hover 只加深投影，不改按钮填充色，保证与输入框描边始终同色 */
 .search-bar:hover .search-btn-bd,
 .search-btn-bd:hover {
-	filter: brightness(1.06) saturate(1.05);
 	box-shadow: var(--shadow-cta-hover);
 }
 .search-btn-bd:active {
@@ -653,7 +642,7 @@ document.addEventListener('DOMContentLoaded', function () { updateTime(); });
     <p><a href="http://wcjs.sbj.cnipa.gov.cn/" target="_blank" rel="noopener">注册商标信息查询</a></p>
   </div>
 </div>
-<div class="footer"> &copy;&nbsp; 2018 - 2026<span>/</span> DESIGNED BY <a href="https://ylyyg.github.io/" target="_blank" rel="noopener">POETRY.</a> <span>/</span> POWERED BY <a href="https://github.com/" target="_blank" rel="noopener">GITHUB.</a> <span>/</span> v31.0 <span>/</span> 2026.11.01 </div>
+<div class="footer"> &copy;&nbsp; 2018 - 2026<span>/</span> DESIGNED BY <a href="https://ylyyg.github.io/" target="_blank" rel="noopener">POETRY.</a> <span>/</span> POWERED BY <a href="https://github.com/" target="_blank" rel="noopener">GITHUB.</a> <span>/</span> v31.1 <span>/</span> 2026.11.07 </div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <!--js部分-->
